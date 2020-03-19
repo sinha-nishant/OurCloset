@@ -15,13 +15,14 @@ public class SQL_Util {
 	public static void initConnection() {
 		if (connection != null) {
 			System.out.println("[WARN] Connection has already been established.");
-			return;
 		}
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection(credentials);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+		else {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				connection = DriverManager.getConnection(credentials);
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -86,7 +87,7 @@ public class SQL_Util {
 		try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO Transactions(postID, buyerID) VALUES (?, ?)");
 			ps.setInt(1, postID);
-			ps.setString(2, buyerID);
+			ps.setInt(2, buyerID);
 			ps.execute();
 			ps.close();
 		}
@@ -110,11 +111,11 @@ public class SQL_Util {
 		}
 	}
 
-	// this method returns all avaible items (not yet sold)
+	// this method returns all available items (not yet sold)
 	public static ArrayList<Post> getPosts() {
 		ArrayList<Post> posts = new ArrayList<Post>();
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE Posts.postID NOT IN (SELECT postID FROM Transcations)");
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE Posts.postID NOT IN (SELECT postID FROM Transactions)");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Post post = new Post(rs.getInt("postID"), rs.getInt("userID"), rs.getString("brand"),rs.getString("pName") , rs.getString("descrip"), rs.getDouble("price"), rs.getShort("quantity"), rs.getBoolean("rent"), rs.getBoolean("buy"), rs.getTimestamp("datePosted"));
@@ -137,7 +138,7 @@ public class SQL_Util {
 		ArrayList<Post> posts = new ArrayList<Post>();
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE userID = ?");
-			ps.setString(1,  userID);
+			ps.setInt(1,  userID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Post post = new Post(rs.getInt("postID"), rs.getInt("userID"), rs.getString("brand"),rs.getString("pName") , rs.getString("descrip"), rs.getDouble("price"), rs.getShort("quantity"), rs.getBoolean("rent"), rs.getBoolean("buy"), rs.getTimestamp("datePosted"));
@@ -185,7 +186,7 @@ public class SQL_Util {
 			ps.setInt(1,  userID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Transaction transaction = new Transaction(rs.getInt("transactionID"), rs.getInt("postID"), ,rs.getInt("buyerID"), rs.getTimestamp("dateSold"));
+				Transaction transaction = new Transaction(rs.getInt("transactionID"), rs.getInt("postID"), rs.getInt("buyerID"), rs.getTimestamp("dateSold"));
 				transactions.add(transaction);
 			}
 			
@@ -208,7 +209,7 @@ public class SQL_Util {
 			ps.setInt(1,  userID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Transaction transaction = new Transaction(rs.getInt("transactionID"), rs.getInt("postID"), ,rs.getInt("buyerID"), rs.getTimestamp("dateSold"));
+				Transaction transaction = new Transaction(rs.getInt("transactionID"), rs.getInt("postID"), rs.getInt("buyerID"), rs.getTimestamp("dateSold"));
 				transactions.add(transaction);
 			}
 			
@@ -245,7 +246,7 @@ public class SQL_Util {
 		return tags;
 	}
 
-	// this method returns the 5 most popular tags for items sold (could be used for a suggested feature when users are uplodaing posts)
+	// this method returns the 5 most popular tags for items sold (could be used for a suggested feature when users are uploading posts)
 	public static ArrayList<Tag> getPopularTags() {
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		try {
@@ -269,13 +270,14 @@ public class SQL_Util {
 
 	// this method gets the average listed price of current items (not yet sold)
 	public static double getAvgListedPrice() {
+		double price = 0;
 		try {
-			double price = 0;
-			PreparedStatement ps = connection.prepareStatement(SELECT AVG(Posts.price) as "price" FROM Posts WHERE Posts.postID NOT IN (SELECT postID FROM Transcations));
+			
+			PreparedStatement ps = connection.prepareStatement("SELECT AVG(Posts.price) as price FROM Posts WHERE Posts.postID NOT IN (SELECT postID FROM Transcations");
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				price = getDouble("price");
+				price = rs.getDouble("price");
 			}
 			ps.close();
 			rs.close();
@@ -288,13 +290,13 @@ public class SQL_Util {
 
 	// this method gets the average price of all items sold 
 	public static double getAvgSellingPrice() {
+		double price = 0;
 		try {
-			double price = 0;
-			PreparedStatement ps = connection.prepareStatement(SELECT AVG(Posts.price) as "price" FROM Posts WHERE Posts.postID IN (SELECT postID FROM Transcations));
+			PreparedStatement ps = connection.prepareStatement("SELECT AVG(Posts.price) as price FROM Posts WHERE Posts.postID IN (SELECT postID FROM Transcation");
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				price = getDouble("price");
+				price = rs.getDouble("price");
 			}
 			ps.close();
 			rs.close();
@@ -371,12 +373,4 @@ public class SQL_Util {
 		
 		return posts;
 	}
-
-
-
-
-	// 
-
-
-
 }

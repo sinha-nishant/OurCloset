@@ -34,7 +34,11 @@ public class User {
 	}
 
 	public int getID() {
-		return id;
+		return userID;
+	}
+	
+	public void setID(int userID) {
+		this.userID = userID;
 	}
 
 	public String getEmail() {

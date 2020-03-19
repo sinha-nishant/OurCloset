@@ -6,11 +6,11 @@ USE OurCloset;
 password, fname, lname, timestamp representing the last login time, privacyStatus, and dateCreated */
 
 CREATE TABLE Users (
-    /* userID is similar to a USC ID, i.e. a series of numbers, not a userID like a screen name */
-    userID INTEGER(7) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    -- userID is similar to a USC ID, i.e. a series of numbers, not a userID like a screen name
+    userID INTEGER(7) PRIMARY KEY AUTO_INCREMENT  NOT NULL,
     /* VARCHAR is essentially a String datatype, 
     (20) indicates the value when printed out will go to a max of 20 characters */
-    uscEmail VARCHAR(30) NOT NULL UNIQUE,
+    uscEmail VARCHAR(30) UNIQUE NOT NULL,
     pass VARCHAR(30) NOT NULL,
     fName VARCHAR(30) NOT NULL,
     lName VARCHAR(30) NOT NULL,
@@ -26,7 +26,7 @@ description, datePosted, price, quantity, type (such as rent or buy), brandName,
 
 CREATE TABLE Posts (
 	-- Unsigned 0-4,294,967,295, (10) specifies the printed value will be max 10 characters
-	postID INTEGER(10) AUTO_INCREMENT PRIMARY KEY,
+	postID INTEGER(10) PRIMARY KEY AUTO_INCREMENT  NOT NULL,
 	userID INTEGER(7) NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users(userID),
     brand VARCHAR(30),
@@ -36,7 +36,7 @@ CREATE TABLE Posts (
     descrip VARCHAR(280),
     -- Decimal(p,s): p is the total # of digits, s is the precision to the right of the decimal point
     price DECIMAL(4,2) NOT NULL,
-    -- Unsigned 0-255,
+    -- Unsigned 0-255
     quantity TINYINT(3) NOT NULL,
     rent BOOL NOT NULL,
     buy BOOL NOT NULL
@@ -50,7 +50,7 @@ CREATE TABLE Transactions (
 	transactionID INTEGER(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     postID INTEGER(10) NOT NULL,
     FOREIGN KEY (postID) REFERENCES Posts(postID),
-    buyer INTEGER(7) NOT NULL,
+    buyerID INTEGER(7) NOT NULL,
     FOREIGN KEY (buyer) REFERENCES Users(userID)
     -- Don't need to pass dateSold because on any insert because it will default to current timestamp
     dateSold TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL

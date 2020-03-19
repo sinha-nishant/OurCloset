@@ -5,20 +5,20 @@ import java.sql.Timestamp;
 public class Transaction {
 	private int transactionID;
 	private int postID;
-	private String buyer;
+	private int buyerID;
 	private Timestamp dateSold;
 	
-	public Transaction(int transactionID, int postID, String buyer) {
+	public Transaction(int transactionID, int postID, int buyer) {
 		this.transactionID = transactionID;
 		this.postID = postID;
-		this.buyer = buyer;
+		this.buyerID = buyer;
 	}
 	
 	// Overloaded Transaction constructor with dateSold
-	public Transaction(int transactionID, int postID, String buyer, Timestamp dateSold) {
+	public Transaction(int transactionID, int postID, int buyerID, Timestamp dateSold) {
 		this.transactionID = transactionID;
 		this.postID = postID;
-		this.buyer = buyer;
+		this.buyerID = buyerID;
 		this.dateSold = dateSold;
 	}
 	
@@ -35,11 +35,11 @@ public class Transaction {
 		this.postID = postID;
 	}
 	
-	public String getBuyer() {
-		return buyer;
+	public int getBuyer() {
+		return this.buyerID;
 	}
-	public void setBuyer(String buyer) {
-		this.buyer = buyer;
+	public void setBuyer(int buyerID) {
+		this.buyerID = buyerID;
 	}
 	public Timestamp getDateSold() {
 		return dateSold;
@@ -49,7 +49,7 @@ public class Transaction {
 	}
 	
 	public String toString() {
-		return "Transaction ID: " + transactionID + "\nPost ID: " + postID + "\nBuyer: " + buyer +
+		return "Transaction ID: " + transactionID + "\nPost ID: " + postID + "\nBuyer: " + buyerID +
 		"\nDate Sold: " + dateSold;
 	}
 }
