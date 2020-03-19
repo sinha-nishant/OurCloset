@@ -3,7 +3,6 @@ package ourCloset;
 import java.sql.Timestamp;
 
 public class Post {
-	private static final AtomicInteger count = new AtomicInteger(0); 
 	private int postID;
 	private int userID;
 	private String brand;
@@ -15,8 +14,8 @@ public class Post {
 	private boolean rent;
 	private boolean buy;
 	
-	public Post(int userID, String brand, String pName, String descrip, double price, short quantity, boolean rent, boolean buy) {
-		postID = count.incrementAndGet();
+	public Post(int postID, int userID, String brand, String pName, String descrip, double price, short quantity, boolean rent, boolean buy) {
+		this.postID = postID;
 		this.userID = userID;
 		this.brand = brand;
 		this.pName = pName;
@@ -28,8 +27,8 @@ public class Post {
 	}
 	
 	// Overloaded constructor with datePosted
-	public Post(int userID, String brand, String pName, String descrip, double price, short quantity, boolean rent, boolean buy, Timestamp datePosted) {
-		postID = count.incrementAndGet();
+	public Post(int postID, int userID, String brand, String pName, String descrip, double price, short quantity, boolean rent, boolean buy, Timestamp datePosted) {
+		this.postID = postID;
 		this.userID = userID;
 		this.brand = brand;
 		this.pName = pName;

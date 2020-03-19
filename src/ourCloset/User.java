@@ -3,7 +3,6 @@ package ourCloset;
 import java.sql.Timestamp;
 
 public class User {
-	private static final AtomicInteger count = new AtomicInteger(0); 
 	private int userID;
 	private String uscEmail;
 	private String pass;
@@ -13,8 +12,8 @@ public class User {
 	private Timestamp dateCreated;
 	private boolean privacyStatus; // true means private profile, false means public profile
 	
-	public User (String uscEmail, String password, String fName, String lName, boolean privacyStatus) {
-		this.userID = count.incrementAndGet();
+	public User (int userID, String uscEmail, String password, String fName, String lName, boolean privacyStatus) {
+		this.userID = userID;
 		this.uscEmail = uscEmail;
 		this.pass = password;
 		this.fName = fName;
@@ -23,7 +22,8 @@ public class User {
 	}
 	
 	// User constructor overloaded with lastLogin and dateCreated
-	public User (String uscEmail, String password, String fName, String lName, boolean privacyStatus, Timestamp lastLogin, Timestamp dateCreated) {
+	public User (int userID, String uscEmail, String password, String fName, String lName, boolean privacyStatus, Timestamp lastLogin, Timestamp dateCreated) {
+		this.userID = userID;
 		this.uscEmail = uscEmail;
 		this.pass = password;
 		this.fName = fName;
