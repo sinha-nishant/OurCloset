@@ -3,51 +3,57 @@ package ourCloset;
 import java.sql.Timestamp;
 
 public class Post {
+	private static final AtomicInteger count = new AtomicInteger(0); 
 	private int postID;
-	private String uscEmail;
+	private int userID;
 	private String brand;
 	private String pName;
 	private Timestamp datePosted;
 	private String descrip;
 	private double price;
 	private short quantity;
-	private boolean saleType;
+	private boolean rent;
+	private boolean buy;
 	
-	public Post(int postID, String uscEmail, String brand, String pName, String descrip, double price, short quantity, boolean saleType) {
-		this.postID = postID;
-		this.uscEmail = uscEmail;
+	public Post(int userID, String brand, String pName, String descrip, double price, short quantity, boolean rent, boolean buy) {
+		postID = count.incrementAndGet();
+		this.userID = userID;
 		this.brand = brand;
 		this.pName = pName;
 		this.descrip = descrip;
 		this.price = price;
 		this.quantity = quantity;
-		this.saleType = saleType;
+		this.rent = rent;
+		this.buy = buy;
 	}
 	
 	// Overloaded constructor with datePosted
-	public Post(int postID, String uscEmail, String brand, String pName, String descrip, double price, short quantity, boolean saleType, Timestamp datePosted) {
-		this.postID = postID;
-		this.uscEmail = uscEmail;
+	public Post(int userID, String brand, String pName, String descrip, double price, short quantity, boolean rent, boolean buy, Timestamp datePosted) {
+		postID = count.incrementAndGet();
+		this.userID = userID;
 		this.brand = brand;
 		this.pName = pName;
 		this.descrip = descrip;
 		this.price = price;
 		this.quantity = quantity;
-		this.saleType = saleType;
+		this.rent = rent;
+		this.buy = buy;
 		this.datePosted = datePosted;
 	}
 	
 	public int getPostID() {
 		return postID;
 	}
+
 	public void setPostID(int postID) {
 		this.postID = postID;
 	}
-	public String getEmail() {
-		return uscEmail;
+
+	public int getUserID() {
+		return userID;
 	}
-	public void setEmail(String uscEmail) {
-		this.uscEmail = uscEmail;
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 	public String getBrand() {
 		return brand;
@@ -85,17 +91,25 @@ public class Post {
 	public void setQuantity(short quantity) {
 		this.quantity = quantity;
 	}
-	public boolean getSaleType() {
-		return saleType;
+	public boolean isRent() {
+		return rent;
 	}
-	public void setSaleType(boolean saleType) {
-		this.saleType = saleType;
+	public void setRent(boolean rent) {
+		this.rent = rent;
+	}
+
+	public boolean isBuy() {
+		return buy;
+	}
+
+	public void setBuy(boolean buy) {
+		this.buy = buy;
 	}
 	
 	public String toString() {
-		return "Post ID: " + postID + "\nUSC Email: " + uscEmail + "\nBrand: " + brand +
+		return "Post ID: " + postID + "\nUSER ID: " + userID + "\nBrand: " + brand +
 				"\nProduct Name: " + pName + "\nDate Posted: " + datePosted.toString() +
 				"\nDescription: " + descrip + "\nPrice: " + price + "\nQuantity: " + quantity +
-				"\nSale Type: " + saleType;
+				"\nRent: " + rent + "\nBuy: " + buy;
 	}
 }
