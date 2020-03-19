@@ -51,7 +51,7 @@ CREATE TABLE Transactions (
     postID INTEGER(10) NOT NULL,
     FOREIGN KEY (postID) REFERENCES Posts(postID),
     buyerID INTEGER(7) NOT NULL,
-    FOREIGN KEY (buyer) REFERENCES Users(userID)
+    FOREIGN KEY (buyer) REFERENCES Users(userID),
     -- Don't need to pass dateSold because on any insert because it will default to current timestamp
     dateSold TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
