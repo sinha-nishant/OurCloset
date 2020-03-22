@@ -18,7 +18,8 @@ CREATE TABLE Users (
     lastLogin TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     dateCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     -- Could also be a VARCHAR
-    privacyStatus BOOL NOT NULL
+    privacyStatus BOOL NOT NULL,
+    valid BOOL DEFAULT TRUE NOT NULL
 );
 
 /* The Posts table will be used for managing all posts created and consist of  postID (PK), productName, 
@@ -35,7 +36,7 @@ CREATE TABLE Posts (
     datePosted TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     descrip VARCHAR(280),
     -- Decimal(p,s): p is the total # of digits, s is the precision to the right of the decimal point
-    price DECIMAL(4,2) NOT NULL,
+    price DECIMAL(5,2) NOT NULL,
     -- Unsigned 0-255
     quantity TINYINT(3) NOT NULL,
     rent BOOL NOT NULL,
@@ -51,7 +52,7 @@ CREATE TABLE Transactions (
     postID INTEGER(10) NOT NULL,
     FOREIGN KEY (postID) REFERENCES Posts(postID),
     buyerID INTEGER(7) NOT NULL,
-    FOREIGN KEY (buyerID) REFERENCES Users(userID)
+    FOREIGN KEY (buyerID) REFERENCES Users(userID),
     -- Don't need to pass dateSold because on any insert because it will default to current timestamp
     dateSold TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );

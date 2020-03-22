@@ -11,6 +11,7 @@ public class User {
 	private Timestamp lastLogin;
 	private Timestamp dateCreated;
 	private boolean privacyStatus; // true means private profile, false means public profile
+	private boolean valid = true; // make false when user deletes their account
 	
 	public User (int userID, String uscEmail, String password, String fName, String lName, boolean privacyStatus) {
 		this.userID = userID;
@@ -97,6 +98,14 @@ public class User {
 		this.privacyStatus = privacyStatus;
 	}
 	
+	public boolean isValid() {
+		return valid;
+	}
+
+	public void setValid(boolean valid) {
+		this.valid = valid;
+	}
+
 	public String toString() {
 		return "USC Email: " + uscEmail + "\nPassword: " + pass + "\nFirst Name: " + fName +
 				"\nLast Name: " + lName + "\nLast Login: " + lastLogin + "\nDate Created: " + dateCreated +

@@ -43,6 +43,47 @@ public class SQL_Util {
 		}
 	}
 	
+	public static User getUser(int userID) {
+		User user = null;
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Users WHERE userID = ?");
+			ps.setInt(1, userID);
+			ps.execute();
+			
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				user = new User(rs.getInt("userID"), rs.getString("uscEmail"), rs.getString("pass"), rs.getString("fName"), rs.getString("lName"), rs.getBoolean("privacyStatus"), rs.getTimestamp("lastLogin"), rs.getTimestamp("dateCreated"));
+			}
+			
+			ps.close();
+			rs.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
+	
+	public static User removeUser(int userID) {
+		User user = null;
+		try {
+			user = SQL_Util.getUser(userID);
+			PreparedStatement ps = connection.prepareStatement("UPDATE Users SET valid = ? WHERE userID = ?");
+			ps.setBoolean(1, false);
+			ps.setInt(2, userID);
+			ps.execute();
+			ps.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
+	
 	public static void addPost(int userID, String brand, String pName, int price, int quantity, boolean rent, boolean buy) {
 		try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO Posts(userID, brand, pName, price, quantity, rent, buy) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -83,6 +124,40 @@ public class SQL_Util {
 		}
 	}
 	
+	public static void removePost(int postID) {
+		try {
+			SQL_Util.removeTags(postID);
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Posts WHERE postID = ? AND ? NOT IN (SELECT postID FROM Transactions)");
+			ps.setInt(1, postID);
+			ps.setInt(2,  postID);
+			ps.execute();
+			ps.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static ArrayList<Transaction> getTransactions(int userID) {
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Transactions WHERE buyerID = ? OR sellerID = ?");
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				Transaction transaction = new Transaction(rs.getInt("transactionID"), rs.getInt("postID"), rs.getInt("buyerID"), rs.getTimestamp("dateSold"));
+				transactions.add(transaction);
+			}
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return transactions;
+	}
+	
 	public static void addTransaction(int postID, int buyerID) {
 		try {
 			PreparedStatement ps = connection.prepareStatement("INSERT INTO Transactions(postID, buyerID) VALUES (?, ?)");
@@ -110,9 +185,48 @@ public class SQL_Util {
 			e.printStackTrace();
 		}
 	}
+	
+	public static ArrayList<Tag> getTags(int postID) {
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Tags WHERE postID = ?");
+			ps.setInt(1,  postID);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Tag tag = new Tag(rs.getInt("tagID"), rs.getInt("postID"), rs.getString("tagName"));
+				tags.add(tag);
+			}
+			
+			ps.close();
+			rs.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return tags;
+	}
+	
+	public static ArrayList<Tag> removeTags(int postID) {
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		try {
+			tags = SQL_Util.getTags(postID);
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Tags WHERE postID = ?");
+			ps.setInt(1, postID);
+			ps.execute();
+			ps.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return tags;
+	}
 
 	// this method returns all available items (not yet sold)
-	public static ArrayList<Post> getPosts() {
+	public static ArrayList<Post> getListedPosts() {
 		ArrayList<Post> posts = new ArrayList<Post>();
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE Posts.postID NOT IN (SELECT postID FROM Transactions)");
@@ -126,7 +240,7 @@ public class SQL_Util {
 			rs.close();
 		}
 		
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
@@ -149,7 +263,7 @@ public class SQL_Util {
 			rs.close();
 		}
 		
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
@@ -171,7 +285,7 @@ public class SQL_Util {
 			rs.close();
 		}
 		
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
@@ -182,7 +296,7 @@ public class SQL_Util {
 	public static ArrayList<Transaction> getSellHistory(int userID) {
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT T.* FROM Transcations T JOIN Posts ON T.postID=Posts.postID WHERE userID = ?");
+			PreparedStatement ps = connection.prepareStatement("SELECT T.* FROM Transactions T JOIN Posts ON T.postID=Posts.postID WHERE userID = ?");
 			ps.setInt(1,  userID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -194,7 +308,7 @@ public class SQL_Util {
 			rs.close();
 		}
 		
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
@@ -217,33 +331,11 @@ public class SQL_Util {
 			rs.close();
 		}
 		
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return transactions;
-	}
-
-	public static ArrayList<Tag> getTags(int postID) {
-		ArrayList<Tag> tags = new ArrayList<Tag>();
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Tags WHERE postID = ?");
-			ps.setInt(1,  postID);
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Tag tag = new Tag(rs.getInt("tagID"), rs.getInt("postID"), rs.getString("tagName"));
-				tags.add(tag);
-			}
-			
-			ps.close();
-			rs.close();
-		}
-		
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return tags;
 	}
 
 	// this method returns the 5 most popular tags for items sold (could be used for a suggested feature when users are uploading posts)
@@ -261,7 +353,7 @@ public class SQL_Util {
 			rs.close();
 		}
 		
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
@@ -282,7 +374,7 @@ public class SQL_Util {
 			ps.close();
 			rs.close();
 		}
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return price;
@@ -301,7 +393,7 @@ public class SQL_Util {
 			ps.close();
 			rs.close();
 		}
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return price;
@@ -322,7 +414,7 @@ public class SQL_Util {
 			rs.close();
 		}
 		
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
@@ -344,7 +436,7 @@ public class SQL_Util {
 			rs.close();
 		}
 		
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
@@ -367,10 +459,55 @@ public class SQL_Util {
 			rs.close();
 		}
 		
-		catch (Exception e) {
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		return posts;
+	}
+	
+	// Clears all entries in the database but doesn't drop the actual tables
+	public static void clear() {
+		try {
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Tags");
+			ps.execute();
+			ps.close();
+			
+			ps = connection.prepareStatement("ALTER TABLE Tags AUTO_INCREMENT = ?");
+			ps.setInt(1, 1);
+			ps.execute();
+			ps.close();
+			
+			ps = connection.prepareStatement("DELETE FROM Transactions");
+			ps.execute();
+			ps.close();
+			
+			ps = connection.prepareStatement("ALTER TABLE Transactions AUTO_INCREMENT = ?");
+			ps.setInt(1, 1);
+			ps.execute();
+			ps.close();
+			
+			ps = connection.prepareStatement("DELETE FROM Posts");
+			ps.execute();
+			ps.close();
+			
+			ps = connection.prepareStatement("ALTER TABLE Posts AUTO_INCREMENT = ?");
+			ps.setInt(1, 1);
+			ps.execute();
+			ps.close();
+			
+			ps = connection.prepareStatement("DELETE FROM Users");
+			ps.execute();
+			ps.close();
+			
+			ps = connection.prepareStatement("ALTER TABLE Users AUTO_INCREMENT = ?");
+			ps.setInt(1, 1);
+			ps.execute();
+			ps.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
