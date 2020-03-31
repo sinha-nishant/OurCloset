@@ -38,9 +38,12 @@ public class AppController {
 	}
 	
 	@RequestMapping("/login")
-	public String login() {
+	public ModelAndView login() {
 		System.out.println("GET: login.jsp");
-		return "login.jsp";
+		ModelAndView mv = new ModelAndView(new RedirectView("login"));
+		mv.setViewName("login.jsp");
+		mv.addObject("errorMessage", "");
+		return mv;
 	}
 	
 	@RequestMapping("/register")
@@ -56,8 +59,9 @@ public class AppController {
 		Users user = usersRepo.findByuscEmail(uscEmail);
 		if (user == null || !user.getPass().equals(pass)) {
 			// should display an invalid login message
-			mv = new ModelAndView(new RedirectView("newsfeed"));
+			mv = new ModelAndView(new RedirectView("login"));
 			mv.setViewName("login.jsp");
+			mv.addObject("errorMessage", "Please enter a valid email/ pass combo");
 			return mv;
 		}
 		
@@ -88,7 +92,7 @@ public class AppController {
 		Users exists = usersRepo.findByuscEmail(user.getUscEmail());
 		if (exists != null) {
 			// should display a user already exists message
-			mv = new ModelAndView(new RedirectView("register"));
+			mv = new ModelAndView(new RedirectView("register", true));
 			mv.setViewName("register.jsp");
 			return mv;
 		}
@@ -98,12 +102,20 @@ public class AppController {
 		
 //		String posts = gson.toJson(postsRepo.returnAllPosts());
 //		System.out.println(posts);
-		mv = new ModelAndView(new RedirectView("newsfeed"));
+		mv = new ModelAndView(new RedirectView("newsfeed", true));
 		mv.addObject("user", user);
 		mv.addObject("postsRepo", postsRepo);
 //		mv.addObject("posts", posts);
 		mv.setViewName("newsfeed.jsp");
 		return mv;
 	}
-
+	
+	@RequestMapping("/upload")
+	public String upload() {
+		System.out.println("GET: upload.jsp");
+		return "upload.jsp";
+	}
+	
+	
+	
 }

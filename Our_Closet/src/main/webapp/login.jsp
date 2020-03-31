@@ -53,6 +53,8 @@
 						</span>
 					</div>
 					
+					<div>${errorMessage}</div>
+					
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn" type="submit" value="Login">
 							Login
