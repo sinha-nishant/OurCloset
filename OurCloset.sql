@@ -27,7 +27,7 @@ description, datePosted, price, quantity, type (such as rent or buy), brandName,
 
 CREATE TABLE Posts (
 	-- Unsigned 0-4,294,967,295, (10) specifies the printed value will be max 10 characters
-	postID INTEGER(10) PRIMARY KEY AUTO_INCREMENT  NOT NULL,
+	postID INTEGER(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
 	userID INTEGER(7) NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users(userID),
     brand VARCHAR(30),
@@ -41,6 +41,12 @@ CREATE TABLE Posts (
     quantity TINYINT(3) NOT NULL,
     rent BOOL NOT NULL,
     buy BOOL NOT NULL
+);
+
+CREATE TABLE Images (
+	imageID INTEGER(10) PRIMARY KEY AUTO_INCREMENT  NOT NULL,
+    postID INTEGER(10) NOT NULL,
+    FOREIGN KEY (postID) REFERENCES Posts(postID)
 );
 
 /* The Transactions table will be used for recording all transaction history and consist of transactionID (PK),

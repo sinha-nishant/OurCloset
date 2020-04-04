@@ -1,6 +1,7 @@
 package ourCloset;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class Post {
 	private int postID;
@@ -13,6 +14,7 @@ public class Post {
 	private short quantity;
 	private boolean rent;
 	private boolean buy;
+	private String[] image_paths = null;
 	
 	public Post(int postID, int userID, String brand, String pName, String descrip, double price, short quantity, boolean rent, boolean buy) {
 		this.postID = postID;
@@ -26,8 +28,22 @@ public class Post {
 		this.buy = buy;
 	}
 	
-	// Overloaded constructor with datePosted
-	public Post(int postID, int userID, String brand, String pName, String descrip, double price, short quantity, boolean rent, boolean buy, Timestamp datePosted) {
+	// Post constructor with parameter for ArrayList of image file paths
+	public Post(int postID, int userID, String brand, String pName, String descrip, double price, short quantity, boolean rent, boolean buy, ArrayList<String> image_paths) {
+		this.postID = postID;
+		this.userID = userID;
+		this.brand = brand;
+		this.pName = pName;
+		this.descrip = descrip;
+		this.price = price;
+		this.quantity = quantity;
+		this.rent = rent;
+		this.buy = buy;
+		this.image_paths = image_paths.toArray(new String[0]);
+	}
+	
+	// Overloaded constructor with datePosted and image_paths
+	public Post(int postID, int userID, String brand, String pName, String descrip, double price, short quantity, boolean rent, boolean buy, Timestamp datePosted, String[] image_paths) {
 		this.postID = postID;
 		this.userID = userID;
 		this.brand = brand;
@@ -38,6 +54,7 @@ public class Post {
 		this.rent = rent;
 		this.buy = buy;
 		this.datePosted = datePosted;
+		this.image_paths = image_paths;
 	}
 	
 	public int getPostID() {
@@ -105,10 +122,18 @@ public class Post {
 		this.buy = buy;
 	}
 	
+	public String[] getImagePaths() {
+		return this.image_paths;
+	}
+
+	public void setImagePaths(String[] image_paths) {
+		this.image_paths = image_paths;
+	}
+
 	public String toString() {
 		return "Post ID: " + postID + "\nUSER ID: " + userID + "\nBrand: " + brand +
 				"\nProduct Name: " + pName + "\nDate Posted: " + datePosted.toString() +
 				"\nDescription: " + descrip + "\nPrice: " + price + "\nQuantity: " + quantity +
-				"\nRent: " + rent + "\nBuy: " + buy;
+				"\nRent: " + rent + "\nBuy: " + buy + "\nImage Paths: " + image_paths;
 	}
 }

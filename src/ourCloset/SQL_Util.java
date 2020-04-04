@@ -7,9 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import java.sql.Timestamp;
+
 public class SQL_Util {
 	
-	public static final String credentials = "jdbc:mysql://localhost/OurCloset?user=root&password=NS@1048169&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles";
+	public static final String credentials = "jdbc:mysql://localhost/OurCloset?user=root&password=MySQLServer&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles";
 	static Connection connection;
 	
 	public static void initConnection() {
@@ -124,6 +126,61 @@ public class SQL_Util {
 		}
 	}
 	
+	// Overloaded addPost() which adds the description and image_paths parameter to the end
+	public static void addPost(int userID, String brand, String pName, int price, int quantity, boolean rent, boolean buy, ArrayList<String> image_paths) {
+		try {
+			PreparedStatement ps1 = connection.prepareStatement("INSERT INTO Posts(userID, brand, pName, price, quantity, rent, buy) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			ps1.setInt(1, userID);
+			ps1.setString(2, brand);
+			ps1.setString(3, pName);
+			ps1.setInt(4, price);
+			ps1.setInt(5,  quantity);
+			ps1.setBoolean(6, rent);
+			ps1.setBoolean(7, buy);
+			ps1.execute();
+			ps1.close();
+			
+			PreparedStatement ps2 = connection.prepareStatement("INSERT INTO Images(postID, filename) VALUES ((SELECT LAST_INSERT_ID()), ?)");
+			for (int i = 0; i < image_paths.size(); i++) {
+				ps2.setString(1, "images/" + image_paths.get(i));
+				ps2.addBatch();
+			}
+			ps2.executeBatch();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Overloaded addPost() which adds the description and image_paths parameter to the end
+	public static void addPost(int userID, String brand, String pName, int price, int quantity, boolean rent, boolean buy, String description, ArrayList<String> image_paths) {
+		try {
+			PreparedStatement ps1 = connection.prepareStatement("INSERT INTO Posts(userID, brand, pName, price, quantity, rent, buy, descrip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			ps1.setInt(1, userID);
+			ps1.setString(2, brand);
+			ps1.setString(3, pName);
+			ps1.setInt(4, price);
+			ps1.setInt(5,  quantity);
+			ps1.setBoolean(6, rent);
+			ps1.setBoolean(7, buy);
+			ps1.setString(8, description);
+			ps1.execute();
+			ps1.close();
+			
+			PreparedStatement ps2 = connection.prepareStatement("INSERT INTO Images(postID, filename) VALUES ((SELECT LAST_INSERT_ID()), ?)");
+			for (int i = 0; i < image_paths.size(); i++) {
+				ps2.setString(1, "images/" + image_paths.get(i));
+				ps2.addBatch();
+			}
+			ps2.executeBatch();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void removePost(int postID) {
 		try {
 			SQL_Util.removeTags(postID);
@@ -224,20 +281,86 @@ public class SQL_Util {
 		
 		return tags;
 	}
+	
+	public static ArrayList<Post> handlePosts(ResultSet rs) {
+		ArrayList<Post> posts = new ArrayList<Post>();
+		try {
+			while (rs.next()) {
+				int postID = rs.getInt("postID");
+				int userID = rs.getInt("userID");
+				String brand = rs.getString("brand");
+				String pName = rs.getString("pName");
+				String descrip = rs.getString("descrip");
+				double price = rs.getDouble("price");
+				short quantity = rs.getShort("quantity");
+				boolean rent = rs.getBoolean("rent");
+				boolean buy = rs.getBoolean("buy");
+				Timestamp datePosted = rs.getTimestamp("datePosted");
+				
+				PreparedStatement ps2 = connection.prepareStatement("SELECT Images.filename FROM Images WHERE Images.postID = ?");
+				ps2.setInt(1, postID);
+				ResultSet rs2 = ps2.executeQuery();
+				ArrayList<String> image_paths_AL = new ArrayList<String>();
+				while(rs2.next()) {
+					image_paths_AL.add(rs2.getString("filename"));
+				}
+				
+				ps2.close();
+				rs2.close();
+				
+				String[] image_paths_A = image_paths_AL.toArray(new String[0]);
+				
+				Post post = new Post(postID, userID, brand, pName, descrip, price, quantity, rent, buy, datePosted, image_paths_A);
+				
+				posts.add(post);
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return posts;
+	}
 
 	// this method returns all available items (not yet sold)
 	public static ArrayList<Post> getListedPosts() {
-		ArrayList<Post> posts = new ArrayList<Post>();
+		ArrayList<Post> posts = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE Posts.postID NOT IN (SELECT postID FROM Transactions)");
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Post post = new Post(rs.getInt("postID"), rs.getInt("userID"), rs.getString("brand"),rs.getString("pName") , rs.getString("descrip"), rs.getDouble("price"), rs.getShort("quantity"), rs.getBoolean("rent"), rs.getBoolean("buy"), rs.getTimestamp("datePosted"));
-				posts.add(post);
-			}
+			PreparedStatement ps1 = connection.prepareStatement("SELECT * FROM Posts WHERE Posts.postID NOT IN (SELECT postID FROM Transactions)");
+			ResultSet rs1 = ps1.executeQuery();
+			posts = handlePosts(rs1);
+//			while (rs1.next()) {
+//				int postID = rs1.getInt("postID");
+//				int userID = rs1.getInt("userID");
+//				String brand = rs1.getString("brand");
+//				String pName = rs1.getString("pName");
+//				String descrip = rs1.getString("descrip");
+//				double price = rs1.getDouble("price");
+//				short quantity = rs1.getShort("quantity");
+//				boolean rent = rs1.getBoolean("rent");
+//				boolean buy = rs1.getBoolean("buy");
+//				Timestamp datePosted = rs1.getTimestamp("datePosted");
+//				
+//				PreparedStatement ps2 = connection.prepareStatement("SELECT Images.filename FROM Images WHERE Images.postID = ?");
+//				ps2.setInt(1, postID);
+//				ResultSet rs2 = ps2.executeQuery();
+//				ArrayList<String> image_paths_AL = new ArrayList<String>();
+//				while(rs2.next()) {
+//					image_paths_AL.add(rs2.getString("filename"));
+//				}
+//				
+//				ps2.close();
+//				rs2.close();
+//				
+//				String[] image_paths_A = image_paths_AL.toArray(new String[0]);
+//				
+//				Post post = new Post(postID, userID, brand, pName, descrip, price, quantity, rent, buy, datePosted, image_paths_A);
+//				
+//				posts.add(post);
+//			}
 			
-			ps.close();
-			rs.close();
+			ps1.close();
+			rs1.close();
 		}
 		
 		catch (SQLException e) {
@@ -249,15 +372,12 @@ public class SQL_Util {
 	
 	// this method returns a user's post history
 	public static ArrayList<Post> getPostHistory(int userID) {
-		ArrayList<Post> posts = new ArrayList<Post>();
+		ArrayList<Post> posts = null;
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE userID = ?");
 			ps.setInt(1,  userID);
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Post post = new Post(rs.getInt("postID"), rs.getInt("userID"), rs.getString("brand"),rs.getString("pName") , rs.getString("descrip"), rs.getDouble("price"), rs.getShort("quantity"), rs.getBoolean("rent"), rs.getBoolean("buy"), rs.getTimestamp("datePosted"));
-				posts.add(post);
-			}
+			posts = handlePosts(rs);
 			
 			ps.close();
 			rs.close();
@@ -269,17 +389,14 @@ public class SQL_Util {
 		
 		return posts;
 	}
-	
+//	
 	// this method returns the 8 most recently sold items (trending items)
 	public static ArrayList<Post> recentlySold() {
-		ArrayList<Post> posts = new ArrayList<Post>();
+		ArrayList<Post> posts = null;
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT P.* FROM Posts P JOIN Transactions ON P.postID=Transactions.postID ORDER BY dateSold ASC LIMIT 8");
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Post post = new Post(rs.getInt("postID"), rs.getInt("userID"), rs.getString("brand"),rs.getString("pName") , rs.getString("descrip"), rs.getDouble("price"), rs.getShort("quantity"), rs.getBoolean("rent"), rs.getBoolean("buy"), rs.getTimestamp("datePosted"));
-				posts.add(post);
-			}
+			posts = handlePosts(rs);
 			
 			ps.close();
 			rs.close();
@@ -401,14 +518,11 @@ public class SQL_Util {
 
 	// this method gets all items available for rent
 	public static ArrayList<Post> forRent() {
-		ArrayList<Post> posts = new ArrayList<Post>();
+		ArrayList<Post> posts = null;
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE rent = 1");
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Post post = new Post(rs.getInt("postID"), rs.getInt("userID"), rs.getString("brand"),rs.getString("pName") , rs.getString("descrip"), rs.getDouble("price"), rs.getShort("quantity"), rs.getBoolean("rent"), rs.getBoolean("buy"), rs.getTimestamp("datePosted"));
-				posts.add(post);
-			}
+			posts = handlePosts(rs);
 			
 			ps.close();
 			rs.close();
@@ -423,14 +537,11 @@ public class SQL_Util {
 
 	// this method gets all items available for purchase
 	public static ArrayList<Post> forBuy() {
-		ArrayList<Post> posts = new ArrayList<Post>();
+		ArrayList<Post> posts = null;
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE buy = 1");
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Post post = new Post(rs.getInt("postID"), rs.getInt("userID"), rs.getString("brand"),rs.getString("pName") , rs.getString("descrip"), rs.getDouble("price"), rs.getShort("quantity"), rs.getBoolean("rent"), rs.getBoolean("buy"), rs.getTimestamp("datePosted"));
-				posts.add(post);
-			}
+			posts = handlePosts(rs);
 			
 			ps.close();
 			rs.close();
@@ -445,15 +556,12 @@ public class SQL_Util {
 
 	// this method returns all items available for less than or equal to the given price
 	public static ArrayList<Post> maxPrice(int maxPrice) {
-		ArrayList<Post> posts = new ArrayList<Post>();
+		ArrayList<Post> posts = null;
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE Posts.postID NOT IN (SELECT postID FROM Transcations) AND price <= ?");
 			ps.setInt(1, maxPrice);
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				Post post = new Post(rs.getInt("postID"), rs.getInt("userID"), rs.getString("brand"),rs.getString("pName") , rs.getString("descrip"), rs.getDouble("price"), rs.getShort("quantity"), rs.getBoolean("rent"), rs.getBoolean("buy"), rs.getTimestamp("datePosted"));
-				posts.add(post);
-			}
+			posts = handlePosts(rs);
 			
 			ps.close();
 			rs.close();
@@ -483,6 +591,15 @@ public class SQL_Util {
 			ps.close();
 			
 			ps = connection.prepareStatement("ALTER TABLE Transactions AUTO_INCREMENT = ?");
+			ps.setInt(1, 1);
+			ps.execute();
+			ps.close();
+			
+			ps = connection.prepareStatement("DELETE FROM Images");
+			ps.execute();
+			ps.close();
+			
+			ps = connection.prepareStatement("ALTER TABLE Images AUTO_INCREMENT = ?");
 			ps.setInt(1, 1);
 			ps.execute();
 			ps.close();
