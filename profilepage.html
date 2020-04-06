@@ -1,0 +1,75 @@
+<!--
+ .notification{ 
+    padding: 15px 26px;
+    position: relative;
+    display: inline-block;
+    border-radius: 2px;
+  }
+.navbar .notification .badge {
+  position: absolute;
+  top: -.5px;
+  right: -10px;
+  padding: 5px 11px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+}
+.
+.
+.
+ <a href="#" class="notification"><i class="fa fa-bell"></i> 
+                <span>Notification</span>
+                <span class="badge">3</span> //need to use the back end here to get notifcations 
+              </a>
+ 
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile Page </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <!-- Add icon library -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <!-- Add font: Poppins -->
+     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {font-family: Poppins, Arial;}
+   .navbar {
+    width: 100%;
+    background: linear-gradient(to right, #993300 0%, #ffcc00 100%);
+    overflow: auto;
+  }
+  
+  .navbar a {
+    float: left;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+  }
+ 
+
+  .navbar a:hover {
+    background-color: #fc6f03;
+  }
+  
+  @media screen and (max-width: 1280px) {
+  .navbar a {
+    float: none;
+    display: block;
+  }
+  }
+</style>
+<body>
+    <div class="navbar">
+      <nav>
+            <a href="#"> Our Closet </a>
+            <a href="/home/"> Home </a>
+            <a href="/profile"> Profile</a>
+            <a href="#"><i class="fa fa-fw fa-search"></i>Search</a>
+            <a href="#" ><i class="fa fa-bell"></i> Notifications </a>
+    </nav>
+    </div>
+</body>
+</html>
