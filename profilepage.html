@@ -13,6 +13,11 @@
   border-radius: 50%;
   background-color: red;
   color: white;
+
+  #imageUpload
+  {
+    display: none;
+  }
 }
 .
 .
@@ -64,17 +69,37 @@
     float: none;
     display: block;
   }
+
+ #profileImage
+ {
+    cursor: pointer;
+ }
+  #userprofilepic{
+    top: -10px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
   }
 </style>
 <body>
     <div class="navbar">
       <nav>
             <a href="#"> Our Closet </a>
-            <a href="/home/"> Home </a>
-            <a href="/profile"> Profile</a>
+            <a href="home.html"> Home </a>
+            <a href="profilepage.html"> Profile</a>
             <a href="#"><i class="fa fa-fw fa-search"></i>Search</a>
             <a href="#" ><i class="fa fa-bell"></i> Notifications </a>
     </nav>
     </div>
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <div id="userprofilepic">
+      <image id="profileImage" src=""/>
+   </div>
+   <!--
+   <input id="imageUpload" type="file" 
+   name="profile_photo" placeholder="Photo" required="" capture>
+   -->
 </body>
 </html>
