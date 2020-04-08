@@ -5,26 +5,44 @@
 <head>
 	<title>Our Closet Login</title>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
+<!-- 	<meta name="viewport" content="width=device-width, initial-scale=1">
+===============================================================================================	
 	<link rel="icon" type="image/png" href="loginStyle/images/icons/favicon.ico"/>
-<!--===============================================================================================-->
+===============================================================================================
 	<link rel="stylesheet" type="text/css" href="loginStyle/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
+===============================================================================================
 	<link rel="stylesheet" type="text/css" href="loginStyle/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
+===============================================================================================
 	<link rel="stylesheet" type="text/css" href="loginStyle/vendor/animate/animate.css">
-<!--===============================================================================================-->	
+===============================================================================================	
 	<link rel="stylesheet" type="text/css" href="loginStyle/vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
+===============================================================================================
 	<link rel="stylesheet" type="text/css" href="loginStyle/vendor/select2/select2.min.css">
-<!--===============================================================================================-->
+===============================================================================================
 	<link rel="stylesheet" type="text/css" href="loginStyle/css/util.css">
 	<link rel="stylesheet" type="text/css" href="loginStyle/css/main.css">
-<!--===============================================================================================-->
+=============================================================================================== -->
 </head>
 <body>
+
+	<h1>Member Login</h1>
+	<form action="closet_login" method="post">
+		<table>
+			<tr>
+				<td><input type="email" name="uscEmail" placeholder="USC Email"></td>
+			</tr>
+			<tr>
+				<td><input type="password" name="pass" placeholder="Password"></td>
+			</tr>
+			<tr>
+				<td><button type="submit" value="Login">Log in</button></td>
+			</tr>
+		</table>
 	
+	</form>
+	<div>${errorMessage}</div>
+	
+	<%-- 
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
@@ -91,7 +109,6 @@
 		})
 	</script>
 <!--===============================================================================================-->
-	<script src="loginStyle/js/main.js"></script>
-
+	<script src="loginStyle/js/main.js"></script> --%>
 </body>
 </html>

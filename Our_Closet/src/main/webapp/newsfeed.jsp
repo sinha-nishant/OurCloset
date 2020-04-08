@@ -5,16 +5,16 @@
 <head>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="newsfeedStyle/polaroid.css">
+<!-- <link rel="stylesheet" type="text/css" href="newsfeedStyle/polaroid.css">
 <link rel="stylesheet" type="text/css" href="newsfeedStyle/nav.css">
 <link rel="stylesheet" type="text/css" href="newsfeedStyle/hover.css">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
 <title>Newsfeed</title>
 </head>
 <!-- --------------------------------------------------------------------------------------------------- -->
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-sticky"> <a
+<!-- 	<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-sticky"> <a
 		class="navbar-brand" href="#">Our Closet</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarSupportedContent"
@@ -48,8 +48,8 @@
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 		</form>
 	</div>
-	</nav>
-	
+	</nav> -->
+<%-- 	
 	<div class="wrapper">
 		<c:if test="${not empty postsRepo.returnAllPosts()}">
 			<c:forEach items="${postsRepo.returnAllPosts()}" var="posts">
@@ -63,9 +63,23 @@
 			</c:forEach>
 		</c:if>
 	</div>
+	 --%>
+	 (Nav bar here with Home, Profile, Upload, Search Bar, and Log Out)
+	<h1>Welcome back ${user.getfName() }</h1>
+	<div>
+		<c:if test="${not empty postsRepo.returnAllPosts()}">
+			<c:forEach items="${postsRepo.returnAllPosts()}" var="posts">
+				<div>
+					<img style="width: 400px; height: 200px; margin-left: 20px; margin-top:10px; margin-bottom:10px"
+						src="https://ca-times.brightspotcdn.com/dims4/default/99f1978/2147483647/strip/true/crop/1548x871+0+0/resize/1486x836!/quality/90/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F81%2F7f%2F9963576d6219c441c5d1e339361c%2Flat-sp-usc-full-logo-20140126">
+					<a href="#"><div">${posts.getpName()}</div></a>
+				</div>
+			</c:forEach>
+		</c:if>
+	</div>
 
 	<!--===============================================================================================-->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+<!-- 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
 	<script
@@ -75,6 +89,6 @@
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous"></script> -->
 </body>
 </html>

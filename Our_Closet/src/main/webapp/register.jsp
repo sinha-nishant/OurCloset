@@ -4,28 +4,51 @@
 <html>
 <head>
 	<title>Our Closet Registration</title>
-	<meta charset="UTF-8">
+<!-- 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
+===============================================================================================	
 	<link rel="icon" type="image/png" href="loginStyle/images/icons/favicon.ico"/>
-<!--===============================================================================================-->
+===============================================================================================
 	<link rel="stylesheet" type="text/css" href="loginStyle/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
+===============================================================================================
 	<link rel="stylesheet" type="text/css" href="loginStyle/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
+===============================================================================================
 	<link rel="stylesheet" type="text/css" href="loginStyle/vendor/animate/animate.css">
-<!--===============================================================================================-->	
+===============================================================================================	
 	<link rel="stylesheet" type="text/css" href="loginStyle/vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
+===============================================================================================
 	<link rel="stylesheet" type="text/css" href="loginStyle/vendor/select2/select2.min.css">
-<!--===============================================================================================-->
+===============================================================================================
 	<link rel="stylesheet" type="text/css" href="loginStyle/css/util.css">
 	<link rel="stylesheet" type="text/css" href="loginStyle/css/main.css">
-<!--===============================================================================================-->
+=============================================================================================== -->
 </head>
 <body>
 	
-	<div class="limiter">
+	
+	<h1>Member Registration</h1>
+	<form action="closet_register" method="post">
+		<table>
+			<tr>
+				<td><input type="text" name="fName" placeholder="First Name"></td>
+			</tr>
+			<tr>
+				<td><input type="text" name="lName" placeholder="Last Name"></td>
+			</tr>
+			<tr>
+				<td><input type="email" name="uscEmail" placeholder="USC Email"></td>
+			</tr>
+			<tr>
+				<td><input type="password" name="pass" placeholder="Password"></td>
+			</tr>
+			<tr>
+				<td><button type="submit" value="Register">Register</button></td>
+			</tr>
+		</table>
+	
+	</form>
+	<div>${errorMessage}</div>
+	<!-- <div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
@@ -77,27 +100,27 @@
 				</form>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	
 	
 
 	
 <!--===============================================================================================-->	
-	<script src="loginStyle/vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
+<!-- 	<script src="loginStyle/vendor/jquery/jquery-3.2.1.min.js"></script>
+===============================================================================================
 	<script src="loginStyle/vendor/bootstrap/js/popper.js"></script>
 	<script src="loginStyle/vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
+===============================================================================================
 	<script src="loginStyle/vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
+===============================================================================================
 	<script src="loginStyle/vendor/tilt/tilt.jquery.min.js"></script>
 	<script >
 		$('.js-tilt').tilt({
 			scale: 1.1
 		})
 	</script>
-<!--===============================================================================================-->
-	<script src="loginStyle/js/main.js"></script>
+===============================================================================================
+	<script src="loginStyle/js/main.js"></script> -->
 
 </body>
 </html>

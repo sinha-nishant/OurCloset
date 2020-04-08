@@ -10,7 +10,7 @@ import java.util.List;
 import com.FinalProject.Our_Closet.model.Users;
 
 public interface UsersRepo extends JpaRepository<Users, Integer>{
-	Users findByuscEmail(String email);
+	Users findByuscEmail(String uscEmail);
 
 	@Query(value ="SELECT userID FROM Users ORDER BY userID DESC LIMIT 1",
 			nativeQuery = true)

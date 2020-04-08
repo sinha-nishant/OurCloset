@@ -31,27 +31,31 @@ public class AppController {
 	PostsRepo postsRepo;
 	Gson gson = new Gson();
 	
+	// Home request
 	@RequestMapping("/")
 	public String home() {
 		System.out.println("GET: home.jsp");
 		return "home.jsp";
 	}
+	////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	// Login request
 	@RequestMapping("/login")
-	public ModelAndView login() {
+	public String login() {
 		System.out.println("GET: login.jsp");
-		ModelAndView mv = new ModelAndView(new RedirectView("login"));
-		mv.setViewName("login.jsp");
-		mv.addObject("errorMessage", "");
-		return mv;
+		return "login.jsp";
 	}
+	////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	// Register request
 	@RequestMapping("/register")
 	public String register() {
 		System.out.println("GET: register.jsp");
 		return "register.jsp";
 	}
+	////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	// Login request
 	@RequestMapping("/closet_login")
 	public ModelAndView loginUser(String uscEmail, String pass) {
 
@@ -59,9 +63,8 @@ public class AppController {
 		Users user = usersRepo.findByuscEmail(uscEmail);
 		if (user == null || !user.getPass().equals(pass)) {
 			// should display an invalid login message
-			mv = new ModelAndView(new RedirectView("login"));
-			mv.setViewName("login.jsp");
-			mv.addObject("errorMessage", "Please enter a valid email/ pass combo");
+			mv = new ModelAndView("login");
+			mv.setViewName("redirect:login");
 			return mv;
 		}
 		
@@ -71,41 +74,40 @@ public class AppController {
 		mv.addObject("user", user);
 		mv.addObject("postsRepo", postsRepo);
 //		mv.addObject("posts", posts);
-		
 		mv.setViewName("newsfeed.jsp");
-		System.out.println("working");
-		
 		return mv;
 	}
+	////////////////////////////////////////////////////////////////////////////////////////////////
 
 	@RequestMapping("/closet_register")
 	public ModelAndView registerNewUser(Users user) {
+		System.out.println(user);
 		ModelAndView mv = null;
 		
 		String userEmail = user.getUscEmail();
 		if (userEmail.length() < 8 || !userEmail.substring(userEmail.length()-8, userEmail.length()).equals("@usc.edu")) {
-			// should display an invalid email message
-			mv.setViewName("register.jsp");
+			System.out.println("missing/ invalid registration fields");
+			mv = new ModelAndView("register");
+			mv.setViewName("redirect:register");
 			return mv;
 		}
 		
 		Users exists = usersRepo.findByuscEmail(user.getUscEmail());
 		if (exists != null) {
+			System.out.println("user aleady exists");
 			// should display a user already exists message
-			mv = new ModelAndView(new RedirectView("register", true));
-			mv.setViewName("register.jsp");
+			mv = new ModelAndView("register");
+			mv.setViewName("redirect:register");
 			return mv;
 		}
+		
 		Integer id = usersRepo.findNextID() + 1;
 		user.setUserID(id);
 		usersRepo.save(user);
 		
-//		String posts = gson.toJson(postsRepo.returnAllPosts());
-//		System.out.println(posts);
 		mv = new ModelAndView(new RedirectView("newsfeed", true));
 		mv.addObject("user", user);
 		mv.addObject("postsRepo", postsRepo);
-//		mv.addObject("posts", posts);
 		mv.setViewName("newsfeed.jsp");
 		return mv;
 	}
@@ -115,7 +117,5 @@ public class AppController {
 		System.out.println("GET: upload.jsp");
 		return "upload.jsp";
 	}
-	
-	
 	
 }
