@@ -13,7 +13,7 @@
       margin: 0;
       padding: 0;
       font-family: Poppins, Arial;
-      background: linear-gradient(to right, #993300 0%, #ffcc00 100%);
+      background: white;
     }
     input:focus, textarea:focus, select:focus{
         outline: none;
@@ -29,26 +29,31 @@
         width: 400px;
         height: 300px;
     }
+    ::placeholder {
+        color: #2b2b2b;
+    }
     input[type=text], select {
         width:100%;
         font-size: 25px;
         padding: 12px 20px;
-        background-color: dimgrey;
+        background-color: white;
         color: #2b2b2b;
         display: inline-block;
         border-radius: 10px;
-        border-color: #2b2b2b;
+        border: solid;
+        border-color: #AA1945;
         box-sizing: border-box;
     }
     input[type=number], select {
         width:100%;
         font-size: 25px;
-        padding: 12px 20px;
-        background-color: dimgrey;
         color: #2b2b2b;
+        padding: 12px 20px;
+        background-color: white;
         display: inline-block;
         border-radius: 10px;
-        border-color: #2b2b2b;
+        border: solid;
+        border-color: #AA1945;
         box-sizing: border-box;
     }
     input[type=submit] {
@@ -81,17 +86,17 @@
     input[type=button]:hover{
         background-color:#f03a3a;
     }
-    ::placeholder {
-        color: #2b2b2b;;
-    }
+   
     .uploadImage{
-        background: url(https://friconix.com/png/fi-xtluxx-plus-thin.png) no-repeat;
+        background: url(plussign.png) no-repeat;
         background-size: 200px;
         background-size: cover;
+        background-position: center;
         border-radius: 15px;
         border-style: solid;
-        border-color: rgb(68, 68, 68);
+        border-image-source: linear-gradient(to right, #d15d0f 0%, #e7420f 100%);
         border-width: 5px;
+        border-image-slice: 1;
         display: block;
         position: center;
         width: 150px;
