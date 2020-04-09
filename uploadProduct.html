@@ -23,21 +23,22 @@
         overflow: auto;
     }
     .productForm{
-        margin-top: 65px;
+        margin-top: 60px;
         margin-right: auto;
         margin-left: auto;
         width: 400px;
         height: 300px;
     }
     ::placeholder {
-        color: #2b2b2b;
+        font-weight: bold;
+        color: #e7420f;
     }
     input[type=text], select {
         width:100%;
-        font-size: 25px;
+        font-size: 20px;
         padding: 12px 20px;
         background-color: white;
-        color: #2b2b2b;
+        color: #e7420f;
         display: inline-block;
         border-radius: 10px;
         border: solid;
@@ -46,8 +47,8 @@
     }
     input[type=number], select {
         width:100%;
-        font-size: 25px;
-        color: #2b2b2b;
+        font-size: 20px;
+        color: #e7420f;
         padding: 12px 20px;
         background-color: white;
         display: inline-block;
@@ -58,33 +59,33 @@
     }
     input[type=submit] {
         width: 25%;
-        background-color: blue;
-        color: white;
-        font-size: large;
+        background-color:white;
+        color: #AA1945;
+        font-size: x-large;
         float: right;
         padding: 14px 20px;
         margin: 8px 0;
         border: none;
-        border-radius: 4px;
+       /* border-radius: 4px;*/
         cursor: pointer;
     }
     input[type=submit]:hover{
-        background-color:#2d43ec;
+        color:gray;
     }
     input[type=button] {
         width: 25%;
-        background-color:red;
-        color: white;
-        font-size: large;
+        background-color:white;
+        color: #AA1945;
+        font-size: x-large;
         float: left;
         padding: 14px 20px;
         margin: 8px 0;
         border: none;
-        border-radius: 4px;
+       /* border-radius: 4px;*/
         cursor: pointer;
     }
     input[type=button]:hover{
-        background-color:#f03a3a;
+        color:gray;
     }
    
     .uploadImage{
@@ -121,12 +122,16 @@
     </span>
     <div class= "productForm">
         <form>
-            <input type="text" id="title" name="title" placeholder="Title"><br> 
+            <input type="text" id="brand" name="brand" placeholder="Brand"><br> 
+            <input type="text" id="name" name="name" placeholder="Name" required><br> 
+            <input type="text" id="type" name="type" placeholder="Item Type (shoes, shirt, etc.)" required><br> 
+            <input type="text" id="color" name="color" placeholder="Color (multi-color if multiple colors)" required><br> 
             <input type="text" id="description" name="description" placeholder="Description"><br> 
-            <input type="number" placeholder="0.00" step="0.01" id="price" name="price"><br> 
-            <input type="text" id="tags" name="tags" placeholder="Tags (Separate with comma)"><br>
-            <input type="submit" value="Post">
-            <input type="button" value="Back" onclick="history.back(-1)" />
+            <input type="text" id="size" name="size" placeholder="Size" required><br>
+            <input type="number" placeholder="0.00" step="0.01" id="price" name="price" required><br> 
+            <input type="text" id="tags" name="tags" placeholder="Tags (Separate with comma)" required><br>
+            <input type="submit" value="Post >">
+            <input type="button" value="< Back" onclick="history.back(-1)" />
         </form>
     </div>
   </div>
