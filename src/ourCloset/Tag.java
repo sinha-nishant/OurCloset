@@ -1,33 +1,62 @@
 package ourCloset;
 
 public class Tag {
-	private int tagID;
-	private int postID;
-	private String tagName;
+	/**
+	 * The primary key ID of this tag, 0 by default.
+	 */
+	private int tagID = 0;
 	
+	/**
+	 * The primary key ID of the post this tag corresponds to, 0 by default.
+	 */
+	private int postID = 0;
+	
+	/**
+	 * The name of this tag, null by default. For example, "Red Boots".
+	 */
+	private String tagName = null;
+	
+	/**
+	 * Basic Tag constructor called from the frontend when a user adds a tag to a post.
+	 * @param postID The primary key ID of the post this tag corresponds to.
+	 * @param tagName The name of this tag. For example, "Red Boots".
+	 */
+	public Tag(int postID, String tagName) {
+		this.postID = postID;
+		this.tagName = tagName;
+	}
+	
+	/**
+	 * Overloaded Tag constructor including the primary key ID of this tag for database retrievals.
+	 * @param tagID The primary key ID of this tag.
+	 * @param postID The primary key ID of the post this tag corresponds to.
+	 * @param tagName The name of this tag. For example, "Red Boots".
+	 */
 	public Tag(int tagID, int postID, String tagName) {
 		this.tagID = tagID;
 		this.postID = postID;
 		this.tagName = tagName;
 	}
 	
+	/**
+	 * @return The primary key ID of this tag.
+	 */
 	public int getTagID() {
-		return tagID;
+		return this.tagID;
 	}
-	public void setTagID(int tagID) {
-		this.tagID = tagID;
-	}
+	
+	/**
+	 * @return The primary key ID of the post this tag corresponds to.
+	 */
 	public int getPostID() {
-		return postID;
+		return this.postID;
 	}
-	public void setPostID(int postID) {
-		this.postID = postID;
-	}
+	
+	/**
+	 * @return The name of this tag. For example, "Red Boots".
+	 */
 	public String getTagName() {
-		return tagName;
-	}
-	public void setTagName(String tagName) {
-		this.tagName = tagName;
+		return this.tagName;
 	}
 	
 	public String toString() {
