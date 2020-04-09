@@ -1,114 +1,156 @@
 package ourCloset;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class User {
-	private int userID;
-	private String uscEmail;
-	private String pass;
-	private String fName;
-	private String lName;
-	private Timestamp lastLogin;
-	private Timestamp dateCreated;
-	private boolean privacyStatus; // true means private profile, false means public profile
-	private boolean valid = true; // make false when user deletes their account
+	/**
+	 * The primary key ID of this user, 0 by default.
+	 */
+	private int userID = 0;
 	
-	public User (int userID, String uscEmail, String password, String fName, String lName, boolean privacyStatus) {
-		this.userID = userID;
+	/**
+	 * The uscEmail corresponding to this user, null by default.<br>
+	 * For example, "ttrojan" in ttrojan@usc.edu
+	 */
+	private String uscEmail = null;
+	
+	/**
+	 * The password for this user, null by default.
+	 */
+	private String pass = null;
+	
+	/**
+	 * The first name of this user, null by default.
+	 */
+	private String fName = null;
+	
+	/**
+	 * The last name of this user, null by default.
+	 */
+	private String lName = null;
+	
+	/**
+	 * The filepath of this user's profile photo, null by default.
+	 */
+	private String photoPath = null;
+	
+	/**
+	 * The amount of total interest this user has attained as a seller across all of their products, 0 by default.
+	 */
+	private int interest = 0;
+	
+	/**
+	 * Indicates whether the user is active, true by default.<br>This should be set to false when a user deletes their account.
+	 */
+	private boolean valid = true;
+	
+	/**
+	 * ArrayList of Product objects which this user is selling, null by default.
+	 */
+	private ArrayList<Product> products = null;
+	
+	/**
+	 * Basic User constructor to be called by frontend when a new user creates an account.
+	 * @param uscEmail The uscEmail corresponding to this user.
+	 * @param password The password for this user.
+	 * @param fName The first name of this user.
+	 * @param lName The last name of this user.
+	 * @param photoPath The filepath of this user's profile photo.
+	 */
+	public User (String uscEmail, String password, String fName, String lName, String photoPath) {
 		this.uscEmail = uscEmail;
 		this.pass = password;
 		this.fName = fName;
 		this.lName = lName;
-		this.privacyStatus = privacyStatus;
+		this.photoPath = photoPath;
 	}
 	
-	// User constructor overloaded with lastLogin and dateCreated
-	public User (int userID, String uscEmail, String password, String fName, String lName, boolean privacyStatus, Timestamp lastLogin, Timestamp dateCreated) {
+	/**
+	 * User constructor for database retrievals overloaded with userID, interest count, and ArrayList of Products.
+	 * @param userID The primary key ID of this user.
+	 * @param uscEmail The uscEmail corresponding to this user.
+	 * @param password The password for this user.
+	 * @param fName The first name of this user.
+	 * @param lName The last name of this user.
+	 * @param photoPath The filepath of this user's profile photo.
+	 * @param interest The amount of total interest this user has attained as a seller across all of their products.
+	 * @param products ArrayList of Product objects which this user is selling.
+	 */
+	public User (int userID, String uscEmail, String password, String fName, String lName, String photoPath, int interest, ArrayList<Product> products) {
 		this.userID = userID;
 		this.uscEmail = uscEmail;
 		this.pass = password;
 		this.fName = fName;
 		this.lName = lName;
-		this.privacyStatus = privacyStatus;
-		this.lastLogin = lastLogin;
-		this.dateCreated = dateCreated;
+		this.photoPath = photoPath;
+		this.interest = interest;
+		this.products = products;
 	}
 
+	/**
+	 * @return The primary key ID of this user.
+	 */
 	public int getID() {
-		return userID;
-	}
-	
-	public void setID(int userID) {
-		this.userID = userID;
+		return this.userID;
 	}
 
+	/**
+	 * @return The uscEmail corresponding to this user. For example, "ttrojan" in ttrojan@usc.edu.
+	 */
 	public String getEmail() {
-		return uscEmail;
+		return this.uscEmail;
 	}
 
-	public void setEmail(String uscEmail) {
-		this.uscEmail = uscEmail;
-	}
-
+	/**
+	 * @return The password for this user.
+	 */
 	public String getPass() {
-		return pass;
+		return this.pass;
 	}
 
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-
+	/**
+	 * @return The first name of this user.
+	 */
 	public String getFirstName() {
-		return fName;
-	}
-
-	public void setFirstName(String fName) {
-		this.fName = fName;
-	}
-
-	public String getLastName() {
-		return lName;
-	}
-
-	public void setLastName(String lName) {
-		this.lName = lName;
-	}
-
-	public Timestamp getLastLogin() {
-		return lastLogin;
-	}
-
-	public void setLastLogin(Timestamp lastLogin) {
-		this.lastLogin = lastLogin;
-	}
-
-	public Timestamp getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated(Timestamp dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	public boolean getPrivacyStatus() {
-		return privacyStatus;
-	}
-
-	public void setPrivacyStatus(boolean privacyStatus) {
-		this.privacyStatus = privacyStatus;
+		return this.fName;
 	}
 	
+	/**
+	 * @return The last name of this user.
+	 */
+	public String getLastName() {
+		return this.lName;
+	}
+	
+	/**
+	 * @return The filepath of this user's profile photo.
+	 */
+	public String getPhotoPath() {
+		return this.photoPath;
+	}
+	
+	/**
+	 * @return The amount of total interest this user has attained as a seller across all of their products.
+	 */
+	public int getInterest() {
+		return this.interest;
+	}
+	
+	/**
+	 * @return Whether the user is active, if false, the account has been deleted, otherwise true.
+	 */
 	public boolean isValid() {
-		return valid;
+		return this.valid;
 	}
 
-	public void setValid(boolean valid) {
-		this.valid = valid;
+	/**
+	 * @return ArrayList of Product objects which this user is selling.
+	 */
+	public ArrayList<Product> getProducts() {
+		return products;
 	}
 
 	public String toString() {
-		return "USC Email: " + uscEmail + "\nPassword: " + pass + "\nFirst Name: " + fName +
-				"\nLast Name: " + lName + "\nLast Login: " + lastLogin + "\nDate Created: " + dateCreated +
-				"\nPrivacy Status: " + privacyStatus;
+		return "USC Email: " + uscEmail + "\nPassword: " + pass + "\nFirst Name: " + fName + "\nLast Name: " + lName;
 	}
 }
