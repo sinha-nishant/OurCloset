@@ -7,6 +7,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
      <!-- Add font: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!--Generating thumbnail code from: http://talkerscode.com/webtricks/preview-image-before-upload-using-javascript.php-->
+    <script type='text/javascript'>
+        function preview_image(event) 
+        {
+         var reader = new FileReader();
+         reader.onload = function()
+         {
+          var output = document.getElementById('image_src');
+          output.src = reader.result;
+         }
+         reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 </head>
 <style>
     html, body {
@@ -66,7 +80,6 @@
         padding: 14px 20px;
         margin: 8px 0;
         border: none;
-       /* border-radius: 4px;*/
         cursor: pointer;
     }
     input[type=submit]:hover{
@@ -81,19 +94,16 @@
         padding: 14px 20px;
         margin: 8px 0;
         border: none;
-       /* border-radius: 4px;*/
         cursor: pointer;
     }
     input[type=button]:hover{
         color:gray;
     }
-   
     .uploadImage{
         background: url(plussign.png) no-repeat;
         background-size: 200px;
         background-size: cover;
         background-position: center;
-        border-radius: 15px;
         border-style: solid;
         border-image-source: linear-gradient(to right, #d15d0f 0%, #e7420f 100%);
         border-width: 5px;
@@ -102,23 +112,25 @@
         position: center;
         width: 150px;
         height: 150px;
-        margin-top: 100px;
+        margin-top: 60px;
         margin-right: auto;
         margin-left: auto;
     }
+   input[type="file"] {
+        display: none !important;
+    }
     #image_src {
-        width: 150px;
-        height: 150px;
-        margin-right: auto;
-        margin-left: auto;
-        opacity: 0;
-        filter: alpha(opacity=0); /* IE 5-7 */
+        max-width: 150px;
+        max-height: 150px;
     }
 </style>
 <body>
   <div class="uploadPage">
-    <span class="uploadImage">
-        <input type="file" name ="image_src" id="image_src" />
+    <span>
+        <label class="uploadImage">
+            <input type="file" accept="image/*" onchange="preview_image(event)">
+            <img id="image_src"/>
+        </label>
     </span>
     <div class= "productForm">
         <form>
