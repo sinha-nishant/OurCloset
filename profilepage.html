@@ -37,20 +37,34 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
      <!-- Add font: Poppins -->
      <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+     <!--Generating thumbnail code from: http://talkerscode.com/webtricks/preview-image-before-upload-using-javascript.php-->
+     <script type='text/javascript'>
+      function preview_image(event) 
+      {
+       var reader = new FileReader();
+       reader.onload = function()
+       {
+        var output = document.getElementById('profileImage');
+        output.src = reader.result;
+       }
+       reader.readAsDataURL(event.target.files[0]);
+      }
+  </script>
 </head>
 <style>
   html, body {
     margin: 0;
     padding: 0;
     font-family: Poppins, Arial;
+    background: white;
   }
-
-   .navbar {
+  .navbar {
     width: 100%;
     background: linear-gradient(to right, #993300 0%, #ffcc00 100%);
     overflow: auto;
+   /* position: fixed; 
+    top:0;*/
   }
-  
   .navbar a {
     float: left;
     padding: 15px;
@@ -58,44 +72,124 @@
     text-decoration: none;
     font-size: 20px;
   }
- 
-
   .navbar a:hover {
     background-color: #fc6f03;
   }
-  
-  @media screen and (max-width: 1280px) {
-  .navbar a {
-    float: none;
-    display: block;
+   .profile{
+    /*margin-top: 60px;*/
+    max-width: 935px;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: auto;
   }
-
- #profileImage
- {
-    cursor: pointer;
- }
-  #userprofilepic{
-    top: -10px;
+   header{
+    margin-top: auto;
+    margin-right: auto;
+    margin-left: auto;
+    max-height: 170px;
+    overflow: auto;
+    display: flex;
+    border-bottom: 1px solid rgb(177, 175, 175);
+  }
+  .userprofilepic{
+    margin: 9px;
+    float: left;
+    background: url(stormtrooper.jpg) no-repeat;
+    background-size: 150px;
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    overflow: hidden;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } 
+  
+  input:focus, textarea:focus, select:focus{
+      outline: none;
   }
+  input[type="file"] {
+      display: none !important;
+   }
+  #profileImage
+  {
+      cursor: pointer;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .name{
+    font-weight: 600;
+    font-size: 35px;
+  }
+  .profileInfo{
+    float: right;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 10px, 20px;
+    max-width: 700px;
+    max-height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    flex: 1;
+  }
+ 
+  .profileInfo li{
+     list-style-type: none;
+     display: inline;
+     margin: 0;
+     padding-right: 10px;
+     font-size: 25px;
+  }
+  .profile-stat-count{
+    font-weight: 600;
+  }
+  @media screen and (max-width: 1280px) {
+    .navbar a {
+      float: none;
+      display: block;
+    }
+    .profile{
+      float: none;
+      display: block;
+    }
   }
 </style>
 <body>
     <div class="navbar">
       <nav>
-            <a href="#"> Our Closet </a>
+            <a href="home.html"> Our Closet </a>
             <a href="home.html"> Home </a>
             <a href="profilepage.html"> Profile</a>
-            <a href="#"><i class="fa fa-fw fa-search"></i>Search</a>
-            <a href="#" ><i class="fa fa-bell"></i> Notifications </a>
+            <a href="search.html"><i class="fa fa-fw fa-search"></i>Search</a>
+            <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
     </nav>
     </div>
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-    <div id="userprofilepic">
-      <image id="profileImage" src=""/>
+   <div class="profile">
+     <header>
+        <span>
+            <label class="userprofilepic">
+              <input type="file" accept="image/*" onchange="preview_image(event)">
+              <img id="profileImage"/>
+            </label>
+        </span>
+        <div class="profileInfo">
+          <ul>
+            <!--Farrokh Bulsara is Freddie Mercury's real name.
+            I was listening to queen when I figured out to fix the formatting 
+            for the header (took longer than it should've-->
+            <span class="name">Farrokh Bulsara</span>
+          </ul>
+          <ul>
+            <li> <span class="profile-stat-count">0</span> Posts </li>
+            <li> <span class="profile-stat-count">0</span> Interests </li>
+          </ul>
+        </div>
+      </header>
    </div>
    <!--
    <input id="imageUpload" type="file" 
