@@ -88,15 +88,6 @@
     display: flex;
     border-bottom: 1px solid rgb(177, 175, 175);
   }
-  input:focus, textarea:focus, select:focus{
-      outline: none;
-  }
-  input[type="file"] {
-      display: none !important;
-   }
-   input [type="file"]:hover{
-     color:rgba(151, 150, 150, 0.521);
-   }
   .userprofilepic{
     margin-left: 64px;
     margin-right: 65px;
@@ -113,6 +104,15 @@
     justify-content: center;
     align-items: center;
   } 
+   input:focus, textarea:focus, select:focus{
+      outline: none;
+   }
+   input[type="file"] {
+      display: none !important;
+   }
+   .userprofilepic img:hover{ 
+     background:rgba(151, 150, 150, 0.301);
+   }
   .profileInfo{
     float: right;
     margin-top: auto;
@@ -192,7 +192,6 @@
             <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
     </nav>
     </div>
-   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
    <div class="profile">
      <header>
         <span>
