@@ -30,11 +30,6 @@ public class User {
 	private String lName = null;
 	
 	/**
-	 * The filepath of this user's profile photo, null by default.
-	 */
-	private String photoPath = null;
-	
-	/**
 	 * The amount of total interest this user has attained as a seller across all of their products, 0 by default.
 	 */
 	private int interest = 0;
@@ -55,14 +50,12 @@ public class User {
 	 * @param password The password for this user.
 	 * @param fName The first name of this user.
 	 * @param lName The last name of this user.
-	 * @param photoPath The filepath of this user's profile photo.
 	 */
-	public User (String uscEmail, String password, String fName, String lName, String photoPath) {
+	public User (String uscEmail, String password, String fName, String lName) {
 		this.uscEmail = uscEmail;
 		this.pass = password;
 		this.fName = fName;
 		this.lName = lName;
-		this.photoPath = photoPath;
 	}
 	
 	/**
@@ -72,17 +65,15 @@ public class User {
 	 * @param password The password for this user.
 	 * @param fName The first name of this user.
 	 * @param lName The last name of this user.
-	 * @param photoPath The filepath of this user's profile photo.
 	 * @param interest The amount of total interest this user has attained as a seller across all of their products.
 	 * @param products ArrayList of Product objects which this user is selling.
 	 */
-	public User (int userID, String uscEmail, String password, String fName, String lName, String photoPath, int interest, ArrayList<Product> products) {
+	public User (int userID, String uscEmail, String password, String fName, String lName, int interest, ArrayList<Product> products) {
 		this.userID = userID;
 		this.uscEmail = uscEmail;
 		this.pass = password;
 		this.fName = fName;
 		this.lName = lName;
-		this.photoPath = photoPath;
 		this.interest = interest;
 		this.products = products;
 	}
@@ -120,13 +111,6 @@ public class User {
 	 */
 	public String getLastName() {
 		return this.lName;
-	}
-	
-	/**
-	 * @return The filepath of this user's profile photo.
-	 */
-	public String getPhotoPath() {
-		return this.photoPath;
 	}
 	
 	/**

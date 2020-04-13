@@ -2,73 +2,80 @@ DROP DATABASE IF EXISTS OurCloset;
 CREATE DATABASE OurCloset;
 USE OurCloset;
 
-/* The User table will be used for authenticating users and consist of userID (PK), uscEmail, 
-password, fname, lname, timestamp representing the last login time, privacyStatus, and dateCreated */
-
+-- The User table will be used for authenticating users
 CREATE TABLE Users (
-    -- userID is similar to a USC ID, i.e. a series of numbers, not a userID like a screen name
-    userID INTEGER(7) PRIMARY KEY AUTO_INCREMENT  NOT NULL,
-    /* VARCHAR is essentially a String datatype, 
-    (20) indicates the value when printed out will go to a max of 20 characters */
+    userID INTEGER(7) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     uscEmail VARCHAR(30) UNIQUE NOT NULL,
     pass VARCHAR(30) NOT NULL,
     fName VARCHAR(30) NOT NULL,
     lName VARCHAR(30) NOT NULL,
-    -- Keep in mind the choice of TIMESTAMP over DATETIME
-    lastLogin TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    dateCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    -- Could also be a VARCHAR
-    privacyStatus BOOL DEFAULT 1 NOT NULL,
+    interest INTEGER(10) NOT NULL,
     valid BOOL DEFAULT TRUE NOT NULL
 );
 
-/* The Posts table will be used for managing all posts created and consist of  postID (PK), productName, 
-description, datePosted, price, quantity, type (such as rent or buy), brandName, and userID (FK) */
-
-CREATE TABLE Posts (
-	-- Unsigned 0-4,294,967,295, (10) specifies the printed value will be max 10 characters
-	postID INTEGER(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-	userID INTEGER(7) NOT NULL,
-    FOREIGN KEY (userID) REFERENCES Users(userID),
+-- The Products table will be used for managing all products added
+CREATE TABLE Products (
+	productID INTEGER(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	sellerID INTEGER(7) NOT NULL,
+    FOREIGN KEY (sellerID) REFERENCES Users(userID),
     brand VARCHAR(30),
     pName VARCHAR(50) NOT NULL,
-    -- Don't need to pass datePosted because on any insert because it will default to current timestamp
-    datePosted TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    timePosted TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    color VARCHAR(20) NOT NULL,
+    itemType VARCHAR(20) NOT NULL,
+    size VARCHAR(20) NOT NULL,
     descrip VARCHAR(280),
-    -- Decimal(p,s): p is the total # of digits, s is the precision to the right of the decimal point
-    price DECIMAL(5,2) NOT NULL,
-    -- Unsigned 0-255
+    rentPrice DECIMAL(5,2) NOT NULL,
+    buyPrice DECIMAL(5,2) NOT NULL,
     quantity TINYINT(3) NOT NULL,
-    rent BOOL NOT NULL,
-    buy BOOL NOT NULL
+    interest INTEGER(10) NOT NULL
 );
 
 CREATE TABLE Images (
 	imageID INTEGER(10) PRIMARY KEY AUTO_INCREMENT  NOT NULL,
-    postID INTEGER(10) NOT NULL,
-    FOREIGN KEY (postID) REFERENCES Posts(postID)
+    productID INTEGER(10) NOT NULL,
+    FOREIGN KEY (productID) REFERENCES Products(productID)
 );
 
-/* The Transactions table will be used for recording all transaction history and consist of transactionID (PK),
-userID1 (FK), userID2 (FK), and dateSold */
-
+-- The Transactions table will be used for recording all transaction history
 CREATE TABLE Transactions (
-	-- Don't need to pass transactionID because on any insert because it will increment
 	transactionID INTEGER(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    postID INTEGER(10) NOT NULL,
-    FOREIGN KEY (postID) REFERENCES Posts(postID),
+    productID INTEGER(10) NOT NULL,
+    FOREIGN KEY (productID) REFERENCES Products(productID),
     buyerID INTEGER(7) NOT NULL,
     FOREIGN KEY (buyerID) REFERENCES Users(userID),
-    -- Don't need to pass dateSold because on any insert because it will default to current timestamp
-    dateSold TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+    timeSold TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
--- The Tags table will allow users to quickly search for posts by tag(s) and consist of tagID (PK), tagName, and postID (FK)
-
+-- The Tags table will allow users to quickly search for Products by tag(s)
 CREATE TABLE Tags (
-	-- Don't need to pass tagID because on any insert because it will increment
 	tagID INTEGER(4) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    postID INTEGER(10) NOT NULL,
-    FOREIGN KEY (postID) REFERENCES Posts(postID),
+    productID INTEGER(10) NOT NULL,
+    FOREIGN KEY (productID) REFERENCES Products(productID),
     tagName VARCHAR(20) NOT NULL UNIQUE
+);
+
+-- Contains all notifications, also a parent of Comments and Interests
+CREATE TABLE Notifications (
+	notificationID INTEGER(7) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    notifierID INTEGER(7) NOT NULL,
+    FOREIGN KEY (notifierID) REFERENCES Users(userID),
+    productID INTEGER(10) NOT NULL,
+    FOREIGN KEY (productID) REFERENCES Products(productID),
+    notificationTime TIMESTAMP NOT NULL,
+    whenViewed TIMESTAMP
+);
+
+-- Contains the comments on each product page
+CREATE TABLE Comments (
+    commentID INTEGER(7) PRIMARY KEY NOT NULL,
+    FOREIGN KEY (commentID) REFERENCES Notifications(notificationID), 
+	message VARCHAR(300) NOT NULL,
+    replyTo INTEGER(7) NOT NULL
+);
+
+-- Indicates the various products Users have had interest in
+CREATE TABLE Interest (
+	interestID INTEGER(7) PRIMARY KEY NOT NULL,
+    FOREIGN KEY (interestID) REFERENCES Notifications(notificationID)
 );

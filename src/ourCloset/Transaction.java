@@ -10,9 +10,9 @@ public class Transaction {
 	private int transactionID = 0;
 	
 	/**
-	 * The primary key ID of the post this transaction is related to, 0 by default.
+	 * The primary key ID of the product this transaction is related to, 0 by default.
 	 */
-	private int postID = 0;
+	private int productID = 0;
 	
 	/**
 	 * The primary key ID of the user who is the buyer in this transaction, 0 by default.
@@ -26,24 +26,24 @@ public class Transaction {
 	
 	/**
 	 * Basic Transaction constructor called by frontend when a seller has sold a product.
-	 * @param postID The primary key ID of the post this transaction is related to.
+	 * @param productID The primary key ID of the product this transaction is related to.
 	 * @param buyerID The primary key ID of the user who is the buyer in this transaction.
 	 */
-	public Transaction(int postID, int buyerID) {
-		this.postID = postID;
+	public Transaction(int productID, int buyerID) {
+		this.productID = productID;
 		this.buyerID = buyerID;
 	}
 	
 	/**
 	 * Overloaded Transaction constructor for database retrievals.
 	 * @param transactionID The primary key ID of this transaction.
-	 * @param postID The primary key ID of the post this transaction is related to.
+	 * @param productID The primary key ID of the product this transaction is related to.
 	 * @param buyerID The primary key ID of the user who is the buyer in this transaction.
 	 * @param timeSold The time at which this transaction occurred.
 	 */
-	public Transaction(int transactionID, int postID, int buyerID, Timestamp timeSold) {
+	public Transaction(int transactionID, int productID, int buyerID, Timestamp timeSold) {
 		this.transactionID = transactionID;
-		this.postID = postID;
+		this.productID = productID;
 		this.buyerID = buyerID;
 		this.timeSold = timeSold;
 	}
@@ -56,10 +56,10 @@ public class Transaction {
 	}
 
 	/**
-	 * @return The primary key ID of the post this transaction is related to.
+	 * @return The primary key ID of the product this transaction is related to.
 	 */
-	public int getPostID() {
-		return this.postID;
+	public int getproductID() {
+		return this.productID;
 	}
 	
 	/**
@@ -77,7 +77,7 @@ public class Transaction {
 	}
 	
 	public String toString() {
-		return "Transaction ID: " + transactionID + "\nPost ID: " + postID + "\nBuyer: " + buyerID +
+		return "Transaction ID: " + transactionID + "\nproduct ID: " + productID + "\nBuyer: " + buyerID +
 		"\nTime Sold: " + timeSold;
 	}
 }

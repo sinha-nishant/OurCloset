@@ -45,6 +45,29 @@ public class SQL_Util {
 		}
 	}
 	
+	public static User getUser(String uscEmail) {
+		User user = null;
+		try {
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Users WHERE uscEmail = ?");
+			ps.setString(1, uscEmail);
+			ps.execute();
+			
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				user = new User(rs.getInt("userID"), rs.getString("uscEmail"), rs.getString("pass"), rs.getString("fName"), rs.getString("lName"), rs.getBoolean("privacyStatus"), rs.getTimestamp("lastLogin"), rs.getTimestamp("dateCreated"));
+			}
+			
+			ps.close();
+			rs.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
+	
 	public static User getUser(int userID) {
 		User user = null;
 		try {
@@ -86,9 +109,9 @@ public class SQL_Util {
 		return user;
 	}
 	
-	public static void addPost(int userID, String brand, String pName, int price, int quantity, boolean rent, boolean buy) {
+	public static void addProduct(int userID, String brand, String pName, int price, int quantity, boolean rent, boolean buy) {
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO Posts(userID, brand, pName, price, quantity, rent, buy) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Products(userID, brand, pName, price, quantity, rent, buy) VALUES (?, ?, ?, ?, ?, ?, ?)");
 			ps.setInt(1, userID);
 			ps.setString(2, brand);
 			ps.setString(3, pName);
@@ -105,10 +128,10 @@ public class SQL_Util {
 		}
 	}
 	
-	// Overloaded addPost() which adds the description parameter to the end
-	public static void addPost(int userID, String brand, String pName, int price, int quantity, boolean rent, boolean buy, String description) {
+	// Overloaded addProduct() which adds the description parameter to the end
+	public static void addProduct(int userID, String brand, String pName, int price, int quantity, boolean rent, boolean buy, String description) {
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO Posts(userID, brand, pName, price, quantity, rent, buy, descrip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Products(userID, brand, pName, price, quantity, rent, buy, descrip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			ps.setInt(1, userID);
 			ps.setString(2, brand);
 			ps.setString(3, pName);
@@ -126,10 +149,10 @@ public class SQL_Util {
 		}
 	}
 	
-	// Overloaded addPost() which adds the description and image_paths parameter to the end
-	public static void addPost(int userID, String brand, String pName, int price, int quantity, boolean rent, boolean buy, ArrayList<String> image_paths) {
+	// Overloaded addProduct() which adds the description and image_paths parameter to the end
+	public static void addProduct(int userID, String brand, String pName, int price, int quantity, boolean rent, boolean buy, ArrayList<String> image_paths) {
 		try {
-			PreparedStatement ps1 = connection.prepareStatement("INSERT INTO Posts(userID, brand, pName, price, quantity, rent, buy) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement ps1 = connection.prepareStatement("INSERT INTO Products(userID, brand, pName, price, quantity, rent, buy) VALUES (?, ?, ?, ?, ?, ?, ?)");
 			ps1.setInt(1, userID);
 			ps1.setString(2, brand);
 			ps1.setString(3, pName);
@@ -140,7 +163,7 @@ public class SQL_Util {
 			ps1.execute();
 			ps1.close();
 			
-			PreparedStatement ps2 = connection.prepareStatement("INSERT INTO Images(postID, filename) VALUES ((SELECT LAST_INSERT_ID()), ?)");
+			PreparedStatement ps2 = connection.prepareStatement("INSERT INTO Images(productID, filename) VALUES ((SELECT LAST_INSERT_ID()), ?)");
 			for (int i = 0; i < image_paths.size(); i++) {
 				ps2.setString(1, "images/" + image_paths.get(i));
 				ps2.addBatch();
@@ -153,10 +176,10 @@ public class SQL_Util {
 		}
 	}
 	
-	// Overloaded addPost() which adds the description and image_paths parameter to the end
-	public static void addPost(int userID, String brand, String pName, int price, int quantity, boolean rent, boolean buy, String description, ArrayList<String> image_paths) {
+	// Overloaded addProduct() which adds the description and image_paths parameter to the end
+	public static void addProduct(int userID, String brand, String pName, int price, int quantity, boolean rent, boolean buy, String description, ArrayList<String> image_paths) {
 		try {
-			PreparedStatement ps1 = connection.prepareStatement("INSERT INTO Posts(userID, brand, pName, price, quantity, rent, buy, descrip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement ps1 = connection.prepareStatement("INSERT INTO Products(userID, brand, pName, price, quantity, rent, buy, descrip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			ps1.setInt(1, userID);
 			ps1.setString(2, brand);
 			ps1.setString(3, pName);
@@ -168,7 +191,7 @@ public class SQL_Util {
 			ps1.execute();
 			ps1.close();
 			
-			PreparedStatement ps2 = connection.prepareStatement("INSERT INTO Images(postID, filename) VALUES ((SELECT LAST_INSERT_ID()), ?)");
+			PreparedStatement ps2 = connection.prepareStatement("INSERT INTO Images(productID, filename) VALUES ((SELECT LAST_INSERT_ID()), ?)");
 			for (int i = 0; i < image_paths.size(); i++) {
 				ps2.setString(1, "images/" + image_paths.get(i));
 				ps2.addBatch();
@@ -181,12 +204,12 @@ public class SQL_Util {
 		}
 	}
 	
-	public static void removePost(int postID) {
+	public static void removeProduct(int productID) {
 		try {
-			SQL_Util.removeTags(postID);
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM Posts WHERE postID = ? AND ? NOT IN (SELECT postID FROM Transactions)");
-			ps.setInt(1, postID);
-			ps.setInt(2,  postID);
+			SQL_Util.removeTags(productID);
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Products WHERE productID = ? AND ? NOT IN (SELECT productID FROM Transactions)");
+			ps.setInt(1, productID);
+			ps.setInt(2,  productID);
 			ps.execute();
 			ps.close();
 		}
@@ -203,7 +226,7 @@ public class SQL_Util {
 			ResultSet rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				Transaction transaction = new Transaction(rs.getInt("transactionID"), rs.getInt("postID"), rs.getInt("buyerID"), rs.getTimestamp("dateSold"));
+				Transaction transaction = new Transaction(rs.getInt("transactionID"), rs.getInt("productID"), rs.getInt("buyerID"), rs.getTimestamp("dateSold"));
 				transactions.add(transaction);
 			}
 		}
@@ -215,10 +238,10 @@ public class SQL_Util {
 		return transactions;
 	}
 	
-	public static void addTransaction(int postID, int buyerID) {
+	public static void addTransaction(int productID, int buyerID) {
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO Transactions(postID, buyerID) VALUES (?, ?)");
-			ps.setInt(1, postID);
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Transactions(productID, buyerID) VALUES (?, ?)");
+			ps.setInt(1, productID);
 			ps.setInt(2, buyerID);
 			ps.execute();
 			ps.close();
@@ -229,10 +252,10 @@ public class SQL_Util {
 		}
 	}
 	
-	public static void addTag(int postID, String tagName) {
+	public static void addTag(int productID, String tagName) {
 		try {
-			PreparedStatement ps = connection.prepareStatement("INSERT INTO Tags(postID, tagName) VALUES (?, ?)");
-			ps.setInt(1, postID);
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO Tags(productID, tagName) VALUES (?, ?)");
+			ps.setInt(1, productID);
 			ps.setString(2, tagName);
 			ps.execute();
 			ps.close();
@@ -243,14 +266,14 @@ public class SQL_Util {
 		}
 	}
 	
-	public static ArrayList<Tag> getTags(int postID) {
+	public static ArrayList<Tag> getTags(int productID) {
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Tags WHERE postID = ?");
-			ps.setInt(1,  postID);
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Tags WHERE productID = ?");
+			ps.setInt(1,  productID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Tag tag = new Tag(rs.getInt("tagID"), rs.getInt("postID"), rs.getString("tagName"));
+				Tag tag = new Tag(rs.getInt("tagID"), rs.getInt("productID"), rs.getString("tagName"));
 				tags.add(tag);
 			}
 			
@@ -265,12 +288,12 @@ public class SQL_Util {
 		return tags;
 	}
 	
-	public static ArrayList<Tag> removeTags(int postID) {
+	public static ArrayList<Tag> removeTags(int productID) {
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		try {
-			tags = SQL_Util.getTags(postID);
-			PreparedStatement ps = connection.prepareStatement("DELETE FROM Tags WHERE postID = ?");
-			ps.setInt(1, postID);
+			tags = SQL_Util.getTags(productID);
+			PreparedStatement ps = connection.prepareStatement("DELETE FROM Tags WHERE productID = ?");
+			ps.setInt(1, productID);
 			ps.execute();
 			ps.close();
 		}
@@ -282,11 +305,11 @@ public class SQL_Util {
 		return tags;
 	}
 	
-	public static ArrayList<Post> handlePosts(ResultSet rs) {
-		ArrayList<Post> posts = new ArrayList<Post>();
+	public static ArrayList<Product> handleProducts(ResultSet rs) {
+		ArrayList<Product> products = new ArrayList<Product>();
 		try {
 			while (rs.next()) {
-				int postID = rs.getInt("postID");
+				int productID = rs.getInt("productID");
 				int userID = rs.getInt("userID");
 				String brand = rs.getString("brand");
 				String pName = rs.getString("pName");
@@ -297,67 +320,36 @@ public class SQL_Util {
 				boolean buy = rs.getBoolean("buy");
 				Timestamp datePosted = rs.getTimestamp("datePosted");
 				
-				PreparedStatement ps2 = connection.prepareStatement("SELECT Images.filename FROM Images WHERE Images.postID = ?");
-				ps2.setInt(1, postID);
+				PreparedStatement ps2 = connection.prepareStatement("SELECT Images.filename FROM Images WHERE Images.productID = ?");
+				ps2.setInt(1, productID);
 				ResultSet rs2 = ps2.executeQuery();
-				ArrayList<String> image_paths_AL = new ArrayList<String>();
+				ArrayList<String> image_paths = new ArrayList<String>();
 				while(rs2.next()) {
-					image_paths_AL.add(rs2.getString("filename"));
+					image_paths.add(rs2.getString("filename"));
 				}
 				
 				ps2.close();
 				rs2.close();
+								
+				Product product = new Product(productID, userID, brand, pName, descrip, price, quantity, rent, buy, datePosted, image_paths);
 				
-				String[] image_paths_A = image_paths_AL.toArray(new String[0]);
-				
-				Post post = new Post(postID, userID, brand, pName, descrip, price, quantity, rent, buy, datePosted, image_paths_A);
-				
-				posts.add(post);
+				products.add(product);
 			}
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return posts;
+		return products;
 	}
 
 	// this method returns all available items (not yet sold)
-	public static ArrayList<Post> getListedPosts() {
-		ArrayList<Post> posts = null;
+	public static ArrayList<Product> getListedProducts() {
+		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps1 = connection.prepareStatement("SELECT * FROM Posts WHERE Posts.postID NOT IN (SELECT postID FROM Transactions)");
+			PreparedStatement ps1 = connection.prepareStatement("SELECT * FROM Products WHERE Products.productID NOT IN (SELECT productID FROM Transactions)");
 			ResultSet rs1 = ps1.executeQuery();
-			posts = handlePosts(rs1);
-//			while (rs1.next()) {
-//				int postID = rs1.getInt("postID");
-//				int userID = rs1.getInt("userID");
-//				String brand = rs1.getString("brand");
-//				String pName = rs1.getString("pName");
-//				String descrip = rs1.getString("descrip");
-//				double price = rs1.getDouble("price");
-//				short quantity = rs1.getShort("quantity");
-//				boolean rent = rs1.getBoolean("rent");
-//				boolean buy = rs1.getBoolean("buy");
-//				Timestamp datePosted = rs1.getTimestamp("datePosted");
-//				
-//				PreparedStatement ps2 = connection.prepareStatement("SELECT Images.filename FROM Images WHERE Images.postID = ?");
-//				ps2.setInt(1, postID);
-//				ResultSet rs2 = ps2.executeQuery();
-//				ArrayList<String> image_paths_AL = new ArrayList<String>();
-//				while(rs2.next()) {
-//					image_paths_AL.add(rs2.getString("filename"));
-//				}
-//				
-//				ps2.close();
-//				rs2.close();
-//				
-//				String[] image_paths_A = image_paths_AL.toArray(new String[0]);
-//				
-//				Post post = new Post(postID, userID, brand, pName, descrip, price, quantity, rent, buy, datePosted, image_paths_A);
-//				
-//				posts.add(post);
-//			}
+			products = handleProducts(rs1);
 			
 			ps1.close();
 			rs1.close();
@@ -367,17 +359,17 @@ public class SQL_Util {
 			e.printStackTrace();
 		}
 		
-		return posts;
+		return products;
 	}
 	
-	// this method returns a user's post history
-	public static ArrayList<Post> getPostHistory(int userID) {
-		ArrayList<Post> posts = null;
+	// this method returns a user's product history
+	public static ArrayList<Product> getProductHistory(int userID) {
+		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE userID = ?");
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE userID = ?");
 			ps.setInt(1,  userID);
 			ResultSet rs = ps.executeQuery();
-			posts = handlePosts(rs);
+			products = handleProducts(rs);
 			
 			ps.close();
 			rs.close();
@@ -387,16 +379,16 @@ public class SQL_Util {
 			e.printStackTrace();
 		}
 		
-		return posts;
+		return products;
 	}
-//	
+
 	// this method returns the 8 most recently sold items (trending items)
-	public static ArrayList<Post> recentlySold() {
-		ArrayList<Post> posts = null;
+	public static ArrayList<Product> recentlySold() {
+		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT P.* FROM Posts P JOIN Transactions ON P.postID=Transactions.postID ORDER BY dateSold ASC LIMIT 8");
+			PreparedStatement ps = connection.prepareStatement("SELECT P.* FROM Products P JOIN Transactions ON P.productID=Transactions.productID ORDER BY dateSold ASC LIMIT 8");
 			ResultSet rs = ps.executeQuery();
-			posts = handlePosts(rs);
+			products = handleProducts(rs);
 			
 			ps.close();
 			rs.close();
@@ -406,18 +398,18 @@ public class SQL_Util {
 			e.printStackTrace();
 		}
 		
-		return posts;
+		return products;
 	}
 
 	// this method gets a user's selling history
 	public static ArrayList<Transaction> getSellHistory(int userID) {
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT T.* FROM Transactions T JOIN Posts ON T.postID=Posts.postID WHERE userID = ?");
+			PreparedStatement ps = connection.prepareStatement("SELECT T.* FROM Transactions T JOIN Products ON T.productID=Products.productID WHERE userID = ?");
 			ps.setInt(1,  userID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Transaction transaction = new Transaction(rs.getInt("transactionID"), rs.getInt("postID"), rs.getInt("buyerID"), rs.getTimestamp("dateSold"));
+				Transaction transaction = new Transaction(rs.getInt("transactionID"), rs.getInt("productID"), rs.getInt("buyerID"), rs.getTimestamp("dateSold"));
 				transactions.add(transaction);
 			}
 			
@@ -440,7 +432,7 @@ public class SQL_Util {
 			ps.setInt(1,  userID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Transaction transaction = new Transaction(rs.getInt("transactionID"), rs.getInt("postID"), rs.getInt("buyerID"), rs.getTimestamp("dateSold"));
+				Transaction transaction = new Transaction(rs.getInt("transactionID"), rs.getInt("productID"), rs.getInt("buyerID"), rs.getTimestamp("dateSold"));
 				transactions.add(transaction);
 			}
 			
@@ -455,14 +447,14 @@ public class SQL_Util {
 		return transactions;
 	}
 
-	// this method returns the 5 most popular tags for items sold (could be used for a suggested feature when users are uploading posts)
+	// this method returns the 5 most popular tags for items sold (could be used for a suggested feature when users are uploading products)
 	public static ArrayList<Tag> getPopularTags() {
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT TG.* From Tags TG JOIN Transactions ON TG.postID=Transactions.postID GROUP BY tagID ORDER BY COUNT(*) DESC LIMIT 5");
+			PreparedStatement ps = connection.prepareStatement("SELECT TG.* From Tags TG JOIN Transactions ON TG.productID=Transactions.productID GROUP BY tagID ORDER BY COUNT(*) DESC LIMIT 5");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Tag tag = new Tag(rs.getInt("tagID"), rs.getInt("postID"), rs.getString("tagName"));
+				Tag tag = new Tag(rs.getInt("tagID"), rs.getInt("productID"), rs.getString("tagName"));
 				tags.add(tag);
 			}
 			
@@ -482,7 +474,7 @@ public class SQL_Util {
 		double price = 0;
 		try {
 			
-			PreparedStatement ps = connection.prepareStatement("SELECT AVG(Posts.price) as price FROM Posts WHERE Posts.postID NOT IN (SELECT postID FROM Transcations");
+			PreparedStatement ps = connection.prepareStatement("SELECT AVG(Products.price) as price FROM Products WHERE Products.productID NOT IN (SELECT productID FROM Transcations");
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -501,7 +493,7 @@ public class SQL_Util {
 	public static double getAvgSellingPrice() {
 		double price = 0;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT AVG(Posts.price) as price FROM Posts WHERE Posts.postID IN (SELECT postID FROM Transcation");
+			PreparedStatement ps = connection.prepareStatement("SELECT AVG(Products.price) as price FROM Products WHERE Products.productID IN (SELECT productID FROM Transcation");
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -517,12 +509,12 @@ public class SQL_Util {
 	}
 
 	// this method gets all items available for rent
-	public static ArrayList<Post> forRent() {
-		ArrayList<Post> posts = null;
+	public static ArrayList<Product> forRent() {
+		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE rent = 1");
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE rent = 1");
 			ResultSet rs = ps.executeQuery();
-			posts = handlePosts(rs);
+			products = handleProducts(rs);
 			
 			ps.close();
 			rs.close();
@@ -532,16 +524,16 @@ public class SQL_Util {
 			e.printStackTrace();
 		}
 		
-		return posts;
+		return products;
 	}
 
 	// this method gets all items available for purchase
-	public static ArrayList<Post> forBuy() {
-		ArrayList<Post> posts = null;
+	public static ArrayList<Product> forBuy() {
+		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE buy = 1");
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE buy = 1");
 			ResultSet rs = ps.executeQuery();
-			posts = handlePosts(rs);
+			products = handleProducts(rs);
 			
 			ps.close();
 			rs.close();
@@ -551,17 +543,17 @@ public class SQL_Util {
 			e.printStackTrace();
 		}
 		
-		return posts;
+		return products;
 	}
 
 	// this method returns all items available for less than or equal to the given price
-	public static ArrayList<Post> maxPrice(int maxPrice) {
-		ArrayList<Post> posts = null;
+	public static ArrayList<Product> maxPrice(int maxPrice) {
+		ArrayList<Product> products = null;
 		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Posts WHERE Posts.postID NOT IN (SELECT postID FROM Transcations) AND price <= ?");
+			PreparedStatement ps = connection.prepareStatement("SELECT * FROM Products WHERE Products.productID NOT IN (SELECT productID FROM Transcations) AND price <= ?");
 			ps.setInt(1, maxPrice);
 			ResultSet rs = ps.executeQuery();
-			posts = handlePosts(rs);
+			products = handleProducts(rs);
 			
 			ps.close();
 			rs.close();
@@ -571,7 +563,7 @@ public class SQL_Util {
 			e.printStackTrace();
 		}
 		
-		return posts;
+		return products;
 	}
 	
 	// Clears all entries in the database but doesn't drop the actual tables
@@ -604,11 +596,11 @@ public class SQL_Util {
 			ps.execute();
 			ps.close();
 			
-			ps = connection.prepareStatement("DELETE FROM Posts");
+			ps = connection.prepareStatement("DELETE FROM Products");
 			ps.execute();
 			ps.close();
 			
-			ps = connection.prepareStatement("ALTER TABLE Posts AUTO_INCREMENT = ?");
+			ps = connection.prepareStatement("ALTER TABLE Products AUTO_INCREMENT = ?");
 			ps.setInt(1, 1);
 			ps.execute();
 			ps.close();
