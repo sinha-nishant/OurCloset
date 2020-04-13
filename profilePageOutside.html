@@ -31,25 +31,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Profile Page </title>
+    <title>Freddie Mercury's Profile</title> <!--will have to use backend for this and also wherever there is 'span'-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <!-- Add icon library -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
      <!-- Add font: Poppins -->
      <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-     <!--Generating thumbnail code from: http://talkerscode.com/webtricks/preview-image-before-upload-using-javascript.php-->
-     <script type='text/javascript'>
-      function preview_image(event) 
-      {
-       var reader = new FileReader();
-       reader.onload = function()
-       {
-        var output = document.getElementById('profileImage');
-        output.src = reader.result;
-       }
-       reader.readAsDataURL(event.target.files[0]);
-      }
-  </script>
 </head>
 <style>
   html, body {
@@ -79,7 +66,7 @@
     margin-left: auto;
     overflow: auto;
   }
-  header{
+   header{
     margin-top: auto;
     margin-right: auto;
     margin-left: auto;
@@ -88,22 +75,12 @@
     display: flex;
     border-bottom: 1px solid rgb(177, 175, 175);
   }
-  input:focus, textarea:focus, select:focus{
-      outline: none;
-  }
-  input[type="file"] {
-      display: none !important;
-   }
-   input [type="file"]:hover{
-     color:rgba(151, 150, 150, 0.521);
-   }
-  .userprofilepic{
+  #userprofilepic{
     margin-left: 64px;
     margin-right: 65px;
     margin-top: 9px;
     margin-bottom: 9px;
     float: left;
-    background: url(stormtrooper.jpg) no-repeat;
     background-size: 150px;
     width: 150px;
     height: 150px;
@@ -161,16 +138,6 @@
     width: 278px;
     height: 278px;
   }
-  #profileImage
-  {
-      cursor: pointer;
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  }
   @media screen and (max-width: 1280px) {
     .navbar a {
       float: none;
@@ -192,29 +159,29 @@
             <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
     </nav>
     </div>
-   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
    <div class="profile">
      <header>
         <span>
-            <label class="userprofilepic">
-              <input type="file" accept="image/*" onchange="preview_image(event)">
-              <img id="profileImage"/>
-            </label>
+            <img src="Freddie-Mercury.jpg" id=userprofilepic alt="">
         </span>
         <div class="profileInfo">
           <ul>
-            <span class="name">First & Last Name</span>
+            <!--I was listening to queen when I figured out to fix the formatting 
+            for the header (took longer than it should've-->
+            <span class="name">Freddie Mercury</span>
           </ul>
           <ul>
-            <li> <span class="profile-stat-count">0</span> Posts </li>
+            <li> <span class="profile-stat-count">3</span> Posts </li>
             <li> <span class="profile-stat-count">0</span> Interests </li>
           </ul>
         </div>
       </header>
-      <span class="gridProduct">
-        <a href="uploadProduct.html"> <img src="blue_plussign.png"id="UploadProductPage" alt="Upload"> </a>
-    </span>
+      <!--Product Grid with option for upload-->
+        <span class="gridProduct">
+            <a href="#"> <img src="queen_shirt.jpeg"id="ProductFormat" alt="product"> </a>
+            <a href="#"> <img src="adidas.jpg"id="ProductFormat" alt="product"> </a>
+            <a href="#"> <img src="leather_jacket.jpg"id="ProductFormat" alt="product"> </a>
+        </span>
    </div>
-  
 </body>
 </html>
