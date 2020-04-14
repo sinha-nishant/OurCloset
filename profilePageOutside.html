@@ -35,6 +35,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <!-- Add icon library -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <script src="https://code.iconify.design/1/1.0.5/iconify.min.js"></script>
      <!-- Add font: Poppins -->
      <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
@@ -49,6 +50,7 @@
     width: 100%;
     background: linear-gradient(to right, #993300 0%, #ffcc00 100%);
     overflow: auto;
+    border-bottom: 1px black solid;
   }
   .navbar a {
     float: left;
@@ -56,6 +58,7 @@
     color: white;
     text-decoration: none;
     font-size: 20px;
+    text-shadow: 1px 1px black;
   }
   .navbar a:hover {
     background-color: #fc6f03;
@@ -154,7 +157,7 @@
    <div class="profile">
      <header>
         <span>
-            <img src="Freddie-Mercury.jpg" id=userprofilepic alt="">
+            <img src="Freddie-Mercury.jpg" id="userprofilepic" alt="">
         </span>
         <div class="profileInfo">
           <ul>
@@ -164,7 +167,7 @@
           </ul>
           <ul>
             <li> <span class="profile-stat-count">3</span> Posts </li>
-            <li> <span class="profile-stat-count">0</span> Interests </li>
+            <li> <span class="profile-stat-count">0</span> <span class="iconify" data-icon="si-glyph:hanger" data-inline="false"></span> </li>
           </ul>
         </div>
       </header>
@@ -173,6 +176,7 @@
             <a href="#"> <img src="queen_shirt.jpeg"id="ProductFormat" alt="product"> </a>
             <a href="#"> <img src="adidas.jpg"id="ProductFormat" alt="product"> </a>
             <a href="#"> <img src="leather_jacket.jpg"id="ProductFormat" alt="product"> </a>
+            <a href="#"> <img src="kobe.jpeg"id="ProductFormat" alt="product"> </a>
         </span>
    </div>
 </body>
