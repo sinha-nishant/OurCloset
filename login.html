@@ -83,6 +83,15 @@
 			background-color: #EAEAE9;
 			text-indent: 18%;
 		}
+		#create-account {
+			margin-top: 50px;
+			text-align: center;
+			cursor: pointer;
+		}
+		#guest-access {
+			text-align: center;
+			cursor: pointer;
+		}
 	</style>
 
 </head>
@@ -94,6 +103,7 @@
 			<div class="row no-gutter">
 				<!-- left hand side of login page -->
 				<div class="d-none d-md-flex col-md-4 col-lg-6 left-side">
+					Welcome to OurCloset!
 					<img src="closet.png" alt="Responsive image of closet">
 					<!-- <p>Welcome to OurCloset!</p> -->
 				</div>
@@ -128,6 +138,14 @@
 								</div>
 
 							</form>
+							
+							<div id="create-account">
+								<span>Create Account </span><i class="fas fa-arrow-right"></i>
+							</div>
+							
+							<div id="guest-access">
+								<span>Continue as Guest </span><i class="fas fa-arrow-right"></i>
+							</div>
 
 						</div> <!-- resizing classes close -->
 					</div> <!-- row close -->
@@ -140,6 +158,21 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+	<!-- javascript to make page redirect buttons work -->
+	<script>
+		// redirect to create account
+		$("#create-account").click(function() {
+			console.log("create account clicked");
+			location.href = "createAccount.html";
+		});
+		
+		// redirect to home page, guest view
+		$("#guest-access").click(function() {
+			console.log("create account clicked");
+			location.href = "createAccount.html";
+		});
+	</script>
 
 </body>
 </html>
