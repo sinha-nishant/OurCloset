@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login</title>
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<!-- fonts -->
+	<!-- poppins -->
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<!-- montserrat -->
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+	<!-- icons -->
+	<script src="https://kit.fontawesome.com/7ce1d97a87.js" crossorigin="anonymous"></script>
+
+	<!-- css -->
+	<style>
+		html {
+			height: 100%;
+			margin:0;
+		}
+		body {
+			height: 100%;
+			margin:0;
+			background: linear-gradient(-135deg, #FFCC00, #990000);
+			font-family: 'Poppins', sans-serif;	
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			overflow:hidden;
+			font-weight: 700;
+		}
+		h2, .labels {
+			font-weight: 700;
+			text-align: center;
+		}
+		.outer-box {
+			margin: 50px;
+			padding: 50px;
+			padding-top: 20px;
+			background-color: white;
+			border-radius: 20px;
+		}
+
+		.left-side {
+			vertical-align: top;
+			display: inline-block;
+			text-align: center;
+			padding-top: 50px;
+			width: 100%;
+			text-overflow: left;
+		}
+		.left-side img {
+			width: 100%;
+			height: 70%;
+			object-fit: contain;
+			
+			margin: 0 auto;
+		}
+		p {
+			display: block;
+		}
+		.labels {
+			border-radius: 25px;
+			width: 100%;
+		}
+		.input-field {
+			position: relative;
+			margin: -10px;
+			font-size: 5px;
+		}
+		.icon {
+			position: relative;
+			top: 30px;
+			left: 20px;
+		}
+		.placeholder-text {
+			font-family: 'Montserrat', sans-serif;
+			border-radius: 25px;
+			border-width: 0px;
+			background-color: #EAEAE9;
+			text-indent: 18%;
+		}
+		#create-account {
+			margin-top: 50px;
+			text-align: center;
+			cursor: pointer;
+		}
+		#guest-access {
+			text-align: center;
+			cursor: pointer;
+		}
+	</style>
+
+</head>
+<body>
+	<div class="outer-box">
+
+		<!-- below layout referenced from: https://startbootstrap.com/snippets/sign-in-split/ -->
+		<div class="container-fluid">
+			<div class="row no-gutter">
+				<!-- left hand side of login page -->
+				<div class="d-none d-md-flex col-md-4 col-lg-6 left-side">
+					Welcome to OurCloset!
+					<img src="closet.png" alt="Responsive image of closet">
+					<!-- <p>Welcome to OurCloset!</p> -->
+				</div>
+				
+				<!-- right hand side of login page -->
+				<div class="col-md-8 col-lg-6 d-flex align-items-center py-5">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-9 col-lg-8 mx-auto">
+
+							<h2 class="mt-5">Member Login</h2>
+						
+							<form action= method= >
+
+								<!-- email -->
+								<div class="form-group input-field">
+									<i class="fas fa-envelope fa-4x icon"></i>
+									<input type="email" class="form-control placeholder-text" name="email" id="loginEmail" placeholder="USC Email">
+								</div>
+
+								<!-- password -->
+								<div class="form-group input-field">
+									<i class="fas fa-key fa-4x icon"></i>
+									<input type="password" class="form-control placeholder-text" name="password" id="loginPassword" placeholder="Password">
+								</div>
+
+								<!-- submit button -->
+								<div class="form-group mt-5">
+									<button type="submit" class="btn btn-success labels">
+									LOGIN
+									</button>
+								</div>
+
+							</form>
+							
+							<div id="create-account">
+								<span>Create Account </span><i class="fas fa-arrow-right"></i>
+							</div>
+							
+							<div id="guest-access">
+								<span>Continue as Guest </span><i class="fas fa-arrow-right"></i>
+							</div>
+
+						</div> <!-- resizing classes close -->
+					</div> <!-- row close -->
+				</div> <!-- container close -->
+				</div> <!-- resizing right hand side close -->
+
+			</div> <!-- row: no-gutter close -->
+		</div> <!-- container-fluid close -->
+	</div> <!-- outer-box close -->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+	<!-- javascript to make page redirect buttons work -->
+	<script>
+		// redirect to create account
+		$("#create-account").click(function() {
+			console.log("create account clicked");
+			location.href = "createAccount.html";
+		});
+		
+		// redirect to home page, guest view
+		$("#guest-access").click(function() {
+			console.log("create account clicked");
+			location.href = "createAccount.html";
+		});
+	</script>
+
+</body>
+</html>

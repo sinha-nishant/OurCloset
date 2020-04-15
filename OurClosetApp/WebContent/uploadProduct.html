@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Product Page </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <!-- Add font: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!--Generating thumbnail code from: http://talkerscode.com/webtricks/preview-image-before-upload-using-javascript.php-->
+    <script type='text/javascript'>
+        function preview_image(event) 
+        {
+         var reader = new FileReader();
+         reader.onload = function()
+         {
+          var output = document.getElementById('image_src');
+          output.src = reader.result;
+         }
+         reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</head>
+<style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Poppins, Arial;
+      background: white;
+    }
+    input:focus, textarea:focus, select:focus{
+        outline: none;
+    }
+    .uploadPage{
+        width: 100%;
+        overflow: auto;
+    }
+    .productForm{
+        margin-top: 50px;
+        margin-right: auto;
+        margin-left: auto;
+        width: 400px;
+        height: 300px;
+    }
+    ::placeholder {
+        font-weight: bold;
+        color: #e7420f;
+    }
+    input[type=text], select {
+        width:100%;
+        font-size: 20px;
+        padding: 12px 20px;
+        background-color: white;
+        color: #e7420f;
+        display: inline-block;
+        border-radius: 10px;
+        border: solid;
+        border-color: #AA1945;
+        box-sizing: border-box;
+    }
+    input[type=number], select {
+        width:100%;
+        font-size: 20px;
+        color: #e7420f;
+        padding: 12px 20px;
+        background-color: white;
+        display: inline-block;
+        border-radius: 10px;
+        border: solid;
+        border-color: #AA1945;
+        box-sizing: border-box;
+    }
+    input[type=submit] {
+        width: 25%;
+        background-color:white;
+        color: #AA1945;
+        font-size: x-large;
+        float: right;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+    }
+    input[type=submit]:hover{
+        color:gray;
+    }
+    input[type=button] {
+        width: 25%;
+        background-color:white;
+        color: #AA1945;
+        font-size: x-large;
+        float: left;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+    }
+    input[type=button]:hover{
+        color:gray;
+    }
+    .uploadImage{
+        background: url(plussign.png) no-repeat;
+        background-size: 200px;
+        background-size: cover;
+        background-position: center;
+        border-style: solid;
+        border-image-source: linear-gradient(to right, #d15d0f 0%, #e7420f 100%);
+        border-width: 5px;
+        border-image-slice: 1;
+        display: block;
+        position: center;
+        width: 150px;
+        height: 150px;
+        margin-top: 50px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+   input[type="file"] {
+        display: none !important;
+    }
+    #image_src {
+        max-width: 150px;
+        max-height: 150px;
+    }
+</style>
+<body>
+  <div class="uploadPage">
+    <span>
+        <label class="uploadImage">
+            <input type="file" accept="image/*" onchange="preview_image(event)">
+            <img id="image_src"/>
+        </label>
+    </span>
+    <div class= "productForm">
+        <form>
+            <input type="text" id="brand" name="brand" placeholder="Brand"><br> 
+            <input type="text" id="name" name="name" placeholder="Name" required><br> 
+            <input type="text" id="type" name="type" placeholder="Item Type (shoes, shirt, etc.)" required><br> 
+            <input type="text" id="color" name="color" placeholder="Color (multi-color if multiple colors)" required><br> 
+            <input type="text" id="size" name="size" placeholder="Size" required><br>
+            <input type="number" placeholder="0.00" step="0.01" id="price" name="price" required><br> 
+            <input type="text" id="description" name="description" placeholder="Description"><br> 
+            <input type="text" id="tags" name="tags" placeholder="Tags (Separate with comma)" required><br>
+            <input type="submit" value="Post >">
+            <input type="button" value="< Back" onclick="history.back(-1)" />
+        </form>
+    </div>
+  </div>
+</body>
