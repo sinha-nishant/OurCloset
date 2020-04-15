@@ -9,7 +9,8 @@ CREATE TABLE Users (
     pass VARCHAR(30) NOT NULL,
     fName VARCHAR(30) NOT NULL,
     lName VARCHAR(30) NOT NULL,
-    interest INTEGER(10) NOT NULL,
+    profileImagePath VARCHAR(30) NOT NULL,
+    interest INTEGER(10) DEFAULT 0 NOT NULL,
     valid BOOL DEFAULT TRUE NOT NULL
 );
 
@@ -28,13 +29,14 @@ CREATE TABLE Products (
     rentPrice DECIMAL(5,2) NOT NULL,
     buyPrice DECIMAL(5,2) NOT NULL,
     quantity TINYINT(3) NOT NULL,
-    interest INTEGER(10) NOT NULL
+    interest INTEGER(10) DEFAULT 0 NOT NULL
 );
 
-CREATE TABLE Images (
-	imageID INTEGER(10) PRIMARY KEY AUTO_INCREMENT  NOT NULL,
+CREATE TABLE ProductImages (
+	imageID INTEGER(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     productID INTEGER(10) NOT NULL,
-    FOREIGN KEY (productID) REFERENCES Products(productID)
+    FOREIGN KEY (productID) REFERENCES Products(productID),
+    productImagePath VARCHAR(30) NOT NULL
 );
 
 -- The Transactions table will be used for recording all transaction history
@@ -62,7 +64,7 @@ CREATE TABLE Notifications (
     FOREIGN KEY (notifierID) REFERENCES Users(userID),
     productID INTEGER(10) NOT NULL,
     FOREIGN KEY (productID) REFERENCES Products(productID),
-    notificationTime TIMESTAMP NOT NULL,
+    notificationTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     whenViewed TIMESTAMP
 );
 

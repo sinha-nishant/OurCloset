@@ -304,7 +304,7 @@ public class Product {
 	/**
 	 * @return The quantity available of this product.
 	 */
-	public int getQuantity() {
+	public short getQuantity() {
 		return this.quantity;
 	}
 
@@ -354,6 +354,7 @@ public class Product {
 		return "Product ID: " + productID + "\nSeller ID: " + sellerID + "\nBrand: " + brand +
 				"\nProduct Name: " + pName + "\nTime Posted: " + timePosted.toString() +
 				"\nDescription: " + descrip + "\nQuantity: " + quantity +
-				"\nRental Price: " + rentPrice + "\nBuy Price: " + buyPrice + "\nImage Paths: " + imagePaths;
+				"\nRental Price: " + rentPrice + "\nBuy Price: " + buyPrice + "\nImage Paths: " + imagePaths +
+				"\nTags: " + tags.toString() + "\nInterest: " + interest + "\nComments: " + comments.toString();
 	}
 }

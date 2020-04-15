@@ -70,4 +70,12 @@ public class Comment extends Notification {
 	public int isReplyTo() {
 		return this.replyTo;
 	}
+	
+	/**
+	 * 
+	 */
+	public String toString() {
+		return "Commenter ID: " + getNotifierID() + "\nProduct ID: " + getProductID() +
+				"\nMessage: " + getMessage();
+	}
 }

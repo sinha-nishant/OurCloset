@@ -30,6 +30,11 @@ public class User {
 	private String lName = null;
 	
 	/**
+	 * The path to this user's profile image.
+	 */
+	private String profileImagePath = null;
+	
+	/**
 	 * The amount of total interest this user has attained as a seller across all of their products, 0 by default.
 	 */
 	private int interest = 0;
@@ -50,12 +55,14 @@ public class User {
 	 * @param password The password for this user.
 	 * @param fName The first name of this user.
 	 * @param lName The last name of this user.
+	 * @param profileImagePath The path to this user's profile image.
 	 */
-	public User (String uscEmail, String password, String fName, String lName) {
+	public User (String uscEmail, String password, String fName, String lName, String profileImagePath) {
 		this.uscEmail = uscEmail;
 		this.pass = password;
 		this.fName = fName;
 		this.lName = lName;
+		this.profileImagePath = profileImagePath;
 	}
 	
 	/**
@@ -65,10 +72,11 @@ public class User {
 	 * @param password The password for this user.
 	 * @param fName The first name of this user.
 	 * @param lName The last name of this user.
+	 * @param profileImagePath The path to this user's profile image.
 	 * @param interest The amount of total interest this user has attained as a seller across all of their products.
 	 * @param products ArrayList of Product objects which this user is selling.
 	 */
-	public User (int userID, String uscEmail, String password, String fName, String lName, int interest, ArrayList<Product> products) {
+	public User (int userID, String uscEmail, String password, String fName, String lName,  String profileImagePath, int interest, ArrayList<Product> products) {
 		this.userID = userID;
 		this.uscEmail = uscEmail;
 		this.pass = password;
@@ -76,6 +84,7 @@ public class User {
 		this.lName = lName;
 		this.interest = interest;
 		this.products = products;
+		this.profileImagePath = profileImagePath;
 	}
 
 	/**
@@ -111,6 +120,13 @@ public class User {
 	 */
 	public String getLastName() {
 		return this.lName;
+	}
+	
+	/**
+	 * @return The path to this user's profile image.
+	 */
+	public String getProfileImagePath() {
+		return this.profileImagePath;
 	}
 	
 	/**
