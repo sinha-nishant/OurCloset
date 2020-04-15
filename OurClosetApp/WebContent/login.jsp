@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -12,88 +15,13 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 	<!-- montserrat -->
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+	
+	<!--  custom css -->
+	<link href="css/login.css" type="text/css" rel="stylesheet">
 
 	<!-- icons -->
 	<script src="https://kit.fontawesome.com/7ce1d97a87.js" crossorigin="anonymous"></script>
-
-	<!-- css -->
-	<style>
-		html {
-			height: 100%;
-			margin:0;
-		}
-		body {
-			height: 100%;
-			margin:0;
-			background: linear-gradient(-135deg, #FFCC00, #990000);
-			font-family: 'Poppins', sans-serif;	
-			background-repeat: no-repeat;
-			background-attachment: fixed;
-			overflow:hidden;
-			font-weight: 700;
-		}
-		h2, .labels {
-			font-weight: 700;
-			text-align: center;
-		}
-		.outer-box {
-			margin: 50px;
-			padding: 50px;
-			padding-top: 20px;
-			background-color: white;
-			border-radius: 20px;
-		}
-
-		.left-side {
-			vertical-align: top;
-			display: inline-block;
-			text-align: center;
-			padding-top: 50px;
-			width: 100%;
-			text-overflow: left;
-		}
-		.left-side img {
-			width: 100%;
-			height: 70%;
-			object-fit: contain;
-			
-			margin: 0 auto;
-		}
-		p {
-			display: block;
-		}
-		.labels {
-			border-radius: 25px;
-			width: 100%;
-		}
-		.input-field {
-			position: relative;
-			margin: -10px;
-			font-size: 5px;
-		}
-		.icon {
-			position: relative;
-			top: 30px;
-			left: 20px;
-		}
-		.placeholder-text {
-			font-family: 'Montserrat', sans-serif;
-			border-radius: 25px;
-			border-width: 0px;
-			background-color: #EAEAE9;
-			text-indent: 18%;
-		}
-		#create-account {
-			margin-top: 50px;
-			text-align: center;
-			cursor: pointer;
-		}
-		#guest-access {
-			text-align: center;
-			cursor: pointer;
-		}
-	</style>
-
+	
 </head>
 <body>
 	<div class="outer-box">
@@ -104,7 +32,7 @@
 				<!-- left hand side of login page -->
 				<div class="d-none d-md-flex col-md-4 col-lg-6 left-side">
 					Welcome to OurCloset!
-					<img src="closet.png" alt="Responsive image of closet">
+					<img src="images/closet.png" alt="Responsive image of closet">
 					<!-- <p>Welcome to OurCloset!</p> -->
 				</div>
 				
@@ -116,12 +44,12 @@
 
 							<h2 class="mt-5">Member Login</h2>
 						
-							<form action= method= >
+							<form action="login" method="POST" name="login" value="Login" >
 
 								<!-- email -->
 								<div class="form-group input-field">
 									<i class="fas fa-envelope fa-4x icon"></i>
-									<input type="email" class="form-control placeholder-text" name="email" id="loginEmail" placeholder="USC Email">
+									<input type="email" class="form-control placeholder-text" name="uscemail" id="loginEmail" placeholder="USC Email">
 								</div>
 
 								<!-- password -->
@@ -138,6 +66,9 @@
 								</div>
 
 							</form>
+							<c:if test="${not empty loginMessage}">
+								<div>${loginMessage}</div>
+							</c:if>
 							
 							<div id="create-account">
 								<span>Create Account </span><i class="fas fa-arrow-right"></i>

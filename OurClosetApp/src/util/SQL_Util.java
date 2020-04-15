@@ -25,7 +25,7 @@ public class SQL_Util {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost/OurCloset?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles");
 		config.setUsername("root");
-		config.setPassword("MySQLServer");
+		config.setPassword("Aqiu2817!");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		dataSource = new HikariDataSource(config);
 	}
@@ -79,6 +79,12 @@ public class SQL_Util {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static boolean isEstablished() {
+		if (dataSource == null)
+			return false;
+		return true;
 	}
 		
 	/**
