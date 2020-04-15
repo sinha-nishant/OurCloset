@@ -11,7 +11,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
@@ -25,8 +24,7 @@ hs_err_pid*
 
 main.java
 
-/.DS_Store
-src/.DS_Store
+*.DS_Store
 /images
 .classpath
 .project
