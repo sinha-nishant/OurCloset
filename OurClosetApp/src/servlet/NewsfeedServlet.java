@@ -8,22 +8,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import model.User;
 import util.SQL_Util;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class NewsfeedServlet
  */
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/newsfeed")
+public class NewsfeedServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public NewsfeedServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,31 +35,17 @@ public class LoginServlet extends HttpServlet {
 		
 		if (!SQL_Util.isEstablished())
 			SQL_Util.initDataSource();
-		
-		String uscEmail = "";
-		String password = "";
-		uscEmail = request.getParameter("uscemail");
-		password = request.getParameter("password");
-		String next = "/login.jsp";
-		String message = "";
-		String loggedIn = "";
-		
-		int userID = SQL_Util.authenticate(uscEmail, password);
-		
-		if (userID == 0) {
-			message = "No account was found, please try again";
-			request.setAttribute("loginMessage", message);
-		}
-		else {
-			next = "/newsfeed";
-			HttpSession session = request.getSession();
-			session.setAttribute("user", SQL_Util.getUser(userID));
-			loggedIn = "true";
-			session.setAttribute("isLoggedIn", loggedIn);
-		}
-		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
-		dispatch.forward(request, response);
-		return;	
+
+		/* get trending posts
+		 * ArrayList<Product> trending = SQL_Util.getTrending();
+		 * request.setAttribute("trending", trending);
+		 * get posts by recent order
+		 * ArrayList<Product> recent = SQL_Util.getRecent();
+		 * request.setAttribute("recent", recent);
+		 * RequestDispatcher dispatch = getServletContext().getRequestDispatcher("newsfeed.jsp");
+			dispatch.forward(request, response);
+			return;
+		 */
 	}
 
 	/**
