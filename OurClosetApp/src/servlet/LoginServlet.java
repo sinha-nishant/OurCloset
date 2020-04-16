@@ -42,16 +42,15 @@ public class LoginServlet extends HttpServlet {
 		String password = "";
 		uscEmail = request.getParameter("uscemail");
 		password = request.getParameter("password");
-		System.out.println(uscEmail + " " + password);
 		String next = "/login.jsp";
 		String message = "";
 		String loggedIn = "";
 		
-		System.out.println(uscEmail + " " + password);
 		int userID = SQL_Util.authenticate(uscEmail, password);
 		
 		if (userID == 0) {
 			message = "No account was found, please try again";
+			request.setAttribute("loginMessage", message);
 		}
 		else {
 			next = "/home.jsp";

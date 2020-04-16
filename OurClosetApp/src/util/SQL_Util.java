@@ -22,12 +22,19 @@ public class SQL_Util {
 	 * <b><i>Necessary at the beginning of all programs involving this class.
 	 */
 	public static void initDataSource() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost/OurCloset?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles");
 		config.setUsername("root");
 		config.setPassword("Aqiu2817!");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		dataSource = new HikariDataSource(config);
+	
 	}
 	
 	private static Connection getConnection() {
