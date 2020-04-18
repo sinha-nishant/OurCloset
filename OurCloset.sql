@@ -54,7 +54,7 @@ CREATE TABLE Tags (
 	tagID INTEGER(4) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     productID INTEGER(10) NOT NULL,
     FOREIGN KEY (productID) REFERENCES Products(productID),
-    tagName VARCHAR(20) NOT NULL UNIQUE
+    tagName VARCHAR(20) NOT NULL
 );
 
 -- Contains all notifications, also a parent of Comments and Interests
@@ -65,7 +65,7 @@ CREATE TABLE Notifications (
     productID INTEGER(10) NOT NULL,
     FOREIGN KEY (productID) REFERENCES Products(productID),
     notificationTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    whenViewed TIMESTAMP
+    whenViewed TIMESTAMP DEFAULT NULL
 );
 
 -- Contains the comments on each product page
