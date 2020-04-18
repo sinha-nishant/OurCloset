@@ -1,24 +1,21 @@
 html {
 	height: 100%;
-	margin: 0;
+	margin:0;
 }
-
 body {
 	height: 100%;
-	margin: 0;
+	margin:0;
 	background: linear-gradient(-135deg, #FFCC00, #990000);
-	font-family: 'Poppins', sans-serif;
+	font-family: 'Poppins', sans-serif;	
 	background-repeat: no-repeat;
 	background-attachment: fixed;
-	overflow: hidden;
+	overflow:hidden;
 	font-weight: 700;
 }
-
 h2, .labels {
 	font-weight: 700;
 	text-align: center;
 }
-
 .outer-box {
 	margin: 50px;
 	padding: 50px;
@@ -27,43 +24,40 @@ h2, .labels {
 	border-radius: 20px;
 }
 
-.left-side {
+#left-side {
 	vertical-align: top;
 	display: inline-block;
 	text-align: center;
 	padding-top: 50px;
-	width: 100%;
+	width: inherit;
 	text-overflow: left;
 }
-
-.left-side img {
-	width: 100%;
-	height: 70%;
-	object-fit: contain;
+#left-side img {
+	width: inherit;
 	margin: 0 auto;
 }
-
-p {
-	display: block;
+#left-side h2 {
+	padding-top: 20px;
 }
-
+p {
+	margin-left: 0px;
+	margin-right: 0px;
+	font-family: 'Montserrat', sans-serif;
+}
 .labels {
 	border-radius: 25px;
 	width: 100%;
 }
-
 .input-field {
 	position: relative;
 	margin: -10px;
 	font-size: 5px;
 }
-
 .icon {
 	position: relative;
 	top: 30px;
 	left: 20px;
 }
-
 .placeholder-text {
 	font-family: 'Montserrat', sans-serif;
 	border-radius: 25px;
@@ -71,13 +65,11 @@ p {
 	background-color: #EAEAE9;
 	text-indent: 18%;
 }
-
 #create-account {
 	margin-top: 50px;
 	text-align: center;
 	cursor: pointer;
 }
-
 #guest-access {
 	text-align: center;
 	cursor: pointer;
