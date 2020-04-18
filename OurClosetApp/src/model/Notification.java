@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 /**
  * @author Nishant Sinha
  */
-public abstract class Notification {
+public class Notification {
 	
 	/**
 	 * The primary key ID of this notification, 0 by default.
@@ -89,5 +89,9 @@ public abstract class Notification {
 	 */
 	public Timestamp getWhenViewed () {
 		return this.whenViewed;
+	}
+	
+	public String toString() {
+		return "Notification from user " + notifierID + " regarding product " + productID;
 	}
 }

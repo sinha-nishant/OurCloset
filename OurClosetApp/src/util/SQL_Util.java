@@ -31,10 +31,9 @@ public class SQL_Util {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost/OurCloset?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles");
 		config.setUsername("root");
-		config.setPassword("");
+		config.setPassword("MySQLServer");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		dataSource = new HikariDataSource(config);
-	
 	}
 	
 	private static Connection getConnection() {
@@ -50,6 +49,12 @@ public class SQL_Util {
 		}
 		
 		return null;
+	}
+	
+	public static boolean isEstablished() {
+		if (dataSource == null)
+			return false;
+		return true;
 	}
 	
 	public static void executeUpdateAndClose(Connection connection, PreparedStatement ps) {
@@ -86,12 +91,6 @@ public class SQL_Util {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public static boolean isEstablished() {
-		if (dataSource == null)
-			return false;
-		return true;
 	}
 		
 	/**
@@ -177,7 +176,7 @@ public class SQL_Util {
 				String lName = rs.getString("lname");
 				String profileImagePath = rs.getString("profileImagePath");
 				int interest = rs.getInt("interest");
-				return new User(userID, uscEmail, pass, fName, lName, profileImagePath, interest, getProducts(userID));
+				return new User(userID, uscEmail, pass, fName, lName, profileImagePath, interest, getProductsByUser(userID));
 			}
 		}
 		
@@ -258,22 +257,12 @@ public class SQL_Util {
 		addTags(addedPrimaryKey, product.getTags());
 	}
 	
-	/**
-	 * 
-	 * @param sellerID
-	 * @return
-	 */
-	public static ArrayList<Product> getProducts(int sellerID) {
-		Connection connection = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+	private static ArrayList<Product> handleProducts(ResultSet rs) {
+		if (rs == null) {
+			return null;
+		}
+		ArrayList<Product> products = new ArrayList<Product>();
 		try {
-			connection = getConnection();
-			ps = connection.prepareStatement("SELECT * FROM Products WHERE sellerID = ?");
-			ps.setInt(1, sellerID);
-			
-			ArrayList<Product> products = new ArrayList<Product>();
-			rs = ps.executeQuery();
 			while (rs.next()) {
 				int productID = rs.getInt("productID");
 				Product product = new Product(
@@ -290,12 +279,81 @@ public class SQL_Util {
 						rs.getDouble("rentPrice"),
 						rs.getDouble("buyPrice"),
 						rs.getShort("quantity"),
-						rs.getInt("interest"),
+						getProductInterest(productID),
 						getProductImagePaths(productID),
 						getComments(productID));
 				
 				products.add(product);
 			}
+			
+			return products;
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public static ArrayList<Product> getAllProducts() {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			connection = dataSource.getConnection();
+			ps = connection.prepareStatement("SELECT * FROM Products");
+			rs = ps.executeQuery();
+			ArrayList<Product> products = handleProducts(rs);
+			return products;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			closeAll(connection, ps, rs);
+		}
+		
+		return null;
+	}
+	
+	// TODO: NOT YET WORKING
+	public static ArrayList<Product> getPopularProducts() {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			connection = dataSource.getConnection();
+			ps = connection.prepareStatement("SELECT * FROM Products LIMIT 10 ");
+			rs = ps.executeQuery();
+			ArrayList<Product> products = handleProducts(rs);
+			return products;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			closeAll(connection, ps, rs);
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param sellerID
+	 * @return
+	 */
+	public static ArrayList<Product> getProductsByUser(int sellerID) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement("SELECT * FROM Products WHERE sellerID = ?");
+			ps.setInt(1, sellerID);
+			
+			rs = ps.executeQuery();
+			ArrayList<Product> products = handleProducts(rs);
 			
 			return products;
 			
@@ -437,24 +495,42 @@ public class SQL_Util {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param comment
-	 */
-	public static void addComment(Comment comment) {
+	public static ArrayList<Notification> getNotifications(int userID) {
 		Connection connection = null;
 		PreparedStatement ps = null;
-		int addedPrimaryKey = 1;
+		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			ps = connection.prepareStatement("INSERT INTO Notifications(notifierID, productID) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
-			ps.setInt(1, comment.getNotifierID());
-			ps.setInt(2, comment.getProductID());
+			ps = connection.prepareStatement("SELECT * FROM Notifications WHERE whenViewed IS NULL AND Notifications.productID IN "
+					+ "(SELECT productID FROM Products WHERE sellerID = ?)");
+			ps.setInt(1, userID);
 			
-			ResultSet rs = ps.getGeneratedKeys();
-			if (rs.next()) {
-				addedPrimaryKey = rs.getInt(1);
+			ArrayList<Notification> notifications = new ArrayList<Notification>();
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				notifications.add(new Notification(rs.getInt("notificationID"), rs.getInt("notifierID"), rs.getInt("productID"), rs.getTimestamp("notificationTime")));
 			}
+			return notifications;
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		finally {
+			closeAll(connection, ps, rs);
+		}
+		
+		return null;
+	}
+	
+	public void setNotificationsViewed(int userID) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement("UPDATE Notifications(whenViewed) VALUES (CURRENT_TIMESTAMP) WHERE Notifications.productID IN "
+					+ "(SELECT productID FROM Products where sellerID = ?)");
+			ps.setInt(1, userID);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -463,10 +539,41 @@ public class SQL_Util {
 		finally {
 			executeUpdateAndClose(connection, ps);
 		}
+	}
+	
+	/**
+	 * 
+	 * @param comment
+	 */
+	public static void addComment(Comment comment) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		int addedPrimaryKey = 0;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement("INSERT INTO Notifications(notifierID, productID) VALUES (?, ?)", new String[] {"notificationID"});
+			ps.setInt(1, comment.getNotifierID());
+			ps.setInt(2, comment.getProductID());
+			
+			ps.executeUpdate();
+			
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				addedPrimaryKey = rs.getInt(1);
+			}
+			
+			ps.close();
+			rs.close();
+			connection.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		try {
 			connection = getConnection();
 			ps = connection.prepareStatement("INSERT INTO Comments(commentID, message, replyTo) VALUES (?, ?, ?)");
+			System.out.println("Added primary key from notifications: " + addedPrimaryKey);
 			ps.setInt(1, addedPrimaryKey);
 			ps.setString(2, comment.getMessage());
 			ps.setInt(3, comment.isReplyTo());
@@ -512,6 +619,67 @@ public class SQL_Util {
 		}
 		
 		return null;
+	}
+	
+	public static void addInterest(Interest interest) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		int addedPrimaryKey = 0;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement("INSERT INTO Notifications(notifierID, productID) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, interest.getNotifierID());
+			ps.setInt(2, interest.getProductID());
+			
+			ps.executeUpdate();
+			
+			ResultSet rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				addedPrimaryKey = rs.getInt(1);
+			}
+			
+			ps.close();
+			rs.close();
+			connection.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement("INSERT INTO Interest(interestID) VALUES (?)");
+			ps.setInt(1, addedPrimaryKey);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			executeUpdateAndClose(connection, ps);
+		}
+	}
+	
+	public static int getProductInterest(int productID) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement("SELECT COUNT(*) FROM Interest I, Notifications N WHERE I.interestID = N.notificationID AND productID = ?");
+			ps.setInt(1, productID);
+			
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		finally {
+			closeAll(connection, ps, rs);
+		}
+		
+		return 0;
 	}
 	
 	/**
