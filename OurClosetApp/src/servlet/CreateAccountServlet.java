@@ -54,7 +54,7 @@ public class CreateAccountServlet extends HttpServlet {
         
         if (!arr[2].contentEquals("@usc.edu")) {
 			message = "Please make sure that you enter a USC email";
-			request.setAttribute("nonUSCEmail", message);
+			request.setAttribute("creatingAccountingMessage", message);
 			RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
 			dispatch.forward(request, response);
 			return;
@@ -72,7 +72,7 @@ public class CreateAccountServlet extends HttpServlet {
 			session.setAttribute("isLoggedIn", loggedIn);
 		} else {
 			message = "The account already exists.";
-			request.setAttribute("accountExists", message);	
+			request.setAttribute("creatingAccountMessage", message);	
 		}
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
 		dispatch.forward(request, response);
