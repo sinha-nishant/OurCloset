@@ -17,7 +17,11 @@
 	            <a href="#" ><i class="fa fa-bell"></i> Notifications </a>
 	    </nav>
  	</div>
-
+ 	
+	<%@page import="java.util.ArrayList" %>
+	<%@page import="model.Product" %>
+	
+ 	
 	<%
 		ArrayList<Product> trending = (ArrayList<Product>) request.getParameter("trending");
 		ArrayList<Product> recent = (ArrayList<Product>) request.getParameter("recent");

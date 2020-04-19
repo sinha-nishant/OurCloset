@@ -10,20 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.omg.CORBA.UserException;
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
+
+import model.User;
 import util.SQL_Util;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class CreateAccountServlet
  */
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/CreateAccountServlet")
+public class CreateAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public CreateAccountServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,35 +37,46 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
+
 		if (!SQL_Util.isEstablished())
 			SQL_Util.initDataSource();
 		
-		String uscEmail = "";
-		String password = "";
-		uscEmail = request.getParameter("uscemail");
-		password = request.getParameter("password");
 		String next = "/login.jsp";
 		String message = "";
 		String loggedIn = "";
 		
-		int userID = SQL_Util.authenticate(uscEmail, password);
+		String newEmail = request.getParameter("email");
+		String newFirstName = request.getParameter("fname");
+		String newLastName = request.getParameter("lname");
+		String newPassword = request.getParameter("password");
 		
-		if (userID == 0) {
-			message = "No account was found, please try again";
-			request.setAttribute("loginMessage", message);
-		}
-		else {
+        String[] arr = newEmail.split("@"); 
+        
+        if (!arr[2].contentEquals("@usc.edu")) {
+			message = "Please make sure that you enter a USC email";
+			request.setAttribute("nonUSCEmail", message);
+			RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
+			dispatch.forward(request, response);
+			return;
+        }
+        
+		model.User newUser = SQL_Util.getUser(Integer.parseInt(arr[1]));
+
+		
+		if (newUser == null) {
+			SQL_Util.addUser(new model.User(arr[0]+arr[1], newPassword, newFirstName, newLastName, null));
 			next = "/newsfeed";
 			HttpSession session = request.getSession();
-			session.setAttribute("user", SQL_Util.getUser(userID));
+			session.setAttribute("user", SQL_Util.getUser(Integer.parseInt(arr[0])));
 			loggedIn = "true";
 			session.setAttribute("isLoggedIn", loggedIn);
+		} else {
+			message = "The account already exists.";
+			request.setAttribute("accountExists", message);	
 		}
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
 		dispatch.forward(request, response);
-		return;	
+		return;
 	}
 
 	/**
