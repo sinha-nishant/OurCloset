@@ -41,11 +41,11 @@ public class NewsfeedServlet extends HttpServlet {
 		 * request.setAttribute("trending", trending);
 		 * get posts by recent order
 		 * ArrayList<Product> recent = SQL_Util.getRecent();
-		 * request.setAttribute("recent", recent);
-		 * RequestDispatcher dispatch = getServletContext().getRequestDispatcher("newsfeed.jsp");
-			dispatch.forward(request, response);
-			return;
-		 */
+		 * request.setAttribute("recent", recent); */
+		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("newsfeed.jsp");
+		dispatch.forward(request, response);
+		return;
+		 
 	}
 
 	/**
