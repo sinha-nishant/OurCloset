@@ -32,7 +32,7 @@
 				<!-- left hand side of login page -->
 				<div class="d-none d-md-flex col-md-4 col-lg-6">
 					<div id="left-side">
-						<img src="closet.png" alt="Responsive image of closet">
+						<img src="images/closet.png" alt="Responsive image of closet">
 						<h2>Welcome to OurCloset!</h2>
 						<p> The one-stop shop to rent or sell clothing so that you can have the fit you've always wanted for a reasonable price!</p>
 					</div>
