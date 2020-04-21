@@ -31,7 +31,7 @@ public class SQL_Util {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost/OurCloset?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles");
 		config.setUsername("root");
-		config.setPassword("MySQLServer");
+		config.setPassword("");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		dataSource = new HikariDataSource(config);
 	}
@@ -227,8 +227,8 @@ public class SQL_Util {
 			connection = getConnection();
 			
 			ps = connection.prepareStatement("INSERT INTO "
-					+ "Products(sellerID, brand, pName, color, itemType, size, descrip, rentPrice, buyPrice, quantity) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					+ "Products(sellerID, brand, pName, color, itemType, size, descrip, rentPrice, buyPrice) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 			
 			ps.setInt(1, product.getSellerID());
@@ -240,7 +240,6 @@ public class SQL_Util {
 			ps.setString(7, product.getDescription());
 			ps.setDouble(8, product.getRentPrice());
 			ps.setDouble(9, product.getBuyPrice());
-			ps.setShort(10, product.getQuantity());
 			
 			rs = ps.getGeneratedKeys();
 			if (rs.next()) {
@@ -279,7 +278,6 @@ public class SQL_Util {
 						getTags(productID),
 						rs.getDouble("rentPrice"),
 						rs.getDouble("buyPrice"),
-						rs.getShort("quantity"),
 						getProductInterest(productID),
 						getProductImagePaths(productID),
 						getComments(productID));

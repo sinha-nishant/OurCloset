@@ -63,11 +63,6 @@ public class Product {
 	private double buyPrice = 0;
 	
 	/**
-	 * The quantity available of this product.
-	 */
-	private short quantity = 0;
-	
-	/**
 	 * A counter of the number of users indicating interest in this product, 0 by default.
 	 */
 	private int interest = 0;
@@ -97,10 +92,9 @@ public class Product {
 	 * @param descrip The description the seller provides for the product.
 	 * @param rentPrice The rental price of this product per unit, pass 0 if the user is not offering this product as a rental.
 	 * @param buyPrice The outright purchase price of this product per unit, pass 0 if the user is not offering this product for purchase.
-	 * @param quantity The quantity available of this product.
 	 * @param imagePaths ArrayList of Strings where each element is the path to an image of this product.
 	 */ 
-	public Product(int sellerID, String pName, String color, String itemType, String size, String descrip, double rentPrice, double buyPrice, short quantity, ArrayList<String> imagePaths) {
+	public Product(int sellerID, String pName, String color, String itemType, String size, String descrip, double rentPrice, double buyPrice, ArrayList<String> imagePaths) {
 		this.sellerID = sellerID;
 		this.pName = pName;
 		this.color = color;
@@ -109,7 +103,6 @@ public class Product {
 		this.descrip = descrip;
 		this.rentPrice = rentPrice;
 		this.buyPrice = buyPrice;
-		this.quantity = quantity;
 		this.imagePaths = imagePaths;
 	}
 	
@@ -124,10 +117,9 @@ public class Product {
 	 * @param tags ArrayList of Tag objects regarding this product.
 	 * @param rentPrice The rental price of this product per unit, pass 0 if the user is not offering this product as a rental.
 	 * @param buyPrice The outright purchase price of this product per unit, pass 0 if the user is not offering this product for purchase.
-	 * @param quantity The quantity available of this product.
 	 * @param imagePaths ArrayList of Strings where each element is the path to an image of this product.
 	 */
-	public Product(int sellerID, String pName, String color, String itemType, String size, String descrip, ArrayList<Tag> tags, double rentPrice, double buyPrice, short quantity, ArrayList<String> imagePaths) {
+	public Product(int sellerID, String pName, String color, String itemType, String size, String descrip, ArrayList<Tag> tags, double rentPrice, double buyPrice, ArrayList<String> imagePaths) {
 		this.sellerID = sellerID;
 		this.pName = pName;
 		this.color = color;
@@ -137,7 +129,6 @@ public class Product {
 		this.tags = tags;
 		this.rentPrice = rentPrice;
 		this.buyPrice = buyPrice;
-		this.quantity = quantity;
 		this.imagePaths = imagePaths;
 	}
 
@@ -152,10 +143,9 @@ public class Product {
 	 * @param descrip The description the seller provides for the product.
 	 * @param rentPrice The rental price of this product per unit, pass 0 if the user is not offering this product as a rental.
 	 * @param buyPrice The outright purchase price of this product per unit, pass 0 if the user is not offering this product for purchase.
-	 * @param quantity The quantity available of this product.
 	 * @param imagePaths ArrayList of Strings where each element is the path to an image of this product.
 	 */
-	public Product(int sellerID, String brand, String pName, String color, String itemType, String size, String descrip, double rentPrice, double buyPrice, short quantity, ArrayList<String> imagePaths) {
+	public Product(int sellerID, String brand, String pName, String color, String itemType, String size, String descrip, double rentPrice, double buyPrice, ArrayList<String> imagePaths) {
 		this.sellerID = sellerID;
 		this.brand = brand;
 		this.pName = pName;
@@ -165,7 +155,6 @@ public class Product {
 		this.descrip = descrip;
 		this.rentPrice = rentPrice;
 		this.buyPrice = buyPrice;
-		this.quantity = quantity;
 		this.imagePaths = imagePaths;
 	}
 
@@ -181,10 +170,9 @@ public class Product {
 	 * @param tags ArrayList of Tag objects regarding this product.
 	 * @param rentPrice The rental price of this product per unit, pass 0 if the user is not offering this product as a rental.
 	 * @param buyPrice The outright purchase price of this product per unit, pass 0 if the user is not offering this product for purchase.
-	 * @param quantity The quantity available of this product.
 	 * @param imagePaths ArrayList of Strings where each element is the path to an image of this product.
 	 */
-	public Product(int sellerID, String brand, String pName, String color, String itemType, String size, String descrip, ArrayList<Tag> tags, double rentPrice, double buyPrice, short quantity, ArrayList<String> imagePaths) {
+	public Product(int sellerID, String brand, String pName, String color, String itemType, String size, String descrip, ArrayList<Tag> tags, double rentPrice, double buyPrice, ArrayList<String> imagePaths) {
 		this.sellerID = sellerID;
 		this.brand = brand;
 		this.pName = pName;
@@ -195,7 +183,6 @@ public class Product {
 		this.tags = tags;
 		this.rentPrice = rentPrice;
 		this.buyPrice = buyPrice;
-		this.quantity = quantity;
 		this.imagePaths = imagePaths;
 	}
 
@@ -213,13 +200,12 @@ public class Product {
 	 * @param tags ArrayList of Tag objects regarding this product.
 	 * @param rentPrice The rental price of this product per unit, pass 0 if the user is not offering this product as a rental.
 	 * @param buyPrice The outright purchase price of this product per unit, pass 0 if the user is not offering this product for purchase.
-	 * @param quantity The quantity available of this product.
 	 * @param interest A counter of the number of users indicating interest in this product.
 	 * @param imagePaths ArrayList of Strings where each element is the path to an image of this product.
 	 * @param comments ArrayList of Comment objects regarding this product.
 	 */
 	public Product(int productID, int sellerID, String brand, String pName, String color, String itemType, String size, Timestamp timePosted, String descrip, ArrayList<Tag> tags, 
-			double rentPrice, double buyPrice, short quantity, int interest, ArrayList<String> imagePaths, ArrayList<Comment> comments) {
+			double rentPrice, double buyPrice, int interest, ArrayList<String> imagePaths, ArrayList<Comment> comments) {
 		this.productID = productID;
 		this.sellerID = sellerID;
 		this.brand = brand;
@@ -232,7 +218,6 @@ public class Product {
 		this.tags = tags;
 		this.rentPrice = rentPrice;
 		this.buyPrice = buyPrice;
-		this.quantity = quantity;
 		this.interest = interest;
 		this.imagePaths = imagePaths;
 		this.comments = comments;
@@ -302,13 +287,6 @@ public class Product {
 	}
 
 	/**
-	 * @return The quantity available of this product.
-	 */
-	public short getQuantity() {
-		return this.quantity;
-	}
-
-	/**
 	 * @return The rental cost of this product per unit.<br>Will return 0 if a rent price has not been provided.
 	 */
 	public  double getRentPrice() {
@@ -353,7 +331,7 @@ public class Product {
 	public String toString() {
 		return "Product ID: " + productID + "\nSeller ID: " + sellerID + "\nBrand: " + brand +
 				"\nProduct Name: " + pName + "\nTime Posted: " + timePosted.toString() +
-				"\nDescription: " + descrip + "\nQuantity: " + quantity +
+				"\nDescription: " + descrip +
 				"\nRental Price: " + rentPrice + "\nBuy Price: " + buyPrice + "\nImage Paths: " + imagePaths +
 				"\nTags: " + tags.toString() + "\nInterest: " + interest + "\nComments: " + comments.toString();
 	}

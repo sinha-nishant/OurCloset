@@ -28,7 +28,6 @@ CREATE TABLE Products (
     descrip VARCHAR(280),
     rentPrice DECIMAL(5,2) NOT NULL,
     buyPrice DECIMAL(5,2) NOT NULL,
-    quantity TINYINT(3) NOT NULL,
     interest INTEGER(10) DEFAULT 0 NOT NULL
 );
 
