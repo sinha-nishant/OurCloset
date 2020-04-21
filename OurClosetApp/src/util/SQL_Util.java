@@ -23,7 +23,7 @@ public class SQL_Util {
 	 */
 	public static void initDataSource() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,6 +61,22 @@ public class SQL_Util {
 		try {
 			if (ps != null) {
 				ps.executeUpdate();
+				ps.close();
+			}
+			
+			if (connection != null) {
+				connection.close();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void closeAll (Connection connection, PreparedStatement ps) {
+		try {
+			
+			if (ps != null) {
 				ps.close();
 			}
 			
@@ -227,19 +243,20 @@ public class SQL_Util {
 			connection = getConnection();
 			
 			ps = connection.prepareStatement("INSERT INTO "
-					+ "Products(sellerID, brand, pName, color, itemType, size, descrip, rentPrice, buyPrice) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					+ "Products(sellerID, brand, pName, itemType, size, descrip, rentPrice, buyPrice) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 			
 			ps.setInt(1, product.getSellerID());
 			ps.setString(2, product.getBrand());
 			ps.setString(3, product.getProductName());
-			ps.setString(4, product.getColor());
-			ps.setString(5, product.getItemType());
-			ps.setString(6, product.getSize());
-			ps.setString(7, product.getDescription());
-			ps.setDouble(8, product.getRentPrice());
-			ps.setDouble(9, product.getBuyPrice());
+			ps.setString(4, product.getItemType());
+			ps.setString(5, product.getSize());
+			ps.setString(6, product.getDescription());
+			ps.setDouble(7, product.getRentPrice());
+			ps.setDouble(8, product.getBuyPrice());
+			
+			ps.executeUpdate();
 			
 			rs = ps.getGeneratedKeys();
 			if (rs.next()) {
@@ -250,9 +267,10 @@ public class SQL_Util {
 			e.printStackTrace();
 		}
 		finally {
-			executeUpdateAndClose(connection, ps);
+			closeAll(connection, ps);
 		}
 		
+		addColors(addedPrimaryKey, product.getColors());
 		addProductImagePaths(addedPrimaryKey, product.getImagePaths());
 		addTags(addedPrimaryKey, product.getTags());
 	}
@@ -270,7 +288,7 @@ public class SQL_Util {
 						rs.getInt("sellerID"),
 						rs.getString("brand"),
 						rs.getString("pName"), 
-						rs.getString("color"),
+						getColors(productID),
 						rs.getString("itemType"),
 						rs.getString("size"),
 						rs.getTimestamp("timePosted"),
@@ -406,6 +424,56 @@ public class SQL_Util {
 			
 			return imagePaths;
 		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		finally {
+			closeAll(connection, ps, rs);
+		}
+		
+		return null;
+	}
+	
+	public static void addColors(int productID, ArrayList<String> colors) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement("INSERT INTO Colors(productID, color) VALUES (?, ?)");
+			for (String color: colors) {
+				ps.setInt(1, productID);
+				ps.setString(2, color.substring(1));
+				ps.addBatch();
+			}
+			
+			ps.executeBatch();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();		
+		}
+		finally {
+			closeAll(connection, ps);
+		}
+	}
+	
+	public static ArrayList<String> getColors(int productID) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement("SELECT color FROM Colors WHERE productID = ?");
+			ps.setInt(1, productID);
+			
+			ArrayList<String> colors = new ArrayList<String>();
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				colors.add("#" + rs.getString("color"));
+			}
+						
+			return colors;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -572,7 +640,6 @@ public class SQL_Util {
 		try {
 			connection = getConnection();
 			ps = connection.prepareStatement("INSERT INTO Comments(commentID, message, replyTo) VALUES (?, ?, ?)");
-			System.out.println("Added primary key from notifications: " + addedPrimaryKey);
 			ps.setInt(1, addedPrimaryKey);
 			ps.setString(2, comment.getMessage());
 			ps.setInt(3, comment.isReplyTo());
@@ -978,6 +1045,15 @@ public class SQL_Util {
 			
 			connection = getConnection();
 			ps = connection.prepareStatement("DELETE FROM Comments");
+			executeUpdateAndClose(connection, ps);
+			
+			connection = getConnection();
+			ps = connection.prepareStatement("DELETE FROM Colors");
+			executeUpdateAndClose(connection, ps);
+			
+			connection = getConnection();
+			ps = connection.prepareStatement("ALTER TABLE Colors AUTO_INCREMENT = ?");
+			ps.setInt(1, 1);
 			executeUpdateAndClose(connection, ps);
 			
 			connection = getConnection();

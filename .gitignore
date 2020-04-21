@@ -22,7 +22,8 @@
 hs_err_pid*
 /bin/
 
-main.java
-
 *.DS_Store
 /images
+
+# This shouldn't be changed anymore
+*.classpath

@@ -33,9 +33,9 @@ public class Product {
 	private Timestamp timePosted = null;
 	
 	/**
-	 * The color of this product, null by default.
+	 * The colors of this product, null by default. For example, [#FF5733, #27B147].
 	 */
-	private String color = null;
+	private ArrayList<String> colors = null;
 	
 	/**
 	 * The type of Product, null by default. For example "shirt", "jeans", or "shoes".
@@ -94,10 +94,10 @@ public class Product {
 	 * @param buyPrice The outright purchase price of this product per unit, pass 0 if the user is not offering this product for purchase.
 	 * @param imagePaths ArrayList of Strings where each element is the path to an image of this product.
 	 */ 
-	public Product(int sellerID, String pName, String color, String itemType, String size, String descrip, double rentPrice, double buyPrice, ArrayList<String> imagePaths) {
+	public Product(int sellerID, String pName, ArrayList<String> colors, String itemType, String size, String descrip, double rentPrice, double buyPrice, ArrayList<String> imagePaths) {
 		this.sellerID = sellerID;
 		this.pName = pName;
-		this.color = color;
+		this.colors = colors;
 		this.itemType = itemType;
 		this.size = size;
 		this.descrip = descrip;
@@ -119,10 +119,10 @@ public class Product {
 	 * @param buyPrice The outright purchase price of this product per unit, pass 0 if the user is not offering this product for purchase.
 	 * @param imagePaths ArrayList of Strings where each element is the path to an image of this product.
 	 */
-	public Product(int sellerID, String pName, String color, String itemType, String size, String descrip, ArrayList<Tag> tags, double rentPrice, double buyPrice, ArrayList<String> imagePaths) {
+	public Product(int sellerID, String pName, ArrayList<String> colors, String itemType, String size, String descrip, ArrayList<Tag> tags, double rentPrice, double buyPrice, ArrayList<String> imagePaths) {
 		this.sellerID = sellerID;
 		this.pName = pName;
-		this.color = color;
+		this.colors = colors;
 		this.itemType = itemType;
 		this.size = size;
 		this.descrip = descrip;
@@ -145,11 +145,11 @@ public class Product {
 	 * @param buyPrice The outright purchase price of this product per unit, pass 0 if the user is not offering this product for purchase.
 	 * @param imagePaths ArrayList of Strings where each element is the path to an image of this product.
 	 */
-	public Product(int sellerID, String brand, String pName, String color, String itemType, String size, String descrip, double rentPrice, double buyPrice, ArrayList<String> imagePaths) {
+	public Product(int sellerID, String brand, String pName, ArrayList<String> colors, String itemType, String size, String descrip, double rentPrice, double buyPrice, ArrayList<String> imagePaths) {
 		this.sellerID = sellerID;
 		this.brand = brand;
 		this.pName = pName;
-		this.color = color;
+		this.colors = colors;
 		this.itemType = itemType;
 		this.size = size;
 		this.descrip = descrip;
@@ -172,11 +172,11 @@ public class Product {
 	 * @param buyPrice The outright purchase price of this product per unit, pass 0 if the user is not offering this product for purchase.
 	 * @param imagePaths ArrayList of Strings where each element is the path to an image of this product.
 	 */
-	public Product(int sellerID, String brand, String pName, String color, String itemType, String size, String descrip, ArrayList<Tag> tags, double rentPrice, double buyPrice, ArrayList<String> imagePaths) {
+	public Product(int sellerID, String brand, String pName, ArrayList<String> colors, String itemType, String size, String descrip, ArrayList<Tag> tags, double rentPrice, double buyPrice, ArrayList<String> imagePaths) {
 		this.sellerID = sellerID;
 		this.brand = brand;
 		this.pName = pName;
-		this.color = color;
+		this.colors = colors;
 		this.itemType = itemType;
 		this.size = size;
 		this.descrip = descrip;
@@ -204,13 +204,13 @@ public class Product {
 	 * @param imagePaths ArrayList of Strings where each element is the path to an image of this product.
 	 * @param comments ArrayList of Comment objects regarding this product.
 	 */
-	public Product(int productID, int sellerID, String brand, String pName, String color, String itemType, String size, Timestamp timePosted, String descrip, ArrayList<Tag> tags, 
+	public Product(int productID, int sellerID, String brand, String pName, ArrayList<String> colors, String itemType, String size, Timestamp timePosted, String descrip, ArrayList<Tag> tags, 
 			double rentPrice, double buyPrice, int interest, ArrayList<String> imagePaths, ArrayList<Comment> comments) {
 		this.productID = productID;
 		this.sellerID = sellerID;
 		this.brand = brand;
 		this.pName = pName;
-		this.color = color;
+		this.colors = colors;
 		this.itemType = itemType;
 		this.size = size;
 		this.timePosted = timePosted;
@@ -261,8 +261,8 @@ public class Product {
 	/**
 	 * @return The color of this product.
 	 */
-	public String getColor() {
-		return this.color;
+	public ArrayList<String> getColors() {
+		return this.colors;
 	}
 
 	/**
@@ -331,7 +331,7 @@ public class Product {
 	public String toString() {
 		return "Product ID: " + productID + "\nSeller ID: " + sellerID + "\nBrand: " + brand +
 				"\nProduct Name: " + pName + "\nTime Posted: " + timePosted.toString() +
-				"\nDescription: " + descrip +
+				"\nDescription: " + descrip + "\nColors: " + colors.toString() +
 				"\nRental Price: " + rentPrice + "\nBuy Price: " + buyPrice + "\nImage Paths: " + imagePaths +
 				"\nTags: " + tags.toString() + "\nInterest: " + interest + "\nComments: " + comments.toString();
 	}
