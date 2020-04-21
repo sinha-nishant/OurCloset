@@ -28,8 +28,10 @@
               </a>
  
 -->
-<!DOCTYPE html>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><html>
 <head>
     <title>Profile Page </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -98,7 +100,7 @@
     margin-top: 9px;
     margin-bottom: 9px;
     float: left;
-    background: url(images/stormtrooper.jpg) no-repeat;
+    background: url(stormtrooper.jpg) no-repeat;
     background-size: 150px;
     width: 150px;
     height: 150px;
@@ -188,9 +190,9 @@
 <body>
     <div class="navbar">
       <nav>
-            <a href="home.html"> Our Closet </a>
-            <a href="home.html"> Home </a>
-            <a href="profilepage.html"> Profile</a>
+            <a href="hometest.jsp"> Our Closet </a>
+            <a href="hometest.jsp"> Home </a>
+            <a href="profilepage.jsp"> Profile</a>
             <a href="search.html"><i class="fa fa-fw fa-search"></i>Search</a>
             <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
     </nav>
@@ -205,16 +207,23 @@
         </span>
         <div class="profileInfo">
           <ul>
-            <span class="name">First & Last Name</span>
+            <span class="name"></span>
           </ul>
           <ul>
-            <li> <span class="profile-stat-count">0</span> Posts </li>
+          
+          	<%@ page import="model.User" %>
+          	
+          	<%
+          		User user = (User)session.getAttribute("user");
+          		int totalInterests = (user.getInterest());
+          	%>
+            <li> <span class="profile-stat-count"><%=totalInterests %></span> Posts </li>
             <li> <span class="profile-stat-count">0</span> Interests </li>
           </ul>
         </div>
       </header>
       <span class="gridProduct">
-        <a href="uploadProduct.html"> <img src="images/plussign.png"id="UploadProductPage" alt="Upload"> </a>
+        <a href="uploadProduct.html"> <img src="plussign.png"id="UploadProductPage" alt="Upload"> </a>
     </span>
    </div>
   
