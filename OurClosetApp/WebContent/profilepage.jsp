@@ -109,6 +109,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
   } 
    input:focus, textarea:focus, select:focus{
       outline: none;
