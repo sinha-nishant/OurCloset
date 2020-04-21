@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -104,7 +107,7 @@
 
 		<div class="container">
 
-			<form action= method= class="mt-3">
+			<form method="POST" action="CreateAccountServlet" class="mt-3">
 				<!-- first name -->
 				<div class="form-group row">
 					<label for="fname" class="col-md-3 col-lg-4 col-form-label labels">First Name</label>
@@ -130,6 +133,7 @@
 				<div class="form-group row">
 					<label for="loginPassword" class="col-md-3 col-lg-4 col-form-label labels">Password</label>
 					<div class="col-md-9 col-lg-8">
+					
 						<input type="password" class="form-control placeholder-text" name="password" id="loginPassword" placeholder="i.e. OurClosetRoxx">
 					</div>
 				</div>
@@ -141,6 +145,9 @@
 					</button>
 				</div>
 			</form>
+			<c:if test="${not empty createAccountMessage}">
+				<div>${createAccountMessage}</div>
+			</c:if>
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -151,7 +158,7 @@
 	<script>
 		$("#back-area").click(function() {
 			console.log("back clicked");
-			location.href = "login.html";
+			location.href = "login.jsp";
 		});
 	
 	</script>

@@ -97,13 +97,13 @@
 		// redirect to create account
 		$("#create-account").click(function() {
 			console.log("create account clicked");
-			location.href = "createAccount.html";
+			location.href = "createAccount.jsp";
 		});
 		
 		// redirect to home page, guest view
 		$("#guest-access").click(function() {
 			console.log("create account clicked");
-			location.href = "createAccount.html";
+			location.href = "createAccount.jsp";
 		});
 	</script>
 

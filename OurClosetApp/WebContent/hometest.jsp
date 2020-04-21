@@ -1,5 +1,7 @@
-
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <style>
@@ -114,8 +116,8 @@ h3 {
 <div class="navbar">
       <nav>
             <a href="#"> Our Closet </a>
-            <a href="home.html"> Home </a>
-            <a href="profilepage.html"> Profile</a>
+            <a href="hometest.jsp"> Home </a>
+            <a href="profilepage.jsp"> Profile</a>
             <a href="#"><i class="fa fa-fw fa-search"></i>Search</a>
             <a href="#" ><i class="fa fa-bell"></i> Notifications </a>
     </nav>

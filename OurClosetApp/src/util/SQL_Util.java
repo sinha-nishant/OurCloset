@@ -4,13 +4,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
+import java.lang.String;
+
+import com.sun.xml.internal.fastinfoset.util.DuplicateAttributeVerifier;
+//import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import model.*;
+import model.Comment;
+import model.Interest;
+import model.Notification;
+import model.Product;
+import model.Tag;
+import model.Transaction;
+import model.User;
 
 @SuppressWarnings("resource")
 public class SQL_Util {
@@ -31,7 +41,7 @@ public class SQL_Util {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost/OurCloset?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles");
 		config.setUsername("root");
-		config.setPassword("");
+		config.setPassword("NecdetT1");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		dataSource = new HikariDataSource(config);
 	}
@@ -114,6 +124,7 @@ public class SQL_Util {
 			e.printStackTrace();
 		}
 		
+		
 		finally {
 			executeUpdateAndClose(connection, ps);
 		}
@@ -153,6 +164,7 @@ public class SQL_Util {
 		
 		return 0;
 	}
+	
 
 	/**
 	 * 
@@ -172,13 +184,15 @@ public class SQL_Util {
 			if (rs.next()) {
 				String uscEmail = rs.getString("uscEmail");
 				String pass = rs.getString("pass");
-				String fName = rs.getString("fname");
-				String lName = rs.getString("lname");
+				String fName = rs.getString("fName");
+				String lName = rs.getString("lName");
 				String profileImagePath = rs.getString("profileImagePath");
 				int interest = rs.getInt("interest");
+
 				return new User(userID, uscEmail, pass, fName, lName, profileImagePath, interest, getProductsByUser(userID));
 			}
 		}
+		
 		
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -210,6 +224,35 @@ public class SQL_Util {
 		
 		finally {
 			executeUpdateAndClose(connection, ps);
+		}
+	}
+	
+	/**
+	 * Checks if a user is registered
+	 * @param uscEmail
+	 */
+	@SuppressWarnings("finally")
+	public static boolean checkIfExists(String uscemail) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		boolean exists = false;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement("SELECT * FROM Users WHERE uscEmail = ? AND Valid = TRUE");
+			ps.setString(1, uscemail);
+			
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				exists = true;;
+			}
+
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			return exists;
 		}
 	}
 	

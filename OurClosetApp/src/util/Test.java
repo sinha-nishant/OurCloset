@@ -1,7 +1,14 @@
 package util;
 
 import java.util.ArrayList;
-import model.*;
+
+import java.lang.String;
+
+import model.Comment;
+import model.Interest;
+import model.Product;
+import model.Tag;
+import model.User;
 
 public class Test {
 
