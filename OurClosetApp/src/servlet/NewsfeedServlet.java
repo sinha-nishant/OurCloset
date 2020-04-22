@@ -36,16 +36,16 @@ public class NewsfeedServlet extends HttpServlet {
 		if (!SQL_Util.isEstablished())
 			SQL_Util.initDataSource();
 
-		// get trending posts
-		ArrayList<Product> trending = SQL_Util.getPopularProducts();
-		request.setAttribute("trending", trending);
-		// get posts by recent order
-		ArrayList<Product> recent = SQL_Util.getAllProducts();
-		request.setAttribute("recent", recent);
-		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("newsfeed.jsp");
-		dispatch.forward(request, response);
-		return;
-
+		/* get trending posts
+		 * ArrayList<Product> trending = SQL_Util.getTrending();
+		 * request.setAttribute("trending", trending);
+		 * get posts by recent order
+		 * ArrayList<Product> recent = SQL_Util.getRecent();
+		 * request.setAttribute("recent", recent);
+		 * RequestDispatcher dispatch = getServletContext().getRequestDispatcher("newsfeed.jsp");
+			dispatch.forward(request, response);
+			return;
+		 */
 	}
 
 	/**
