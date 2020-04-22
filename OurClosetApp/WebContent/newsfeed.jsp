@@ -34,6 +34,16 @@
 			<div id="innerwrapper">
 				<form action="details" method="GET" name="details" value="Details">
 					<input type="image" class="image" src="${product.getImagePath()}" border="0" alt="Submit" />
+					<input type="hidden" name="brand" value="${product.getBrand()}">
+					<input type="hidden" name="productName" value="${product.getProductName()}">
+					<input type="hidden" name="itemType" value="${product.getItemType()}">
+					<input type="hidden" name="size" value="${product.getSize()}">
+					<input type="hidden" name="description" value="${product.getDescription()}">
+					<input type="hidden" name="rentPrice" value="${product.getRentPrice()}">
+					<input type="hidden" name="buyPrice" value="${product.getBuyPrice()}">
+					<input type="hidden" name="interest" value="${product.getInterest()}">
+					<%-- <input type="hidden" name="comments" value="${product.getComments()}">
+					<input type="hidden" name="images" value="${product.getImagePaths()}"> --%>
 				</form>
   			</div>
   		</div>
@@ -44,11 +54,19 @@
 		<div class="column">
 			<form action="details" method="GET" name="details" value="Details">
 				<input type="image" class="image" src="${product.getImagePath()}" border="0" alt="Submit" />
+				<input type="hidden" name="brand" value="${product.getBrand()}">
+				<input type="hidden" name="productName" value="${product.getProductName()}">
+				<input type="hidden" name="itemType" value="${product.getItemType()}">
+				<input type="hidden" name="size" value="${product.getSize()}">
+				<input type="hidden" name="description" value="${product.getDescription()}">
+				<input type="hidden" name="rentPrice" value="${product.getRentPrice()}">
+				<input type="hidden" name="buyPrice" value="${product.getBuyPrice()}">
+				<input type="hidden" name="interest" value="${product.getInterest()}">
+				<%-- <input type="hidden" name="comments" value="${product.getComments()}">
+				<input type="hidden" name="images" value="${product.getImagePaths()}"> --%>
+				
 			</form>
   		</div>
 	</c:forEach>
-	
-	
-
 </body>
 </html>

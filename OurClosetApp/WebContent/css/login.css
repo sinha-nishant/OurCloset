@@ -3,13 +3,13 @@ html {
 	margin:0;
 }
 body {
-	height: 100%;
+	
 	margin:0;
 	background: linear-gradient(-135deg, #FFCC00, #990000);
 	font-family: 'Poppins', sans-serif;	
 	background-repeat: no-repeat;
 	background-attachment: fixed;
-	overflow:hidden;
+	
 	font-weight: 700;
 }
 h2, .labels {

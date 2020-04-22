@@ -19,7 +19,6 @@
 	<!-- css -->
 	<style>
 		html {
-			height: 100%;
 			margin:0;
 		}
 		body {
@@ -29,7 +28,6 @@
 			font-family: 'Poppins', sans-serif;	
 			background-repeat: no-repeat;
 			background-attachment: fixed;
-			overflow:hidden;
 			font-weight: 700;
 			font-size: 20px;
 		}
@@ -109,7 +107,7 @@
 				<div class="form-group row">
 					<label for="fname" class="col-md-3 col-lg-4 col-form-label labels">First Name</label>
 					<div class="col-md-9 col-lg-8">
-						<input type="text" class="form-control placeholder-text" name="firstName" id="fname" placeholder="i.e. Tommy">
+						<input type="text" class="form-control placeholder-text" name="fname" id="fname" placeholder="i.e. Tommy">
 					</div>
 				</div>
 				<!-- last name -->
@@ -151,7 +149,7 @@
 	<script>
 		$("#back-area").click(function() {
 			console.log("back clicked");
-			location.href = "login.html";
+			location.href = "login.jsp";
 		});
 	
 	</script>
