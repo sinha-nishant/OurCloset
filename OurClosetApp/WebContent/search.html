@@ -34,6 +34,23 @@
 			font-weight: 700;
 			font-size: 20px;
 		}
+		.navbar {
+			width: 100%;
+			background: linear-gradient(to right, #993300 0%, #ffcc00 100%);
+			overflow: auto;
+			border-bottom: 1px black solid;
+		}
+		.navbar a {
+			float: left;
+			padding: 15px;
+			color: white;
+			text-decoration: none;
+			font-size: 20px;
+			text-shadow: 1px 1px black;
+		}
+		.navbar a:hover {
+			background-color: #fc6f03;
+		}
 		h1, .labels {
 			font-weight: 700;
 		}
@@ -93,11 +110,15 @@
 	</style>
 </head>
 <body>
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="index.php">Home</a></li>
-		<li class="breadcrumb-item active">Search</li>
-	</ol>
-	
+	<div class="navbar">
+		<nav>
+			  <a href="home.html"> Our Closet </a>
+			  <a href="home.html"> Home </a>
+			  <a href="profilepage.html"> Profile</a>
+			  <a href="search.html"><i class="fa fa-fw fa-search"></i>Search</a>
+			  <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
+	  </nav>
+	  </div>
 	<div class="outer-box">
 		<div class="container">
 			<div class="row">
