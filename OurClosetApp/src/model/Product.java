@@ -86,7 +86,7 @@ public class Product {
 	 * Basic Product constructor called by frontend when user is adding a product without tags or a brand name.
 	 * @param sellerID The primary key ID of the seller offering this product.
 	 * @param pName The name of this product. For example, in "Nike Air Force 1", the name would be "Air Force 1".
-	 * @param color The color of this product.
+	 * @param colors The colors of this product.
 	 * @param itemType The type of Product. For example "shirt", "jeans", or "shoes".
 	 * @param size The size of this item, null by default, all standardized to strings to conform to guidelines for a wide variety of products.
 	 * @param descrip The description the seller provides for the product.
@@ -110,7 +110,7 @@ public class Product {
 	 * Overloaded Product constructor called by frontend when user is adding a project without a brand name, but with tags.
 	 * @param sellerID The primary key ID of the seller offering this product.
 	 * @param pName The name of this product. For example, in "Nike Air Force 1", the name would be "Air Force 1".
-	 * @param color The color of this product.
+	 * @param colors The colors of this product.
 	 * @param itemType The type of Product. For example "shirt", "jeans", or "shoes".
 	 * @param size The size of this item, null by default, all standardized to strings to conform to guidelines for a wide variety of products.
 	 * @param descrip The description the seller provides for the product.
@@ -137,7 +137,7 @@ public class Product {
 	 * @param sellerID The primary key ID of the seller offering this product.
 	 * @param brand The brand of this product.
 	 * @param pName The name of this product. For example, in "Nike Air Force 1", the name would be "Air Force 1".
-	 * @param color The color of this product.
+	 * @param colors The colors of this product.
 	 * @param itemType The type of Product. For example "shirt", "jeans", or "shoes".
 	 * @param size The size of this item, null by default, all standardized to strings to conform to guidelines for a wide variety of products.
 	 * @param descrip The description the seller provides for the product.
@@ -163,7 +163,7 @@ public class Product {
 	 * @param sellerID The primary key ID of the seller offering this product.
 	 * @param brand The brand of this product.
 	 * @param pName The name of this product. For example, in "Nike Air Force 1", the name would be "Air Force 1".
-	 * @param color The color of this product.
+	 * @param colors The colors of this product.
 	 * @param itemType The type of Product. For example "shirt", "jeans", or "shoes".
 	 * @param size The size of this item, null by default, all standardized to strings to conform to guidelines for a wide variety of products.
 	 * @param descrip The description the seller provides for the product.
@@ -192,7 +192,7 @@ public class Product {
 	 * @param sellerID The primary key ID of the seller offering this product.
 	 * @param brand The brand of this product.
 	 * @param pName The name of this product. For example, in "Nike Air Force 1", the name would be "Air Force 1".
-	 * @param color The color of this product.
+	 * @param colors The colors of this product.
 	 * @param itemType The type of Product. For example "shirt", "jeans", or "shoes".
 	 * @param size The size of this item, null by default, all standardized to strings to conform to guidelines for a wide variety of products.
 	 * @param timePosted The time the product was posted to the website.
@@ -259,7 +259,7 @@ public class Product {
 	}
 
 	/**
-	 * @return The color of this product.
+	 * @return The colors of this product.
 	 */
 	public ArrayList<String> getColors() {
 		return this.colors;

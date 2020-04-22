@@ -26,8 +26,7 @@ CREATE TABLE Products (
     size VARCHAR(20) NOT NULL,
     descrip VARCHAR(280),
     rentPrice DECIMAL(5,2) NOT NULL,
-    buyPrice DECIMAL(5,2) NOT NULL,
-    interest INTEGER(10) DEFAULT 0 NOT NULL
+    buyPrice DECIMAL(5,2) NOT NULL
 );
 
 CREATE TABLE Colors (

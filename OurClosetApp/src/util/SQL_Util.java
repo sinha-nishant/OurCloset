@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -25,13 +25,12 @@ public class SQL_Util {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost/OurCloset?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles");
 		config.setUsername("root");
-		config.setPassword("");
+		config.setPassword("MySQLServer");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		dataSource = new HikariDataSource(config);
 	}
@@ -275,6 +274,11 @@ public class SQL_Util {
 		addTags(addedPrimaryKey, product.getTags());
 	}
 	
+	/**
+	 * 
+	 * @param rs
+	 * @return
+	 */
 	private static ArrayList<Product> handleProducts(ResultSet rs) {
 		if (rs == null) {
 			return null;
@@ -312,15 +316,24 @@ public class SQL_Util {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public static ArrayList<Product> getAllProducts() {
 		Connection connection = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			connection = dataSource.getConnection();
-			ps = connection.prepareStatement("SELECT * FROM Products");
+			ps = connection.prepareStatement("SELECT * FROM Products WHERE Products.ProductID NOT IN (SELECT Transactions.ProductID FROM Transactions)");
 			rs = ps.executeQuery();
 			ArrayList<Product> products = handleProducts(rs);
+		
+			if (products.isEmpty()) {
+				return null;
+			}
+			
 			return products;
 			
 		} catch (SQLException e) {
@@ -333,16 +346,122 @@ public class SQL_Util {
 		return null;
 	}
 	
-	// TODO: NOT YET WORKING
-	public static ArrayList<Product> getPopularProducts() {
+	/**
+	 * TODO
+	 * @param color Hexadecimal including #
+	 * @return
+	 */
+	public static ArrayList<Product> getProductsByColor(String color) {
 		Connection connection = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			connection = dataSource.getConnection();
-			ps = connection.prepareStatement("SELECT * FROM Products LIMIT 10 ");
+			ps = connection.prepareStatement("SELECT Products.* FROM Products " + 
+					"WHERE Products.productID IN (SELECT Colors.productID FROM Colors WHERE color = ?)"
+					+ "AND Products.ProductID NOT IN (SELECT Transactions.ProductID FROM Transactions)");
+			ps.setString(1, color.substring(1));
+			
 			rs = ps.executeQuery();
 			ArrayList<Product> products = handleProducts(rs);
+		
+			if (products.isEmpty()) {
+				return null;
+			}
+			
+			return products;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			closeAll(connection, ps, rs);
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * @return
+	 */
+	public static ArrayList<Product> getProductsByPrice() {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			connection = dataSource.getConnection();
+			ps = connection.prepareStatement("SELECT Products.* FROM Products WHERE Products.ProductID NOT IN (" + 
+					"SELECT Transactions.ProductID FROM Transactions) ORDER BY buyPrice ASC");
+			rs = ps.executeQuery();
+			ArrayList<Product> products = handleProducts(rs);
+		
+			if (products.isEmpty()) {
+				return null;
+			}
+			
+			return products;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			closeAll(connection, ps, rs);
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static ArrayList<Product> getPopularProducts() {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<Integer> popularProductIDs = null;
+		try {
+			connection = dataSource.getConnection();
+			ps = connection.prepareStatement("SELECT N.productID, COUNT(*) as interest FROM Products, Notifications N, Interest I"
+					+ " WHERE N.notificationID = I.interestID AND Products.ProductID NOT IN "
+					+ "(SELECT Transactions.ProductID FROM Transactions)"
+					+ " GROUP BY productID ORDER BY interest DESC LIMIT 8");
+			rs = ps.executeQuery();
+			
+			popularProductIDs = new ArrayList<Integer>();
+			while (rs.next()) {
+				popularProductIDs.add(rs.getInt("productID"));
+			}
+			
+			if (popularProductIDs.isEmpty()) {
+				return null;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			closeAll(connection, ps, rs);
+		}
+		
+		try {
+			connection = dataSource.getConnection();
+			
+			String sql = "SELECT * FROM Products WHERE productID in (";
+			for (int i = 0; i < popularProductIDs.size() - 1; i++) {
+				sql += "?, ";
+			}
+			sql += "?)";
+			
+			ps = connection.prepareStatement(sql);
+			
+			for (int i = 0; i < popularProductIDs.size(); i++) {
+				ps.setInt(i + 1, popularProductIDs.get(i));
+			}
+			
+			rs = ps.executeQuery();
+			ArrayList<Product> products = handleProducts(rs);
+			products.sort(Comparator.comparing(Product::getInterest).reversed());
 			return products;
 			
 		} catch (SQLException e) {
@@ -366,11 +485,16 @@ public class SQL_Util {
 		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			ps = connection.prepareStatement("SELECT * FROM Products WHERE sellerID = ?");
+			ps = connection.prepareStatement("SELECT * FROM Products WHERE sellerID = ? AND"
+					+ " Products.ProductID NOT IN (SELECT Transactions.ProductID FROM Transactions)");
 			ps.setInt(1, sellerID);
 			
 			rs = ps.executeQuery();
 			ArrayList<Product> products = handleProducts(rs);
+			
+			if (products.isEmpty()) {
+				return null;
+			}
 			
 			return products;
 			
@@ -690,6 +814,7 @@ public class SQL_Util {
 	public static void addInterest(Interest interest) {
 		Connection connection = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
 		int addedPrimaryKey = 0;
 		try {
 			connection = getConnection();
@@ -699,17 +824,17 @@ public class SQL_Util {
 			
 			ps.executeUpdate();
 			
-			ResultSet rs = ps.getGeneratedKeys();
+			rs = ps.getGeneratedKeys();
 			if (rs.next()) {
 				addedPrimaryKey = rs.getInt(1);
 			}
 			
-			ps.close();
-			rs.close();
-			connection.close();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		
+		finally {
+			closeAll(connection, ps, rs);
 		}
 		
 		try {
