@@ -1,33 +1,3 @@
-<!--
- .notification{ 
-    padding: 15px 26px;
-    position: relative;
-    display: inline-block;
-    border-radius: 2px;
-  }
-.navbar .notification .badge {
-  position: absolute;
-  top: -.5px;
-  right: -10px;
-  padding: 5px 11px;
-  border-radius: 50%;
-  background-color: red;
-  color: white;
-
-  #imageUpload
-  {
-    display: none;
-  }
-}
-.
-.
-.
- <a href="#" class="notification"><i class="fa fa-bell"></i> 
-                <span>Notification</span>
-                <span class="badge">3</span> //need to use the back end here to get notifcations 
-              </a>
- 
--->
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <!-- Add icon library -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <!--icon library for hanger-->
+     <script src="https://code.iconify.design/1/1.0.5/iconify.min.js"></script>
      <!-- Add font: Poppins -->
      <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
      <!--Generating thumbnail code from: http://talkerscode.com/webtricks/preview-image-before-upload-using-javascript.php-->
@@ -98,7 +70,7 @@
     margin-top: 9px;
     margin-bottom: 9px;
     float: left;
-    background: url(stormtrooper.jpg) no-repeat;
+    background: url(images/stormtrooper.jpg) no-repeat;
     background-size: 150px;
     width: 150px;
     height: 150px;
@@ -209,12 +181,12 @@
           </ul>
           <ul>
             <li> <span class="profile-stat-count">0</span> Posts </li>
-            <li> <span class="profile-stat-count">0</span> Interests </li>
+            <li> <span class="profile-stat-count">0</span> <span class="iconify" data-icon="si-glyph:hanger" data-inline="false"></span> </li>
           </ul>
         </div>
       </header>
       <span class="gridProduct">
-        <a href="uploadProduct.html"> <img src="plussign.png"id="UploadProductPage" alt="Upload"> </a>
+        <a href="uploadProduct.html"> <img src="images/plussign.png"id="UploadProductPage" alt="Upload"> </a>
     </span>
    </div>
   
