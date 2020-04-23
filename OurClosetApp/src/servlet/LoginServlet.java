@@ -64,6 +64,8 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("user", SQL_Util.getUser(userID));
 			
 			System.out.println("Servlet interests : " + SQL_Util.getUser(userID).getInterest());
+			System.out.println("Servlet interests again : " + ((User)session.getAttribute("user")).getInterest());
+
 			loggedIn = "true";
 			session.setAttribute("isLoggedIn", loggedIn);
 			

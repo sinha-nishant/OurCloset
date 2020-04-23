@@ -54,10 +54,22 @@ public class CreateAccountServlet extends HttpServlet {
 		String loggedIn = "";
 		
 		newEmail = request.getParameter("email");
-		newFirstName = request.getParameter("firstName");
+		newFirstName = request.getParameter("fname");
 		newLastName = request.getParameter("lname");
-		newPassword = request.getParameter("password");	
+		newPassword = request.getParameter("password");
+
 		String path = "";
+		
+		if (newEmail != null) newEmail = newEmail.trim();
+		if (newFirstName != null) newFirstName = newFirstName.trim();
+		if (newLastName != null) newLastName = newLastName.trim();
+		if (newPassword != null) newPassword = newPassword.trim();
+		
+		System.out.println(newEmail);
+		System.out.println(newFirstName);
+		System.out.println(newLastName);
+		System.out.println(newPassword);
+
 
 		//empty input
 		if (newEmail == null || newEmail == "" || newFirstName == null || newFirstName == "" || newLastName == null || newLastName == ""
@@ -84,7 +96,7 @@ public class CreateAccountServlet extends HttpServlet {
 		}
 		
 		//user already exists
-		else if (SQL_Util.checkIfExists(newEmail.split("@")[0])) {
+		else if (SQL_Util.checkIfExists(newEmail)) {
 			System.out.println("Account already exists");
 
 			message = "This email address is already registered.";
@@ -96,7 +108,7 @@ public class CreateAccountServlet extends HttpServlet {
 		}
 		
 		else {
-			System.out.println("Valid - not exists");
+			System.out.println("Valid - new account");
 			
 			path = newEmail + "Path";			
 		
@@ -110,6 +122,8 @@ public class CreateAccountServlet extends HttpServlet {
 
 			loggedIn = "true";
 			session.setAttribute("isLoggedIn", loggedIn);
+			session.setAttribute("loggedBy", "create account");
+
 
 			response.sendRedirect("ActiveStatus");
 		}

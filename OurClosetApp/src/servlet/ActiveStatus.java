@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
 import model.User;
 import util.SQL_Util;
@@ -35,26 +36,33 @@ public class ActiveStatus extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession session = request.getSession();
-		
-		/*
-		 * If from login -> do nothing - already established
-		 */		
-
+			
 
 		/*
 		 * If from create account
 		 */
-		if (session.getAttribute("idName") != null && session.getAttribute("password") != null) {
+		if (session.getAttribute("loggedBy") != null) {
+			System.out.println("supposedly - createAccount");
 			String uniqueName = (session.getAttribute("idName")).toString();
 			int id = (SQL_Util.authenticate(session.getAttribute("idName").toString(), session.getAttribute("password").toString()));
 			session.setAttribute("user", SQL_Util.getUser(id));
-			
+
 			User user = (User)session.getAttribute("user");
 			String emailString = user.getEmail();
 			//System.out.println("Testing -- " + emailString);
 		}
+		
+		
+		
+		/*
+		 * If from login -> do nothing - already established (just testin)
+		 */	
+		else {
+			System.out.println("inside");
+			System.out.println(((User)session.getAttribute("user")).getInterest());
+		}
 
-		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/hometest.jsp");
+		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/homeUsers.jsp");
 		dispatch.forward(request, response);
 	}
 

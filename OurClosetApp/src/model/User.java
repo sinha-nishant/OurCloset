@@ -63,6 +63,7 @@ public class User {
 		this.fName = fName;
 		this.lName = lName;
 		this.profileImagePath = profileImagePath;
+		products = new ArrayList<Product>();
 	}
 	
 	/**

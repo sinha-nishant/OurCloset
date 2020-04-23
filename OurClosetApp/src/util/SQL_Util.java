@@ -10,7 +10,13 @@ import java.util.Comparator;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import model.*;
+import model.Comment;
+import model.Interest;
+import model.Notification;
+import model.Product;
+import model.Tag;
+import model.Transaction;
+import model.User;
 
 @SuppressWarnings("resource")
 public class SQL_Util {
@@ -23,14 +29,15 @@ public class SQL_Util {
 	 */
 	public static void initDataSource() {
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
+			//Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		HikariConfig config = new HikariConfig();
-		config.setJdbcUrl("jdbc:mysql://localhost/OurCloset?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles");
+		config.setJdbcUrl("jdbc:mysql://localhost/OurCloset?allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles");
 		config.setUsername("root");
-		config.setPassword("");
+		config.setPassword("NecdetT1");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		dataSource = new HikariDataSource(config);
 	}
@@ -170,6 +177,29 @@ public class SQL_Util {
 	}
 	
 
+	public static boolean checkIfExists(String uscEmail) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		if (uscEmail.contains("@usc.edu")) {
+			uscEmail = uscEmail.split("@usc.edu")[0];
+		}
+		
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement("SELECT userID, pass FROM Users WHERE valid = TRUE AND uscEmail = ?");
+			ps.setString(1, uscEmail);
+			rs = ps.executeQuery();
+			return rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			closeAll(connection, ps);
+		}
+		return false;
+	}
 	/**
 	 * 
 	 * @param userID The primary key ID for the user.
@@ -188,8 +218,8 @@ public class SQL_Util {
 			if (rs.next()) {
 				String uscEmail = rs.getString("uscEmail");
 				String pass = rs.getString("pass");
-				String fName = rs.getString("fname");
-				String lName = rs.getString("lname");
+				String fName = rs.getString("fName");
+				String lName = rs.getString("lName");
 				String profileImagePath = rs.getString("profileImagePath");
 				int interest = rs.getInt("interest");
 				return new User(userID, uscEmail, pass, fName, lName, profileImagePath, interest, getProductsByUser(userID));
