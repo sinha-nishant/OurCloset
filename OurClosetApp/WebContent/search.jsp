@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>OurCloset Search Form</title>
 	<!-- bootstrap -->
@@ -134,7 +136,7 @@
 
 		<div class="container">
 
-		<form action="search_results.html" method="GET">
+		<form action="searchServlet" method="GET">
 
 			<div class="form-group row">
 				<label for="name-id" class="col-sm-3 col-form-label text-sm-right">Product Name:</label>
@@ -149,7 +151,7 @@
 						<option value="" selected>-- All --</option>
 
 						<!-- put dynamic results from database here -->
-
+						
 					</select>
 				</div>
 			</div> <!-- .form-group -->
@@ -201,7 +203,7 @@
 			<div class="form-group row">
 				<label for="tag-id" class="col-sm-3 col-form-label text-sm-right">Tags:</label>
 				<div class="col-sm-9">
-					<input type="tag" class="form-control" id="tag-id" name="track_name">
+					<input type="tag" class="form-control" id="tag-id" name="track_tag">
 				</div>
 			</div> <!-- .form-group -->
 			<div class="form-group row">
@@ -212,6 +214,9 @@
 				</div>
 			</div> <!-- .form-group -->
 		</form>
+		<c:if test="${not empty searchMessage}">
+			<div>${searchMessage}</div>
+		</c:if>
 	</div> <!-- .container -->
 </div>
 	
