@@ -8,6 +8,9 @@
      <!-- Add font: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/index.js"></script>
+
     <!--Generating thumbnail code from: http://talkerscode.com/webtricks/preview-image-before-upload-using-javascript.php-->
     <script type='text/javascript'>
         function preview_image(event) 
@@ -32,16 +35,57 @@
     input:focus, textarea:focus, select:focus{
         outline: none;
     }
-    .uploadPage{
-        width: 100%;
-        overflow: auto;
+    .EntirePage{
+        width: auto;
+        margin: auto 75px;
+        position: absolute;
+        top: 23%;
     }
-    .productForm{
-        margin-top: 50px;
-        margin-right: auto;
-        margin-left: auto;
-        width: 400px;
-        height: 300px;
+    .uploadPage{
+        width: auto;
+        overflow: auto;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        flex-direction: row;
+    }
+    .uploadPage > div {
+        align-items: center;
+        margin-right: 15px;
+        width: 330px;
+        height: 320px;
+    }
+    textarea {
+        width: 100%;
+        height: 100%;
+        font-size: 20px;
+        padding: 12px 20px;
+        background-color: white;
+        color: #e7420f;
+        display: inline-block;
+        border-radius: 10px;
+        border: solid;
+        border-color: #AA1945;
+        box-sizing: border-box;
+        overflow: auto;
+        outline: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        resize: none; /*remove the resize handle on the bottom right*/
+    }
+    select[multiple] {
+        width: 100%;
+        height: 100%;
+        font-size: 20px;
+        padding: 12px 20px;
+        background-color: white;
+        color: #e7420f;
+        display: inline-block;
+        border-radius: 10px;
+        border: solid;
+        border-color: #AA1945;
+        box-sizing: border-box;
     }
     ::placeholder {
         font-weight: bold;
@@ -83,6 +127,7 @@
         cursor: pointer;
     }
     input[type=submit]:hover{
+        float: right;
         color:gray;
     }
     input[type=button] {
@@ -100,8 +145,9 @@
         color:gray;
     }
     .uploadImage{
-        background: url(plussign.png) no-repeat;
-        background-size: 200px;
+        margin-top: 33px;
+        background: url(images/plussign.png) no-repeat;
+        background-size: 300px;
         background-size: cover;
         background-position: center;
         border-style: solid;
@@ -109,42 +155,90 @@
         border-width: 5px;
         border-image-slice: 1;
         display: block;
-        position: center;
-        width: 150px;
-        height: 150px;
-        margin-top: 50px;
-        margin-right: auto;
-        margin-left: auto;
+        width: 250px;
+        height: 250px;
+    }
+    #item{
+        height: 55px;
     }
    input[type="file"] {
         display: none !important;
     }
     #image_src {
-        max-width: 150px;
-        max-height: 150px;
+        max-width: 250px;
+        max-height: 250px;
     }
 </style>
 <body>
-  <div class="uploadPage">
-    <span>
-        <label class="uploadImage">
-            <input type="file" accept="image/*" onchange="preview_image(event)">
-            <img id="image_src"/>
-        </label>
-    </span>
-    <div class= "productForm">
-        <form>
-            <input type="text" id="brand" name="brand" placeholder="Brand"><br> 
-            <input type="text" id="name" name="name" placeholder="Name" required><br> 
-            <input type="text" id="type" name="type" placeholder="Item Type (shoes, shirt, etc.)" required><br> 
-            <input type="text" id="color" name="color" placeholder="Color (multi-color if multiple colors)" required><br> 
-            <input type="text" id="size" name="size" placeholder="Size" required><br>
-            <input type="number" placeholder="0.00" step="0.01" id="price" name="price" required><br> 
-            <input type="text" id="description" name="description" placeholder="Description"><br> 
-            <input type="text" id="tags" name="tags" placeholder="Tags (Separate with comma)" required><br>
+    <form class="EntirePage" method="GET" action="UploadProductServlet">
+        <div class="uploadPage">
+            <div style="width:260px; height: 260px;">
+                <span>
+                    <label class="uploadImage">
+                        <input name="image" type="file" accept="image/*" onchange="preview_image(event)">
+                        <img id="image_src"/>
+                    </label>
+                </span>
+             </div>
+                <div>
+                    <input type="text" id="brand" name="brand" placeholder="Brand"><br> 
+                    <input type="text" id="name" name="name" placeholder="Name" required><br> 
+
+                    <select name="item" id="item" required>
+                        <option value="" disabled selected >Item Type(shoes, shirt, etc.)</option>
+                        <option value="tshirt"> T-Shirt </option>
+                        <option value="tank"> Tank Top</option>
+                        <option value="buttonUp"> Button Up Shirt</option>
+                        <option value="pants">Pants</option>
+                        <option value="coat"> Coat</option>
+                        <option value="dress"> Dress</option>
+                        <option value="swimsuit"> Swimsuit </option>
+                        <option value="shoe"> Shoes</option>
+                        <option value="heels"> Heels</option>
+                        <option value="sandals"> Sandals</option>
+                        <option value="boots">Boots</option>
+                        <option value="hat"> Hat</option>
+                        <option value="scarf"> Scarf</option>
+                        <option value="gloves">Gloves</option>
+                        <option value="socks"> Socks</option>
+                    </select>
+                    
+                    <input type="text" id="size" name="size" placeholder="Size" required><br>
+                    <input type="number" placeholder="$0.00" step="0.01" id="price" name="price" required><br> 
+                    <input type="text" id="tags" name="tags" placeholder="Tags (Separate with #)" required><br>
+                </div>
+                <div>
+                    <select style="font-size: 13px;"
+                     name="color" multiple="multiple" id="colorSelector" required>
+                        <optgroup label="Color (for multiple: hold 'Command' or 'Control')">
+                        <option value="#00FFF" style="background-color:aqua;"></option>
+                        <option value="#F5F5DC" style="background-color: beige;"></option>
+                        <option value="#000000" style="background-color: black;"></option>
+                        <option value="#0000FF" style="background-color: #0000FF;"></option>
+                        <option value="#A52A2A" style="background-color: #A52A2A;"></option>
+                        <option value="#FF7F50" style="background-color: #FF7F50;"></option>
+                        <option value="#808080" style="background-color: #808080;"></option>
+                        <option value="#800000" style="background-color: #800000;"></option>
+                        <option value="#000080" style="background-color: #000080;"></option>
+                        <option value="#DDA0DD" style="background-color: #DDA0DD;"></option>
+                        <option value="#008080" style="background-color: #008080;"></option>
+                        <option value="#FFA500" style="background-color: #FFA500;"></option>
+                        <option value="#FFC0CB" style="background-color: #FFC0CB;"></option>
+                        <option value="#800080" style="background-color: #800080;"></option>
+                        <option value="#40E0D0" style="background-color: #40E0D0;"></option> <!--turqoise-->
+                        <option value="#FF0000" style="background-color: #FF0000;"></option>
+                        <option value="#87CEEB" style="background-color: #87CEEB;"></option>
+                        <option value="#FFFFFF" style="background-color: #FFFFFF;"></option>
+                        <option value="#FFFF00" style="background-color: #FFFF00;"></option>
+                    </select>
+                </div>
+                <div> 
+                    <textarea name="description" rows="10" cols="30" placeholder="Description"></textarea>
+                </div>
+        </div>
+        <div>
             <input type="submit" value="Post >">
             <input type="button" value="< Back" onclick="history.back(-1)" />
-        </form>
-    </div>
-  </div>
+        </div>
+    </form>
 </body>

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.connector.Request;
 import org.omg.CORBA.UserException;
 
 import com.sun.xml.internal.bind.v2.model.core.ID;
@@ -38,45 +39,95 @@ public class CreateAccountServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
+		System.out.println("In the servlet");
 		if (!SQL_Util.isEstablished())
 			SQL_Util.initDataSource();
 		
-		String next = "/login.jsp";
+		String newEmail = "";
+		String newFirstName = "";
+		String newLastName = "";
+
+		String newPassword = request.getParameter("password");
+		
+		String next = "/createAccount.jsp";
 		String message = "";
 		String loggedIn = "";
 		
-		String newEmail = request.getParameter("email");
-		String newFirstName = request.getParameter("fname");
-		String newLastName = request.getParameter("lname");
-		String newPassword = request.getParameter("password");
+		newEmail = request.getParameter("email");
+		newFirstName = request.getParameter("fname");
+		newLastName = request.getParameter("lname");
+		newPassword = request.getParameter("password");
+
+		String path = "";
 		
-        String[] arr = newEmail.split("@"); 
-        
-        if (!arr[2].contentEquals("@usc.edu")) {
-			message = "Please make sure that you enter a USC email";
-			request.setAttribute("nonUSCEmail", message);
+		if (newEmail != null) newEmail = newEmail.trim();
+		if (newFirstName != null) newFirstName = newFirstName.trim();
+		if (newLastName != null) newLastName = newLastName.trim();
+		if (newPassword != null) newPassword = newPassword.trim();
+		
+		System.out.println(newEmail);
+		System.out.println(newFirstName);
+		System.out.println(newLastName);
+		System.out.println(newPassword);
+
+
+		//empty input
+		if (newEmail == null || newEmail == "" || newFirstName == null || newFirstName == "" || newLastName == null || newLastName == ""
+				|| newPassword == null || newPassword == "") {
+	
+			message = "Please fill all the inputs above.";
+			request.setAttribute("createAccountMessage", message);
+			
 			RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
 			dispatch.forward(request, response);
 			return;
-        }
-        
-		model.User newUser = SQL_Util.getUser(Integer.parseInt(arr[1]));
-
+		}
 		
-		if (newUser == null) {
-			SQL_Util.addUser(new model.User(arr[0]+arr[1], newPassword, newFirstName, newLastName, null));
-			next = "/newsfeed";
+		//non-USC email
+		else if (!("@" + newEmail.split("@")[1]).contentEquals("@usc.edu")) {
+			System.out.println("Email is Wrong");
+
+			message = "Please enter a USC email.";
+			request.setAttribute("createAccountMessage", message);
+
+			RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
+			dispatch.forward(request, response);
+			return;
+		}
+		
+		//user already exists
+		else if (SQL_Util.checkIfExists(newEmail)) {
+			System.out.println("Account already exists");
+
+			message = "This email address is already registered.";
+			request.setAttribute("createAccountMessage", message);
+			
+			RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
+			dispatch.forward(request, response);
+			return;
+		}
+		
+		else {
+			System.out.println("Valid - new account");
+			
+			path = newEmail + "Path";			
+		
+			SQL_Util.addUser(new User(newEmail.split("@")[0], newPassword, newFirstName, newLastName, path));
+			//Integer userID = SQL_Util.authenticate(newEmail.split("@")[1], newPassword);
+
 			HttpSession session = request.getSession();
-			session.setAttribute("user", SQL_Util.getUser(Integer.parseInt(arr[0])));
+			
+			session.setAttribute("idName", newEmail.split("@")[0]);
+			session.setAttribute("password", newPassword);
+
 			loggedIn = "true";
 			session.setAttribute("isLoggedIn", loggedIn);
-		} else {
-			message = "The account already exists.";
-			request.setAttribute("accountExists", message);	
+			session.setAttribute("loggedBy", "create account");
+
+
+			response.sendRedirect("ActiveStatus");
 		}
-		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
-		dispatch.forward(request, response);
-		return;
+
 	}
 
 	/**
@@ -86,5 +137,5 @@ public class CreateAccountServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
+

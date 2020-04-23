@@ -38,6 +38,7 @@ public class NewsfeedServlet extends HttpServlet {
 		if (!SQL_Util.isEstablished())
 			SQL_Util.initDataSource();
 
+<<<<<<< HEAD
 		// get trending posts
 		ArrayList<Product> trending = SQL_Util.getPopularProducts();
 		request.setAttribute("trending", trending);
@@ -47,7 +48,6 @@ public class NewsfeedServlet extends HttpServlet {
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/newsfeed.jsp");
 		dispatch.forward(request, response);
 		return;
-
 	}
 
 	/**

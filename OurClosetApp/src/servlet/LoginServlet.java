@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import model.User;
 import util.SQL_Util;
 
 /**
@@ -47,21 +47,33 @@ public class LoginServlet extends HttpServlet {
 		String loggedIn = "";
 		
 		int userID = SQL_Util.authenticate(uscEmail, password);
+		System.out.println("Authenticated");
 		
 		if (userID == 0) {
 			message = "No account was found, please try again";
 			request.setAttribute("loginMessage", message);
+			
+			RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
+			dispatch.forward(request, response);
+			
+			return;
 		}
 		else {
-			next = "/newsfeed";
+			next = "/hometest.jsp";
 			HttpSession session = request.getSession();
 			session.setAttribute("user", SQL_Util.getUser(userID));
+			
+			System.out.println("Servlet interests : " + SQL_Util.getUser(userID).getInterest());
+			System.out.println("Servlet interests again : " + ((User)session.getAttribute("user")).getInterest());
+
 			loggedIn = "true";
 			session.setAttribute("isLoggedIn", loggedIn);
+			
+			response.sendRedirect("ActiveStatus");
+			return;	
 		}
-		RequestDispatcher dispatch = getServletContext().getRequestDispatcher(next);
-		dispatch.forward(request, response);
-		return;	
+		
+
 	}
 
 	/**
