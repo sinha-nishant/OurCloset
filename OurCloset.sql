@@ -22,18 +22,14 @@ CREATE TABLE Products (
     brand VARCHAR(30),
     pName VARCHAR(50) NOT NULL,
     timePosted TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    color VARCHAR(20) NOT NULL,
     itemType VARCHAR(20) NOT NULL,
     size VARCHAR(20) NOT NULL,
     descrip VARCHAR(280),
     rentPrice DECIMAL(5,2) NOT NULL,
-    buyPrice DECIMAL(5,2) NOT NULL
-);
-
-CREATE TABLE Colors (
-	colorID INTEGER(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    productID INTEGER(10) NOT NULL,
-    color CHAR(6) NOT NULL,
-    FOREIGN KEY (productID) REFERENCES Products(productID)
+    buyPrice DECIMAL(5,2) NOT NULL,
+    quantity TINYINT(3) NOT NULL,
+    interest INTEGER(10) DEFAULT 0 NOT NULL
 );
 
 CREATE TABLE ProductImages (
