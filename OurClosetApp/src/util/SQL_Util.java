@@ -176,7 +176,11 @@ public class SQL_Util {
 		return 0;
 	}
 	
-
+	/**
+	 * 
+	 * @param uscEmail
+	 * @return
+	 */
 	public static boolean checkIfExists(String uscEmail) {
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -188,7 +192,7 @@ public class SQL_Util {
 		
 		try {
 			connection = getConnection();
-			ps = connection.prepareStatement("SELECT userID, pass FROM Users WHERE valid = TRUE AND uscEmail = ?");
+			ps = connection.prepareStatement("SELECT userID FROM Users WHERE valid = TRUE AND uscEmail = ?");
 			ps.setString(1, uscEmail);
 			rs = ps.executeQuery();
 			return rs.next();
