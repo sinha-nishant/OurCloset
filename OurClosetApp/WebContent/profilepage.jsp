@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Profile Page </title>
@@ -160,10 +163,10 @@
 <body>
     <div class="navbar">
       <nav>
-            <a href="home.html"> Our Closet </a>
-            <a href="home.html"> Home </a>
-            <a href="profilepage.html"> Profile</a>
-            <a href="search.html"><i class="fa fa-fw fa-search"></i>Search</a>
+            <a href="homeUsers.jsp"> Our Closet </a>
+            <a href="homeUsers.jsp"> Home </a>
+            <a href="profilePage.jsp"> Profile</a>
+            <a href="search.jsp"><i class="fa fa-fw fa-search"></i>Search</a>
             <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
     </nav>
     </div>
@@ -175,13 +178,22 @@
               <img id="profileImage"/>
             </label>
         </span>
+        
+        <%@ page import="model.User" %>
+        
+        <%  User user = (User) session.getAttribute("user");
+        	int interests = user.getInterest();
+        	
+        	int products = 0;
+        	if (user.getProducts() != null) products = user.getProducts().size();
+        %>
         <div class="profileInfo">
           <ul>
             <span class="name">First & Last Name</span>
           </ul>
           <ul>
-            <li> <span class="profile-stat-count"> </span> Posts </li>
-            <li> <span class="profile-stat-count">0</span> <span class="iconify" data-icon="si-glyph:hanger" data-inline="false"></span> </li>
+            <li> <span class="profile-stat-count"> </span> <%=products%> </li>
+            <li> <span class="profile-stat-count"> <%=interests%> </span> <span class="iconify" data-icon="si-glyph:hanger" data-inline="false"></span> </li>
           </ul>
         </div>
       </header>
