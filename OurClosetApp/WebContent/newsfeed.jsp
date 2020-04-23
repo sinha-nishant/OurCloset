@@ -5,13 +5,14 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/newsfeed.css">
 	<title>Newsfeed</title>
 </head>
 <body>
 	<div class="navbar">
 	      <nav>
-	            <a href="#"> Our Closet </a>
-	            <a href="home.html"> Home </a>
+	            <a href="newsfeed.jsp"> Our Closet </a>
+	            <a href="newsfeed.jsp"> Home </a>
 	            <a href="profilepage.html"> Profile</a>
 	            <a href="#"><i class="fa fa-fw fa-search"></i>Search</a>
 	            <a href="#" ><i class="fa fa-bell"></i> Notifications </a>
@@ -23,8 +24,8 @@
 	
  	
 	<%
-		ArrayList<Product> trending = (ArrayList<Product>) request.getParameter("trending");
-		ArrayList<Product> recent = (ArrayList<Product>) request.getParameter("recent");
+		ArrayList<Product> trending = (ArrayList<Product>) request.getAttribute("trending");
+		ArrayList<Product> recent = (ArrayList<Product>) request.getAttribute("recent");
 	
 	%>
 	<h2>TRENDING</h2>
@@ -33,7 +34,7 @@
 		<div id="wrapper">
 			<div id="innerwrapper">
 				<form action="details" method="GET" name="details" value="Details">
-					<input type="image" class="image" src="${product.getImagePath()}" border="0" alt="Submit" />
+					<input type="image" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
 					<input type="hidden" name="brand" value="${product.getBrand()}">
 					<input type="hidden" name="productName" value="${product.getProductName()}">
 					<input type="hidden" name="itemType" value="${product.getItemType()}">
@@ -53,7 +54,7 @@
 	<c:forEach items="${recent}" var="product">
 		<div class="column">
 			<form action="details" method="GET" name="details" value="Details">
-				<input type="image" class="image" src="${product.getImagePath()}" border="0" alt="Submit" />
+				<input type="image" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
 				<input type="hidden" name="brand" value="${product.getBrand()}">
 				<input type="hidden" name="productName" value="${product.getProductName()}">
 				<input type="hidden" name="itemType" value="${product.getItemType()}">

@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Product;
 import util.SQL_Util;
 
 /**
@@ -42,7 +44,7 @@ public class NewsfeedServlet extends HttpServlet {
 		// get posts by recent order
 		ArrayList<Product> recent = SQL_Util.getAllProducts();
 		request.setAttribute("recent", recent);
-		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("newsfeed.jsp");
+		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/newsfeed.jsp");
 		dispatch.forward(request, response);
 		return;
 
