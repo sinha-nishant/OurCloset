@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Upload Product Page </title>
@@ -205,7 +208,7 @@
                     
                     <input type="text" id="size" name="size" placeholder="Size" required><br>
                     <input type="number" placeholder="$0.00" step="0.01" id="price" name="price" required><br> 
-                    <input type="text" id="tags" name="tags" placeholder="Tags (Separate with #)" required><br>
+                    <input type="text" id="tags" name="tags" placeholder="Tags (Separate with #)"><br>
                 </div>
                 <div>
                     <select style="font-size: 13px;"
@@ -233,7 +236,7 @@
                     </select>
                 </div>
                 <div> 
-                    <textarea name="description" rows="10" cols="30" placeholder="Description"></textarea>
+                    <textarea required name="description" rows="10" cols="30" placeholder="Description"></textarea>
                 </div>
         </div>
         <div>
@@ -241,4 +244,7 @@
             <input type="button" value="< Back" onclick="history.back(-1)" />
         </div>
     </form>
+    <c:if test="${not empty uploadMessage}">
+		<div>${uploadMessage}</div>
+	</c:if>
 </body>

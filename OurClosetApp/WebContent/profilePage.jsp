@@ -198,7 +198,7 @@
         </div>
       </header>
       <span class="gridProduct">
-        <a href="uploadProduct.html"> <img src="images/plussign.png"id="UploadProductPage" alt="Upload"> </a>
+        <a href="uploadProduct.jsp"> <img src="images/plussign.png"id="UploadProductPage" alt="Upload"> </a>
     </span>
    </div>
   

@@ -117,7 +117,6 @@ public class CreateAccountServlet extends HttpServlet {
 
 			HttpSession session = request.getSession();
 			
-			session.setAttribute("idName", newEmail.split("@")[0]);
 			session.setAttribute("password", newPassword);
 
 			loggedIn = "true";
