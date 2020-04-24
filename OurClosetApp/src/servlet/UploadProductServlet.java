@@ -54,9 +54,7 @@ public class UploadProductServlet extends HttpServlet {
 		//color
 		itemType = itemType.trim();
 		productSize = productSize.trim();
-		productPrice = productPrice.trim();
-		
-		
+		productPrice = productPrice.trim();		
 
 		User user = (User)session.getAttribute("user");
 		if (user == null) {

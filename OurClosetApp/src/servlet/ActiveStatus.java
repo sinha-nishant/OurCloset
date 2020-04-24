@@ -37,12 +37,15 @@ public class ActiveStatus extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 			
-
+		
+		if (session.getAttribute("loggedBy") != null) {
+			System.out.println((String)(session.getAttribute("loggedBy")));
+		}
 		/*
 		 * If from create account
 		 */
-		if (session.getAttribute("loggedBy") != null) {
-			System.out.println("supposedly - createAccount");
+		if (((String)session.getAttribute("loggedBy")).contentEquals("create account")) {
+			System.out.println("in Active Status -> redirected to: Create Account");
 			String uniqueName = (session.getAttribute("idName")).toString();
 			int id = (SQL_Util.authenticate(session.getAttribute("idName").toString(), session.getAttribute("password").toString()));
 			session.setAttribute("user", SQL_Util.getUser(id));
@@ -51,7 +54,6 @@ public class ActiveStatus extends HttpServlet {
 			String emailString = user.getEmail();
 			//System.out.println("Testing -- " + emailString);
 		}
-		
 		
 		
 		/*
