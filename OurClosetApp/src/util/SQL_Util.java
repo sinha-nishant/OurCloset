@@ -306,7 +306,7 @@ public class SQL_Util {
 		
 		addColors(addedPrimaryKey, product.getColors());
 		addProductImagePaths(addedPrimaryKey, product.getImagePaths());
-		addTags(addedPrimaryKey, product.getTags());
+//		addTags(addedPrimaryKey, product.getTags());
 	}
 	
 	/**
@@ -464,8 +464,14 @@ public class SQL_Util {
 			rs = ps.executeQuery();
 			
 			popularProductIDs = new ArrayList<Integer>();
+			boolean next = false;
 			while (rs.next()) {
+				next = true;
+				System.out.println("has next");
 				popularProductIDs.add(rs.getInt("productID"));
+			}
+			if (!next) {
+				System.out.println("did not get in");
 			}
 			
 			if (popularProductIDs.isEmpty()) {

@@ -16,6 +16,7 @@ import org.apache.taglibs.standard.tag.common.sql.TransactionTagSupport;
 import apple.laf.JRSUIConstants.Size;
 import model.Product;
 import model.User;
+import util.SQL_Util;
 
 /**
  * Servlet implementation class UploadProductServlet
@@ -91,7 +92,7 @@ public class UploadProductServlet extends HttpServlet {
 		
 		//checking for null - tags
 		boolean tagsNull = true;
-		if (productTags != null || !productTags.contentEquals("")) {
+		if (productTags != null && !productTags.contentEquals("")) {
 			
 			if (productTags.charAt(0) != '#') {
 				message = "Please make sure that you start with a '#'.";
@@ -148,8 +149,12 @@ public class UploadProductServlet extends HttpServlet {
 			else {
 				product = new model.Product(sellerID, productName, colorList, itemType, productSize, description, 0.0, productPriceCasted, imagePaths);
 			}
+			SQL_Util.addProduct(product);
+			//
+			//set any attribute?
+			RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/newsfeed.jsp");
+			dispatch.forward(request, response);
 		}
-		
 		
 		
 		

@@ -173,7 +173,7 @@
     }
 </style>
 <body>
-    <form class="EntirePage" method="GET" action="UploadProductServlet">
+    <form class="EntirePage" method="POST" action="UploadProductServlet">
         <div class="uploadPage">
             <div style="width:260px; height: 260px;">
                 <span>
@@ -243,6 +243,23 @@
             <input type="submit" value="Post >">
             <input type="button" value="< Back" onclick="history.back(-1)" />
         </div>
+        
+        <script>
+        function getSelectValues(select) {
+        	  var result = [];
+        	  var options = select && select.options;
+        	  var opt;
+
+        	  for (var i=0, iLen=options.length; i<iLen; i++) {
+        	    opt = options[i];
+
+        	    if (opt.selected) {
+        	      result.push(opt.value || opt.text);
+        	    }
+        	  }
+        	  return result;
+        	}
+        </script>
     </form>
     <c:if test="${not empty uploadMessage}">
 		<div>${uploadMessage}</div>

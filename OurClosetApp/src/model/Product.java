@@ -7,6 +7,15 @@ import java.util.ArrayList;
  * @author Nishant Sinha
  */
 public class Product {
+	
+	/**
+	 * 
+	 * @param tags
+	 * This one is made by Can and Alex!
+	 */
+	private void setTag(ArrayList<Tag> tags) {
+		this.tags = tags;
+	}
 	/**
 	 * The primary key ID of this product, 0 by default.
 	 */
