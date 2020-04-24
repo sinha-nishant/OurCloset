@@ -18,11 +18,9 @@ public class Tag {
 	
 	/**
 	 * Basic Tag constructor called from the frontend when a user adds a tag to a product.
-	 * @param productID The primary key ID of the product this tag corresponds to.
 	 * @param tagName The name of this tag. For example, "Red Boots".
 	 */
-	public Tag(int productID, String tagName) {
-		this.productID = productID;
+	public Tag(String tagName) {
 		this.tagName = tagName;
 	}
 	
