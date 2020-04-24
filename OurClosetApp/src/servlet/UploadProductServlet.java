@@ -45,7 +45,9 @@ public class UploadProductServlet extends HttpServlet {
 		String message = "";
 
 		//TODO: check all - if they are empty or full...
+		
 		String productBrand = request.getParameter("brand");
+		String imagePath = request.getParameter("image");
 		String productName = request.getParameter("name");
 		String colorOption = request.getParameter("color");
 		String itemType = request.getParameter("item");
@@ -54,6 +56,12 @@ public class UploadProductServlet extends HttpServlet {
 		String productTags = request.getParameter("tags");
 		String description = request.getParameter("description");
 
+		/*
+		 * Add the image path to the arraylist 
+		 */
+		ArrayList<String> imagePaths = new ArrayList<String>();
+		imagePaths.add(imagePath);
+		
 		System.out.println("printing color - " + colorOption); /* only getting the first/uppermost value */
 		
 		Double productPriceCasted = Double.parseDouble(productPrice);
@@ -63,10 +71,10 @@ public class UploadProductServlet extends HttpServlet {
 		itemType = itemType.trim();
 		productSize = productSize.trim();
 		productPrice = productPrice.trim();
-		
+
 		
 		ArrayList<String> colorList = new ArrayList<String>();
-		/**
+		/*
 		 * 
 		 * For now, just add the only color code you can access - to be fixed probably
 		 */
@@ -118,9 +126,6 @@ public class UploadProductServlet extends HttpServlet {
 			}
 		}
 		
-		ArrayList<String> imagePaths = null;
-		imagePaths.add("TODO");
-		
 		//testing user object accessibility::
 		User user = (User)session.getAttribute("user");
 		if (user == null) {
@@ -128,12 +133,23 @@ public class UploadProductServlet extends HttpServlet {
 		}
 		else {
 			int sellerID = user.getID();
-			System.out.println("milestone: moving to construct the product object");
+			System.out.println("milestone: moving to construct the product object - id is " + sellerID);
 			
-			if (!brandNull && !tagsNull) {
-				model.Product product = new model.Product(sellerID, productBrand, productName, colorList, itemType, productSize, description, tagsList, 0.0, productPriceCasted, imagePaths);
+			model.Product product = null;
+//			if (!brandNull && !tagsNull) {
+//				product = new model.Product(sellerID, productBrand, productName, colorList, itemType, productSize, description, null, 0.0, productPriceCasted, imagePaths);
+//			}
+//			else if (brandNull && !tagsNull) {
+//				product = new model.Product(sellerID, productName, colorList, itemType, productSize, description, null, 0.0, productPriceCasted, imagePaths);
+//			}
+			if(!brandNull && tagsNull) {
+				product = new model.Product(sellerID, productBrand, productName, colorList, itemType, productSize, description, 0.0, productPriceCasted, imagePaths);
+			}
+			else {
+				product = new model.Product(sellerID, productName, colorList, itemType, productSize, description, 0.0, productPriceCasted, imagePaths);
 			}
 		}
+		
 		
 		
 		

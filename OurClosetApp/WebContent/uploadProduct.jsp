@@ -178,7 +178,7 @@
             <div style="width:260px; height: 260px;">
                 <span>
                     <label class="uploadImage">
-                        <input name="image" type="file" accept="image/*" onchange="preview_image(event)">
+                        <input required name="image" type="file" accept="image/*" onchange="preview_image(event)">
                         <img id="image_src"/>
                     </label>
                 </span>
