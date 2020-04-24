@@ -16,25 +16,25 @@ html, body {
 }
 
 @media screen and (max-width: 1500px) {
-	.navbar a {
-		float: none;
-		display: block;
-	}
 	.navbar {
-		width: 100%;
-		background: linear-gradient(to right, #993300 0%, #ffcc00 100%);
-		overflow: auto;
-	}
-	.navbar a {
-		float: left;
-		padding: 15px;
-		color: white;
-		text-decoration: none;
-		font-size: 20px;
-	}
-	.navbar a:hover {
-		background-color: #fc6f03;
-	}
+    width: 100%;
+    background: linear-gradient(to right, #993300 0%, #ffcc00 100%);
+    overflow: auto;
+    border-bottom: 1px black solid;
+
+  }
+  .navbar a {
+    float: left;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    text-shadow: 1px 1px black;
+
+  }
+  .navbar a:hover {
+    background-color: #fc6f03;
+  }
 	#wrapper {
 		height: 300px;
 		overflow: auto;
@@ -87,6 +87,66 @@ html, body {
 		margin-top: 8px;
 		vertical-align: middle;
 		width: 100%;
+	}
+	
+	/* The Modal (background) */
+	.modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		background-color: rgb(0, 0, 0); /* Fallback color */
+		background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+	}
+	
+	/* Modal Content/Box */
+	.modal-content {
+/* 		margin: 15% auto; 15% from the top and centered */
+		width: 100%; /* Could be more or less, depending on screen size */
+		height: 100%;
+	}
+	
+	#product-img {
+		position: relative;
+		height: 100%;
+		width: 100%;
+		left: 25%;
+	}
+	
+	.modal-attr {
+
+	}
+/* 	linear-gradient(to right, #993300 0%, #ffcc00 100%)
+ */	.product-card {
+		box-shadow: 0 4px 8px 0 #993300;
+		max-width: 50%;
+		height: 100%;
+		margin: auto;
+		text-align: center;
+		color: white;
+	}
+
+
+	.product-card button {
+		border: none;
+		outline: 0;
+		padding: 12px;
+		color: white;
+		background-color: #000;
+		text-align: center;
+		cursor: pointer;
+		width: 100%;
+		font-size: 18px;
+	}
+	.product-card modal-btn:hover {
+		opacity: 0.7;
+	}
+	
+	#modal-btn {
+		background: linear-gradient(to right, #993300 0%, #ffcc00 100%);
 	}
 
 	/* Responsive layout - makes a two column-layout instead of four columns */

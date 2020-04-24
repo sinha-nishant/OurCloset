@@ -103,7 +103,7 @@
 		// redirect to home page, guest view
 		$("#guest-access").click(function() {
 			console.log("create account clicked");
-			location.href = "createAccount.jsp";
+			location.href = "newsfeed.jsp";
 		});
 	</script>
 

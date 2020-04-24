@@ -120,10 +120,10 @@
 <body>
 	<div class="navbar">
 		<nav>
-			  <a href="home.html"> Our Closet </a>
-			  <a href="home.html"> Home </a>
-			  <a href="profilepage.html"> Profile</a>
-			  <a href="search.html"><i class="fa fa-fw fa-search"></i>Search</a>
+			  <a href="newsfeed.jsp"> Our Closet </a>
+			  <a href="newsfeed.jsp"> Home </a>
+			  <a href="profilepage.jsp"> Profile</a>
+			  <a href="search.jsp"><i class="fa fa-fw fa-search"></i>Search</a>
 			  <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
 	  </nav>
 	  </div>

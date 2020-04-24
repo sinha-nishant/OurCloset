@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Timestamp;
+import java.lang.String;
 
 /**
  * @author Nishant Sinha

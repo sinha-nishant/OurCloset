@@ -62,7 +62,7 @@ public class ActiveStatus extends HttpServlet {
 			System.out.println(((User)session.getAttribute("user")).getInterest());
 		}
 
-		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/homeUsers.jsp");
+		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/newsfeed.jsp");
 		dispatch.forward(request, response);
 	}
 

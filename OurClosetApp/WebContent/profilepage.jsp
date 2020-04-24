@@ -162,13 +162,13 @@
 </style>
 <body>
     <div class="navbar">
-      <nav>
-            <a href="homeUsers.jsp"> Our Closet </a>
-            <a href="homeUsers.jsp"> Home </a>
-            <a href="profilePage.jsp"> Profile</a>
+     	<nav>
+            <a href="newsfeed.jsp"> Our Closet </a>
+            <a href="newsfeed.jsp"> Home </a>
+            <a href="profilepage.jsp"> Profile</a>
             <a href="search.jsp"><i class="fa fa-fw fa-search"></i>Search</a>
             <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
-    </nav>
+    	</nav>
     </div>
    <div class="profile">
      <header>

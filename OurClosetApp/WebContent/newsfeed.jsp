@@ -10,14 +10,14 @@
 </head>
 <body>
 	<div class="navbar">
-	      <nav>
-	            <a href="newsfeed.jsp"> Our Closet </a>
-	            <a href="newsfeed.jsp"> Home </a>
-	            <a href="profilepage.html"> Profile</a>
-	            <a href="#"><i class="fa fa-fw fa-search"></i>Search</a>
-	            <a href="#" ><i class="fa fa-bell"></i> Notifications </a>
-	    </nav>
- 	</div>
+     	<nav>
+            <a href="newsfeed.jsp"> Our Closet </a>
+            <a href="newsfeed.jsp"> Home </a>
+            <a href="profilepage.jsp"> Profile</a>
+            <a href="search.jsp"><i class="fa fa-fw fa-search"></i>Search</a>
+            <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
+    	</nav>
+    </div>
  	
 	<%@page import="java.util.ArrayList" %>
 	<%@page import="model.Product" %>
@@ -48,6 +48,15 @@
 				</form>
   			</div>
   		</div>
+	  	<!-- The Modal -->
+		<div class="product-modal" class="modal">
+		  <!-- Modal content -->
+		  <div id="modal-content" class="modal-content">
+		    <!-- <span class="close">&times;</span> -->
+		 	<div id="product-info" style="height:400px;width:50%;"></div>
+		  </div>
+		
+		</div>
 	</c:forEach>
 	
 	<h3>NEWSFEED</h3>
@@ -69,5 +78,33 @@
 			</form>
   		</div>
 	</c:forEach>
+	
+	<script>
+		function openModal(number) {
+			
+		}
+		// Get the modal
+		var modal = document.getElementById("map-modal");
+		var modalContent = document.getElementById("modal-content");
+	
+		// Get the button that opens the modal
+		var btn = document.getElementById("map-btn");
+	
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+	
+		// When the user clicks on the button, open the modal
+		btn.onclick = function() {
+		  modal.style.display = "block";
+		}
+	
+		//When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		  if (event.target == modal || event.target == modalContent) {
+		    modal.style.display = "none";
+		  }
+		}
+
+	</script>
 </body>
 </html>

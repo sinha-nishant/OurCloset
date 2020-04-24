@@ -12,6 +12,7 @@
             margin: 0;
             padding: 0;
             font-family: Poppins, Arial;
+            overflow-x: hidden;
         }
         
         @media screen and (max-width: 1500px) {
@@ -104,6 +105,7 @@
                 }
             }
     </style>
+    <link rel="stylesheet" type="text/css" href="css/newsfeed.css">
 </head>
 
 <body>
@@ -122,9 +124,9 @@
 
     <div id="wrapper">
         <div id="innerwrapper">
-            <a href="#">
+           
                 <img src="https://di2ponv0v5otw.cloudfront.net/posts/2019/10/26/5db491d8b3e9170d4bc01ad0/m_5db49230de696ad6cb5f34dd.jpg" />
-            </a>
+            
             <a href="#">
                 <img src="https://i.etsystatic.com/19181655/r/il/fd6649/1740098704/il_570xN.1740098704_3m72.jpg" />
             </a>
@@ -187,6 +189,29 @@
             <img src="https://content.backcountry.com/images/items/900/PAT/PAT00KM/NATBLB.jpg">
         </div>
     </div>
+    
+    <!-- The Modal -->
+	<div id="product-modal" class="modal">
+	  <!-- Modal content -->
+	  <div id="modal-content" class="modal-content">
+	    <!-- <span class="close">&times;</span> -->
+		    <div class="product-card">
+			  <img src="" style="height:400px;width:100%">
+			  <h1>Product name here</h1>
+			  <p class="modal-attr">Brand: </p>
+			  <p class="modal-attr">Color: </p>
+			  <p class="modal-attr">Description: </p>
+			  <p class="modal-attr">Price: </p>
+			  <p class="modal-attr">Quantity: </p>
+			  <p class="modal-attr">Interest: </p>
+			  <p class="modal-attr">Seller: </p>
+			  <p><button id="modal-btn">Show Interest!</button></p>
+			</div>
+		
+		</div>
+	</div>
+	
+	<script src="js/newsfeed.js"></script>
 
 </body>
 

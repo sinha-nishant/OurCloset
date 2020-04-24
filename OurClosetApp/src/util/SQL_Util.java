@@ -38,11 +38,7 @@ public class SQL_Util {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost/OurCloset?allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles");
 		config.setUsername("root");
-<<<<<<< HEAD
 		config.setPassword("Aqiu2817!");
-=======
-		config.setPassword("NecdetT1");
->>>>>>> 800462ca7cbbc88d27ebf7e0bd4e5f022e9da941
 		config.addDataSourceProperty("cachePrepStmts", true);
 		dataSource = new HikariDataSource(config);
 	}

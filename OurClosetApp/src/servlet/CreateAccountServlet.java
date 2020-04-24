@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.connector.Request;
+//import org.apache.catalina.connector.Request;
 import org.omg.CORBA.UserException;
 
 import com.sun.xml.internal.bind.v2.model.core.ID;
