@@ -143,6 +143,14 @@
 		}
 	</style>
 
+	<script>
+	// add comment
+	function addComment(source) {
+		var comments = document.querySelector("comments");
+		commments.innerHTML += ("<p>" + source.value + "</p>");
+		return false;
+	}
+	</script>
 </head>
 <body>
 	<div id="exit-area"><i id="exit-button" class="fas fa-times fa-3x"></i></div>
@@ -190,7 +198,7 @@
 			</div>
 		</div>
 		<div>
-			<form>
+			<form onsubmit="return (addComment(this))" >
 			<input type="text" class="form-control placeholder-text" name="comment" id="comment" placeholder="Add a comment">
 			</form>
 		</div>
