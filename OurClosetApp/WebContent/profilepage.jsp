@@ -181,12 +181,12 @@
         
         <%@ page import="model.User" %>
         
-        <%  User user = (User) session.getAttribute("user");
+      <%--   <%  User user = (User) session.getAttribute("user");
         	int interests = user.getInterest();
         	
         	int products = 0;
         	if (user.getProducts() != null) products = user.getProducts().size();
-        %>
+        %> --%>
         <div class="profileInfo">
           <ul>
             <span class="name">First & Last Name</span>

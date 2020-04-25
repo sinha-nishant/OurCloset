@@ -190,26 +190,6 @@
         </div>
     </div>
     
-    <!-- The Modal -->
-	<div id="product-modal" class="modal">
-	  <!-- Modal content -->
-	  <div id="modal-content" class="modal-content">
-	    <!-- <span class="close">&times;</span> -->
-		    <div class="product-card">
-			  <img src="" style="height:400px;width:100%">
-			  <h1>Product name here</h1>
-			  <p class="modal-attr">Brand: </p>
-			  <p class="modal-attr">Color: </p>
-			  <p class="modal-attr">Description: </p>
-			  <p class="modal-attr">Price: </p>
-			  <p class="modal-attr">Quantity: </p>
-			  <p class="modal-attr">Interest: </p>
-			  <p class="modal-attr">Seller: </p>
-			  <p><button id="modal-btn">Show Interest!</button></p>
-			</div>
-		
-		</div>
-	</div>
 	
 	<script src="js/newsfeed.js"></script>
 

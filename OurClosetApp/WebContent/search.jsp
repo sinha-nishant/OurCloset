@@ -32,7 +32,6 @@
 			font-family: 'Poppins', sans-serif;	
 			background-repeat: no-repeat;
 			background-attachment: fixed;
-			overflow:hidden;
 			font-weight: 700;
 			font-size: 20px;
 		}

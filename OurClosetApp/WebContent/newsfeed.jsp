@@ -13,7 +13,7 @@
      	<nav>
             <a href="newsfeed.jsp"> Our Closet </a>
             <a href="newsfeed.jsp"> Home </a>
-            <a href="profilePage.jsp"> Profile</a>
+            <a href="profilepage.jsp"> Profile</a>
             <a href="search.jsp"><i class="fa fa-fw fa-search"></i>Search</a>
             <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
     	</nav>
@@ -26,7 +26,7 @@
 	
  	
 	<%
-		System.out.println("testing -- " + ((User)(session.getAttribute("user"))).getInterest());
+		/* System.out.println("testing -- " + ((User)(session.getAttribute("user"))).getInterest()); */
 		ArrayList<Product> trending = (ArrayList<Product>) request.getAttribute("trending");
 		ArrayList<Product> recent = (ArrayList<Product>) request.getAttribute("recent");
 	
@@ -37,7 +37,8 @@
 		<div id="wrapper">
 			<div id="innerwrapper">
 				<form action="details" method="GET" name="details" value="Details">
-					<input type="image" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
+					<img src="${product.getImagePaths().get(0)}">
+					<%-- <input type="image" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" /> --%>
 					<input type="hidden" name="brand" value="${product.getBrand()}">
 					<input type="hidden" name="productName" value="${product.getProductName()}">
 					<input type="hidden" name="itemType" value="${product.getItemType()}">
@@ -51,22 +52,14 @@
 				</form>
   			</div>
   		</div>
-	  	<!-- The Modal -->
-		<div class="product-modal" class="modal">
-		  <!-- Modal content -->
-		  <div id="modal-content" class="modal-content">
-		    <!-- <span class="close">&times;</span> -->
-		 	<div id="product-info" style="height:400px;width:50%;"></div>
-		  </div>
-		
-		</div>
 	</c:forEach>
 	
 	<h3>NEWSFEED</h3>
 	<c:forEach items="${recent}" var="product">
 		<div class="column">
 			<form action="details" method="GET" name="details" value="Details">
-				<input type="image" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
+				<img src="${product.getImagePaths().get(0)}">
+				<%-- <input type="image" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" /> --%>
 				<input type="hidden" name="brand" value="${product.getBrand()}">
 				<input type="hidden" name="productName" value="${product.getProductName()}">
 				<input type="hidden" name="itemType" value="${product.getItemType()}">
@@ -82,32 +75,27 @@
   		</div>
 	</c:forEach>
 	
-	<script>
-		function openModal(number) {
-			
-		}
-		// Get the modal
-		var modal = document.getElementById("map-modal");
-		var modalContent = document.getElementById("modal-content");
+	<!-- Modal popup -->
+	<div id="product-modal" class="modal">
+	  <!-- Modal content -->
+	  <div id="modal-content" class="modal-content">
+	    <!-- <span class="close">&times;</span> -->
+		    <div class="product-card">
+			  <img src="" style="height:400px;width:100%">
+			  <h1>Product name here</h1>
+			  <p class="modal-attr">Brand: </p>
+			  <p class="modal-attr">Color: </p>
+			  <p class="modal-attr">Description: </p>
+			  <p class="modal-attr">Price: </p>
+			  <p class="modal-attr">Quantity: </p>
+			  <p class="modal-attr">Interest: </p>
+			  <p class="modal-attr">Seller: </p>
+			  <p><button id="modal-btn">Show Interest!</button></p>
+			</div>
+		
+		</div>
+	</div>
 	
-		// Get the button that opens the modal
-		var btn = document.getElementById("map-btn");
-	
-		// Get the <span> element that closes the modal
-		var span = document.getElementsByClassName("close")[0];
-	
-		// When the user clicks on the button, open the modal
-		btn.onclick = function() {
-		  modal.style.display = "block";
-		}
-	
-		//When the user clicks anywhere outside of the modal, close it
-		window.onclick = function(event) {
-		  if (event.target == modal || event.target == modalContent) {
-		    modal.style.display = "none";
-		  }
-		}
-
-	</script>
+	<script src="newsfeed.js"></script>
 </body>
 </html>
