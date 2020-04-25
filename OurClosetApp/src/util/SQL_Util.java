@@ -38,7 +38,7 @@ public class SQL_Util {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost/OurCloset?allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles");
 		config.setUsername("root");
-		config.setPassword("MySQLServer");
+		config.setPassword("NecdetT1");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		dataSource = new HikariDataSource(config);
 	}
@@ -306,6 +306,7 @@ public class SQL_Util {
 		
 		addColors(addedPrimaryKey, product.getColors());
 		addProductImagePaths(addedPrimaryKey, product.getImagePaths());
+		System.out.println("TAGS" + product.getTags().toString());
 		addTags(addedPrimaryKey, product.getTags());
 	}
 	
