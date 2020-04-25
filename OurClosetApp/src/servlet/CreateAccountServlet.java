@@ -51,7 +51,6 @@ public class CreateAccountServlet extends HttpServlet {
 		
 		String next = "/createAccount.jsp";
 		String message = "";
-		String loggedIn = "";
 		
 		newEmail = request.getParameter("email");
 		newFirstName = request.getParameter("fname");
@@ -110,17 +109,19 @@ public class CreateAccountServlet extends HttpServlet {
 		else {
 			System.out.println("Valid - new account");
 			
-			path = newEmail + "Path";			
+			path = newEmail + "_path";			
 		
-			SQL_Util.addUser(new User(newEmail.split("@")[0], newPassword, newFirstName, newLastName, path));
+			User user = new User(newEmail.split("@")[0], newPassword, newFirstName, newLastName, path);
+			SQL_Util.addUser(user);
 			//Integer userID = SQL_Util.authenticate(newEmail.split("@")[1], newPassword);
-
-			HttpSession session = request.getSession();
 			
+			
+			HttpSession session = request.getSession();	
+			
+			session.setAttribute("id", newEmail.split("@")[0]);
 			session.setAttribute("password", newPassword);
-
-			loggedIn = "true";
-			session.setAttribute("isLoggedIn", loggedIn);
+			session.setAttribute("user", user);
+			session.setAttribute("isLoggedIn", "true");
 			session.setAttribute("loggedBy", "create account");
 
 
