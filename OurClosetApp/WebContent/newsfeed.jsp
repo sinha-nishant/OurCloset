@@ -11,9 +11,9 @@
 <body>
 	<div class="navbar">
      	<nav>
-            <a href="newsfeed.jsp"> Our Closet </a>
-            <a href="newsfeed.jsp"> Home </a>
-            <a href="profilepage.jsp"> Profile</a>
+            <a href="newsfeed"> Our Closet </a>
+            <a href="newsfeed"> Home </a>
+            <a href="profilePage.jsp"> Profile</a>
             <a href="search.jsp"><i class="fa fa-fw fa-search"></i>Search</a>
             <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
     	</nav>

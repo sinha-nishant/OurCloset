@@ -7,6 +7,8 @@ import java.util.ArrayList;
  * @author Nishant Sinha
  */
 public class Product {
+	
+
 	/**
 	 * The primary key ID of this product, 0 by default.
 	 */

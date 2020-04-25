@@ -11,11 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.taglibs.standard.tag.common.sql.TransactionTagSupport;
-
-import apple.laf.JRSUIConstants.Size;
 import model.Product;
+import model.Tag;
 import model.User;
+import util.SQL_Util;
 
 /**
  * Servlet implementation class UploadProductServlet
@@ -83,15 +82,20 @@ public class UploadProductServlet extends HttpServlet {
 		
 		//checking for null - brand
 		boolean brandNull = true;
-		ArrayList<String> tagsList = null;
 		if (productBrand != null || !productBrand.contentEquals("")) {
 			productBrand = productBrand.trim();
 			brandNull = false;
 		}
 		
 		//checking for null - tags
-		boolean tagsNull = true;
-		if (productTags != null || !productTags.contentEquals("")) {
+		boolean tagsNull = false;
+		ArrayList<Tag> tagsList = null;
+		tagsList = new ArrayList<Tag>();
+		tagsList.add(new Tag("tag1"));
+		tagsList.add(new Tag("tag2"));
+		tagsList.add(new Tag("tag3"));
+
+		if (productTags != null && !productTags.contentEquals("")) {
 			
 			if (productTags.charAt(0) != '#') {
 				message = "Please make sure that you start with a '#'.";
@@ -112,16 +116,16 @@ public class UploadProductServlet extends HttpServlet {
 					if (productTags.charAt(i) == val) count++;
 				}
 				
-				tagsList = new ArrayList<String>();
+				tagsList = new ArrayList<Tag>();
 				String [] arr = productTags.split("#", count+1);
 				for (int i = 0; i <= count; i++) {
-					tagsList.add(arr[i]);
+					tagsList.add(new Tag(arr[i]));
 				}
 				tagsList.remove(0);
 				
 				System.out.println("size of the hashtag list - " + tagsList.size());
 				for (int i = 0; i < tagsList.size(); i++) {
-					System.out.println("name at index " + i + " is " + tagsList.get(i));
+					System.out.println("tag name at index " + i + " is " + tagsList.get(i).getTagName());
 				}
 			}
 		}
@@ -135,21 +139,34 @@ public class UploadProductServlet extends HttpServlet {
 			int sellerID = user.getID();
 			System.out.println("milestone: moving to construct the product object - id is " + sellerID);
 			
-			model.Product product = null;
-//			if (!brandNull && !tagsNull) {
-//				product = new model.Product(sellerID, productBrand, productName, colorList, itemType, productSize, description, null, 0.0, productPriceCasted, imagePaths);
-//			}
-//			else if (brandNull && !tagsNull) {
-//				product = new model.Product(sellerID, productName, colorList, itemType, productSize, description, null, 0.0, productPriceCasted, imagePaths);
-//			}
-			if(!brandNull && tagsNull) {
+			Product product = null;
+			if (!brandNull && !tagsNull) {
+				System.out.println("1");
+
+				//product = new model.Product(sellerID, productBrand, productName, colorList, itemType, productSize, description, tagsList, 0.0, productPriceCasted, imagePaths);
+				ArrayList<Tag>tagsList1 = new ArrayList<Tag>();
+				tagsList1.add(new Tag("TEST"));
+				product = new Product(1, "Pagani", "Huayra", colorList, "Car", "Medium", "Hypercar", tagsList, 1.00, 825.00, imagePaths);
+
+			}
+			else if (brandNull && !tagsNull) {
+				System.out.println("2");
+				product = new model.Product(sellerID, productName, colorList, itemType, productSize, description, tagsList, 0.0, productPriceCasted, imagePaths);
+			}
+			else if(!brandNull && tagsNull) {
+				System.out.println("3");
 				product = new model.Product(sellerID, productBrand, productName, colorList, itemType, productSize, description, 0.0, productPriceCasted, imagePaths);
 			}
 			else {
+				System.out.println("4");
 				product = new model.Product(sellerID, productName, colorList, itemType, productSize, description, 0.0, productPriceCasted, imagePaths);
 			}
+			SQL_Util.addProduct(product);
+			//
+			//set any attribute?
+			RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/newsfeed");
+			dispatch.forward(request, response);
 		}
-		
 		
 		
 		

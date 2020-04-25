@@ -32,7 +32,7 @@ CREATE TABLE Products (
 CREATE TABLE Colors (
 	colorID INTEGER(10) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     productID INTEGER(10) NOT NULL,
-    color CHAR(6) NOT NULL,
+    color CHAR(7) NOT NULL,
     FOREIGN KEY (productID) REFERENCES Products(productID)
 );
 

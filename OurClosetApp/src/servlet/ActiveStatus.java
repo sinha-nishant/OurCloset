@@ -46,7 +46,6 @@ public class ActiveStatus extends HttpServlet {
 		 */
 		if (((String)session.getAttribute("loggedBy")).contentEquals("create account")) {
 			System.out.println("in Active Status -> redirected to: Create Account");
-			String uniqueName = (session.getAttribute("idName")).toString();
 			int id = (SQL_Util.authenticate(session.getAttribute("idName").toString(), session.getAttribute("password").toString()));
 			session.setAttribute("user", SQL_Util.getUser(id));
 
@@ -64,7 +63,7 @@ public class ActiveStatus extends HttpServlet {
 			System.out.println(((User)session.getAttribute("user")).getInterest());
 		}
 
-		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/newsfeed.jsp");
+		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/newsfeed");
 		dispatch.forward(request, response);
 	}
 
