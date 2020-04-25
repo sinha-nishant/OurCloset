@@ -232,9 +232,17 @@ public class SQL_Util {
 				String pass = rs.getString("pass");
 				String fName = rs.getString("fName");
 				String lName = rs.getString("lName");
-				String profileImagePath = rs.getString("profileImagePath");
-				int interest = rs.getInt("interest");
-				return new User(userID, uscEmail, pass, fName, lName, profileImagePath, interest, getProductsByUser(userID));
+				String profileImagePath = "profileImages/" + rs.getString("profileImagePath");
+				ArrayList<Product> products = getProductsByUser(userID);
+				
+				int interest = 0;
+				if (products != null) {
+					for (Product product: products) {
+						interest += product.getInterest();
+					}
+				}
+				
+				return new User(userID, uscEmail, pass, fName, lName, profileImagePath, interest, products);
 			}
 		}
 		

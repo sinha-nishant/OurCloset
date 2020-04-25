@@ -77,5 +77,7 @@ public class Test {
 		System.out.println("\n\nProducts with color #aa9ad");
 		
 		System.out.println(SQL_Util.getProductsByColor("#aa9ad").toString());
+		
+		System.out.println(SQL_Util.getUser(1).getInterest());
 	}
 }
