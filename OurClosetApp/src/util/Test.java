@@ -22,8 +22,8 @@ public class Test {
 		System.out.println(SQL_Util.authenticate("sinhan@usc.edu", "abc"));
 		System.out.println(SQL_Util.getUser(2).getFirstName() + " " + SQL_Util.getUser(2).getLastName());
 		ArrayList<Tag> tags1 = new ArrayList<Tag>();
-//		tags1.add(new Tag(1, "Summer"));
-//		tags1.add(new Tag(1, "Italian"));
+		tags1.add(new Tag("Summer"));
+		tags1.add(new Tag("Italian"));
 		ArrayList<String> imagePaths = new ArrayList<String>();
 		ArrayList<String> colors1 = new ArrayList<String>();
 		colors1.add("aaa9ad");
@@ -41,8 +41,8 @@ public class Test {
 		product = new Product(2, "McLaren", "P1", colors2, "Car", "Small", "Hypercar", tags2, 1.00, 999.99, imagePaths);
 		SQL_Util.addProduct(product);
 		ArrayList<Tag> tags3 = new ArrayList<Tag>();
-//		tags3.add(new Tag(3, "GT"));
-//		tags3.add(new Tag(3, "German"));
+		tags3.add(new Tag("GT"));
+		tags3.add(new Tag("German"));
 		ArrayList<String> colors3 = new ArrayList<String>();
 		colors3.add("aaa9ad");
 		colors3.add("#20262c");
