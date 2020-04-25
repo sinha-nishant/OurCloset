@@ -91,6 +91,13 @@ public class User {
 	/**
 	 * @return The primary key ID of this user.
 	 */
+	public void setID(int id) {
+		this.userID = id;
+	}
+	
+	/**
+	 * @return The primary key ID of this user.
+	 */
 	public int getID() {
 		return this.userID;
 	}
