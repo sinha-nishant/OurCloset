@@ -38,7 +38,7 @@ public class SQL_Util {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost/OurCloset?allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles");
 		config.setUsername("root");
-		config.setPassword("NecdetT1");
+		config.setPassword("MySQLServer");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		dataSource = new HikariDataSource(config);
 	}
@@ -121,16 +121,23 @@ public class SQL_Util {
 	 * @param user The User object for the user you would like to add.
 	 */
 	public static void addUser(User user) {
+		int userID = 1;
 		Connection connection = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
 		try {
 			connection = getConnection();
-			ps = connection.prepareStatement("INSERT INTO Users(uscEmail, pass, fName, lName, profileImagePath) VALUES (?, ?, ?, ?, ?)");
+			ps = connection.prepareStatement("INSERT INTO Users(uscEmail, pass, fName, lName, profileImagePath) VALUES (?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 			ps.setString(1, user.getEmail());
 			ps.setString(2, user.getPass());
 			ps.setString(3, user.getFirstName());
 			ps.setString(4, user.getLastName());
 			ps.setString(5, user.getProfileImagePath());
+			rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				userID = rs.getInt(1);
+			}
+			user.setID(userID);
 		}
 		
 		catch (SQLException e) {
@@ -476,7 +483,7 @@ public class SQL_Util {
 			}
 			
 			if (popularProductIDs.isEmpty()) {
-				return null;
+				return getAllProducts();
 			}
 			
 		} catch (SQLException e) {

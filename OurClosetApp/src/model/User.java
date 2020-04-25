@@ -159,6 +159,6 @@ public class User {
 	}
 
 	public String toString() {
-		return "USC Email: " + uscEmail + "\nPassword: " + pass + "\nFirst Name: " + fName + "\nLast Name: " + lName;
+		return "User ID: " + userID + "\nUSC Email: " + uscEmail + "\nPassword: " + pass + "\nFirst Name: " + fName + "\nLast Name: " + lName;
 	}
 }
