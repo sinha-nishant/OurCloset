@@ -150,6 +150,7 @@
 		commments.innerHTML += ("<p>" + source.value + "</p>");
 		return false;
 	}
+	
 	</script>
 </head>
 <body>
@@ -176,7 +177,7 @@
 		<!-- product name + price -->
 		<div id="product-row" class="formatting">
 			<h3 id="product" class="col-12 d-flex justify-content-left">Coding Onesie
-				<span id="price">Rent: $3 Buy: $10</span>
+				<span id="price">Rent: $3  Buy: $10</span>
 			</h3>
 		</div>
 
@@ -196,7 +197,7 @@
 			</div>
 		</div>
 		<div>
-			<form onsubmit="return (addComment(this))" >
+			<form id="comment-form" >
 			<input type="text" class="form-control placeholder-text" name="comment" id="comment" placeholder="Add a comment">
 			</form>
 		</div>
@@ -208,6 +209,21 @@
 
 	<!-- javascript to make back button work -->
 	<script>
+	document.querySelector("#comment-form").onsubmit = function(event) {
+		//prevent from actually submitting form
+		event.preventDefault();
+		console.log("comments added");
+		let comment = document.createElement("p");
+		//let user = document.createElement("span");
+		//user.className = "labels";
+		//user.innerHTML = "user: ";
+		var user = "user: ";
+		var userName = user.bold();
+		console.log(userName); 
+		comment.innerHTML = "<span class='labels'>User: </span>" + document.querySelector("#comment").value;
+		//comment.appendChild(user);
+		document.querySelector("#comments").appendChild(comment);
+	}
 		// go back to home page/where we originally clicked from to get more product details
 		$("#exit-area").click(function() {
 			console.log("back clicked");
