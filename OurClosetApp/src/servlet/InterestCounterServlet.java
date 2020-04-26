@@ -32,9 +32,10 @@ public class InterestCounterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("interest servlet working");
 		Boolean addToInterest = Boolean.parseBoolean((String) request.getParameter("addToInterest"));
 		int productID = Integer.parseInt((String)request.getParameter("productID")); 
-		int userID = (int) request.getSession().getAttribute("userID"); 
+		int userID = (int) request.getSession().getAttribute("user"); 
 		if (addToInterest) {
 			Interest interest = new Interest(userID, productID);
 			SQL_Util.addInterest(interest);

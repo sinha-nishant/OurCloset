@@ -240,7 +240,7 @@
 		document.querySelector("#interest-button").onclick = function() {
 			console.log(this);
 			//toggle effect
-<%-- 			if(this.classList.contains("liked")) //if paragraph already has class "liked"
+			if(this.classList.contains("liked")) //if paragraph already has class "liked"
 			{
 				//on click that satisfies this condition, will change color of interest button to indicate "not interested"
 				this.classList.remove("liked");
@@ -250,36 +250,27 @@
 				//on click that satisfies this condition, will change color of interest button to indicate "interested"
 				this.classList.add("liked");
 				this.classList.remove("not-liked");
-				$.post('interestCounter', 
-				{ addToInterest: true,
-					productID: <%=productID%>
-				
-					
-				}, 
-			    function(returnedData){
-					console.log(returnedData);
-					 
-					// how to reload CSS?
-					
-				});
-			} --%>
-			
-			var fordata = {addToInterest: true, productID: <%=productID%>};
-			
-			$.ajax({
-				type: "POST",
-				url: "interestCounter".
-				data: forData,
-				dataType: "text",
+				$.ajax({
+					type: "POST",
+					url: "interestCounter",
+					data: {addToInterest: true, productID: <%=productID%>},
+					dataType: "text",
 
-				success: function(data) {
-				console.log('interest succesfully incremented'));
-				},
-				error: function(data){
-				alert("fail");
-				}
-			});
-		}
+					success: function(data) {
+						console.log('interest succesfully incremented');
+						<%int newInterest = interest+1; %>
+						console.log(document.getElementById("interest-count"));
+						document.getElementById("interest-count").textContent = <%=newInterest%>;
+					
+					},
+					error: function(data){
+					alert("fail");
+					}
+				});
+			} 
+			
+			
+		
 		//toggle showing the comments on product page (default hidden)
 		document.querySelector("#comments-toggler").onclick = function() {
 			console.log(this);
@@ -295,6 +286,7 @@
 				this.nextElementSibling.classList.add("hide"); //predefined class in css, adding as class element to <p> element
 				this.innerHTML = "view comments...";
 			}
+		}
 		}
 	
 	</script>
