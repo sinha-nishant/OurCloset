@@ -184,7 +184,7 @@
 		<!-- product image -->
 		<div class="container">
 			<div class="row">
-				<img src="images/coding-onesie.jpg">
+				<img src="<%= product.getImagePaths().get(0) %>">
 			</div>	
 		</div>
 
@@ -228,7 +228,27 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+
+	<script>
 	<!-- javascript to make back button work -->
+	document.querySelector("#comment-form").onsubmit = function(event) 
+	{ 		
+		//prevent from actually submitting form 		
+		event.preventDefault(); 		
+		console.log("comments added"); 
+		let comment = document.createElement("p"); 
+		//let user = document.createElement("span"); 
+		//user.className = "labels"; 
+		//user.innerHTML = "user: "; 
+		var user = "user: "; 
+		var userName = user.bold(); 	
+		console.log(userName);  
+		comment.innerHTML = "<span class='labels'>User: </span>" + document.querySelector("#comment").value; 
+		//comment.appendChild(user); 
+		document.querySelector("#comments").appendChild(comment); 	
+	} 
+	</script>
+
 	<script>
 		// go back to home page/where we originally clicked from to get more product details
 		$("#exit-area").click(function() {

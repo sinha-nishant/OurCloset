@@ -40,7 +40,7 @@
 		<div id="wrapper">
 			<div id="innerwrapper">
 				<c:forEach items="${trending}" var="product">	
-					<form action="product.jsp" method="GET" name="product" value="Product">
+					<form action="product.jsp" method="GET" name="product" value="Product" style="width:400px;height:400px;margin-bottom:50px;">
 	 					<input type="image" style="width:400px;height:400px;" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
 						<input type="hidden" name="productid" value="${product.getProductID()}">
 					</form>
@@ -50,16 +50,16 @@
 	
 	<h3>NEWSFEED</h3>
 	
-	<div class="row">
-			<div id="column">
+ 
+			<div class="flex-container-newsfeed">
 				<c:forEach items="${recent}" var="product">	
-					<form action="product.jsp" method="GET" name="product" value="Product">
+					<form action="product.jsp" method="GET" name="product" value="Product" style="width:400px;height:400px;margin-bottom:50px;">
 						<input type="image" style="width:400px;height:400px;"class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
 						<input type="hidden" name="productid" value="${product.getProductID()}">
 					</form>
 				</c:forEach>
   			</div>
-  		</div>
+
 	
 	<!-- Modal popup -->
 	<div id="product-modal" class="modal">

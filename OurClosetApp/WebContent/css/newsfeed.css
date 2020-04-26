@@ -13,6 +13,7 @@ html, body {
 	padding: 0;
 	max-width: 100%;
 	font-family: Poppins, Arial;
+	overflow-x: hidden;
 }
 
 @media screen and (max-width: 1500px) {
@@ -36,7 +37,7 @@ html, body {
     background-color: #fc6f03;
   }
 	#wrapper {
-		height: 300px;
+		height: 400px;
 		overflow: auto;
 		width: 1600px;
 		overflow-y: hidden;
@@ -68,13 +69,19 @@ html, body {
 	}
 	.flex-container {
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-evenly;
 		width: 100%;
 	}
-	.row {
-		display: flex;
+	
+	.flex-container-newsfeed {
+		display: flex;;
 		flex-wrap: wrap;
+		justify-content: space-evenly;
+
+	}
+	.row {
 		padding: 0 4px;
+		width: 100%;
 	}
 
 	/* Create four equal columns that sits next to each other */
