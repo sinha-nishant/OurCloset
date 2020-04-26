@@ -28,8 +28,7 @@ public class Test {
 		ArrayList<String> colors1 = new ArrayList<String>();
 		colors1.add("aaa9ad");
 		colors1.add("#20262c");
-		imagePaths.add("somePath1");
-		imagePaths.add("somePath2");
+		imagePaths.add("profile.jpg");
 		Product product = new Product(1, "Pagani", "Huayra", colors1, "Car", "Medium", "Hypercar", tags1, 1.00, 825.00, imagePaths);
 		SQL_Util.addProduct(product);
 		ArrayList<Tag> tags2 = new ArrayList<Tag>();

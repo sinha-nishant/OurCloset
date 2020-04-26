@@ -15,7 +15,7 @@
             <a href="newsfeed"> Home </a>
             <a href="profilepage.jsp"> Profile</a>
             <a href="search.jsp"><i class="fa fa-fw fa-search"></i>Search</a>
-            <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
+            <a href="notifications.jsp" ><i class="fa fa-bell"></i> Notifications</a>
     	</nav>
     </div>
  	
@@ -37,48 +37,51 @@
 	%>
 	<h2>TRENDING</h2>
 	
-	<c:forEach items="${trending}" var="product">
 		<div id="wrapper">
 			<div id="innerwrapper">
-				<form action="product.jsp" method="GET" name="product" value="Product">
-<%-- 					<img src="${product.getImagePaths().get(0)}">
- --%>					<input type="image" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
-					<%--<input type="hidden" name="brand" value="${product.getBrand()}">
-					<input type="hidden" name="productName" value="${product.getProductName()}">
-<%-- 					<input type="hidden" name="itemType" value="${product.getItemType()}">
- --%>				<%--	<input type="hidden" name="size" value="${product.getSize()}">
-					<input type="hidden" name="description" value="${product.getDescription()}">
-					<input type="hidden" name="rentPrice" value="${product.getRentPrice()}">
-					<input type="hidden" name="buyPrice" value="${product.getBuyPrice()}">
-					<input type="hidden" name="interest" value="${product.getInterest()}">
-					<%-- <input type="hidden" name="comments" value="${product.getComments()}">
-					<input type="hidden" name="images" value="${product.getImagePaths()}"> --%> 
-					<input type="hidden" name="productid" value="${product.getProductID()}">
-				</form>
+				<c:forEach items="${trending}" var="product">	
+					<form action="product.jsp" method="GET" name="product" value="Product">
+	<%-- 					<img src="${product.getImagePaths().get(0)}">
+	 --%>					<input type="image" style="width:400px;height:400px;" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
+						<%--<input type="hidden" name="brand" value="${product.getBrand()}">
+						<input type="hidden" name="productName" value="${product.getProductName()}">
+	<%-- 					<input type="hidden" name="itemType" value="${product.getItemType()}">
+	 --%>				<%--	<input type="hidden" name="size" value="${product.getSize()}">
+						<input type="hidden" name="description" value="${product.getDescription()}">
+						<input type="hidden" name="rentPrice" value="${product.getRentPrice()}">
+						<input type="hidden" name="buyPrice" value="${product.getBuyPrice()}">
+						<input type="hidden" name="interest" value="${product.getInterest()}">
+						<%-- <input type="hidden" name="comments" value="${product.getComments()}">
+						<input type="hidden" name="images" value="${product.getImagePaths()}"> --%> 
+						<input type="hidden" name="productid" value="${product.getProductID()}">
+					</form>
+				</c:forEach>
   			</div>
   		</div>
-	</c:forEach>
 	
 	<h3>NEWSFEED</h3>
-	<c:forEach items="${recent}" var="product">
-		<div class="column">
-			<form action="product.jsp" method="GET" name="product" value="Product">
-				<img src="${product.getImagePaths().get(0)}">
-				<%-- <input type="image" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" /> --%>
-<%-- 				<input type="hidden" name="brand" value="${product.getBrand()}">
-				<input type="hidden" name="productName" value="${product.getProductName()}">
-				<input type="hidden" name="itemType" value="${product.getItemType()}">
-				<input type="hidden" name="size" value="${product.getSize()}">
-				<input type="hidden" name="description" value="${product.getDescription()}">
-				<input type="hidden" name="rentPrice" value="${product.getRentPrice()}">
-				<input type="hidden" name="buyPrice" value="${product.getBuyPrice()}">
-				<input type="hidden" name="interest" value="${product.getInterest()}"> --%>
-<%-- 				<input type="hidden" name="comments" value="${product.getComments()}">
- --%>				<input type="hidden" name="productid" value="${product.getProductID()}">
-				
-			</form>
+	
+	<div class="row">
+			<div id="column">
+				<c:forEach items="${recent}" var="product">	
+					<form action="product.jsp" method="GET" name="product" value="Product">
+	<%-- 					<img src="${product.getImagePaths().get(0)}">
+	 --%>					<input type="image" style="width:400px;height:400px;"class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
+						<%--<input type="hidden" name="brand" value="${product.getBrand()}">
+						<input type="hidden" name="productName" value="${product.getProductName()}">
+	<%-- 					<input type="hidden" name="itemType" value="${product.getItemType()}">
+	 --%>				<%--	<input type="hidden" name="size" value="${product.getSize()}">
+						<input type="hidden" name="description" value="${product.getDescription()}">
+						<input type="hidden" name="rentPrice" value="${product.getRentPrice()}">
+						<input type="hidden" name="buyPrice" value="${product.getBuyPrice()}">
+						<input type="hidden" name="interest" value="${product.getInterest()}">
+						<%-- <input type="hidden" name="comments" value="${product.getComments()}">
+						<input type="hidden" name="images" value="${product.getImagePaths()}"> --%> 
+						<input type="hidden" name="productid" value="${product.getProductID()}">
+					</form>
+				</c:forEach>
+  			</div>
   		</div>
-	</c:forEach>
 	
 	<!-- Modal popup -->
 	<div id="product-modal" class="modal">

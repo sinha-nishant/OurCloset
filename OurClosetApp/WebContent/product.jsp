@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -90,7 +88,7 @@
 		}
 		#price {
 			position: absolute;
-			right: 2%;
+			right: 0%;
 		}
 
 		p {
@@ -152,23 +150,18 @@
 		commments.innerHTML += ("<p>" + source.value + "</p>");
 		return false;
 	}
+	
 	</script>
 </head>
 <body>
 	<div id="exit-area"><i id="exit-button" class="fas fa-times fa-3x"></i></div>
 	<div class="outer-box">
-	<%@page import="model.Product"%>
-	<%@page import="util.SQL_Util" %>
-	<% int productID = Integer.parseInt(request.getParameter("productid"));
-	Product product = SQL_Util.getProduct(productID);
-	String pName = product.getProductName();
-	String brand = product.getBrand();
-	%>
+
 		<!-- seller name + interest button -->
 		<div class="container">
 			<div class="row formatting">
 				<h1 id="name" class="col-12 mt-5 d-flex justify-content-left">Betty
-					<div id="interest"><span id="interest-count">103</span><i id="interest-button" class="fas fa-hand-sparkles justify-content-right interest"></i></div>
+					<div id="interest"><span id="interest-count">103</span><i id="interest-button" class="not-liked fas fa-hand-sparkles justify-content-right interest"></i></div>
 					<!-- NEED TO ADD JSP INTO THIS ICON's "CLASS" ATTRIBUTE TO DETERMINE WHAT COLOR IT SHOULD BE PRE-COLORED (INTERESTED (class: liked) OR NOT INTERESTED (class: not-liked)) -->
 				</h1>
 			</div>
@@ -183,16 +176,15 @@
 
 		<!-- product name + price -->
 		<div id="product-row" class="formatting">
-			<h3 id="product" class="col-12 d-flex justify-content-left"><%=pName %>
-				<span id="price">$3</span>
+			<h3 id="product" class="col-12 d-flex justify-content-left">Coding Onesie
+				<span id="price">Rent: $3  Buy: $10</span>
 			</h3>
 		</div>
 
 		<!-- product info -->
 		<div>
 			<p><span class="labels">size:</span> S</p>
-			<p><span class="labels">brand:</span> <%=brand %></p>
-			<p><span class="labels">rent/sell:</span> rent</p>
+			<p><span class="labels">brand:</span> MADE4DEV</p>
 			<p><span class="labels">description:</span> Try out this cute coding onesie to encourage your little one to start compiling early!</p>
 		</div>
 
@@ -201,11 +193,11 @@
 			<span id="comments-toggler">view comments...</span>
 			<div id="comments" class="hide">
 				<p><span class="labels">Patty:</span> so cute!</p>
-				<p>Elisabeth: omg I NEED this for my little one *heart eyes* asdlfjkaskldjfklasd jkfldas</p>
+				<p><span class="labels">Elisabeth:</span> omg I NEED this for my little one *heart eyes* asdlfjkaskldjfklasd jkfldas</p>
 			</div>
 		</div>
 		<div>
-			<form onsubmit="return (addComment(this))" >
+			<form id="comment-form" >
 			<input type="text" class="form-control placeholder-text" name="comment" id="comment" placeholder="Add a comment">
 			</form>
 		</div>
@@ -217,6 +209,21 @@
 
 	<!-- javascript to make back button work -->
 	<script>
+	document.querySelector("#comment-form").onsubmit = function(event) {
+		//prevent from actually submitting form
+		event.preventDefault();
+		console.log("comments added");
+		let comment = document.createElement("p");
+		//let user = document.createElement("span");
+		//user.className = "labels";
+		//user.innerHTML = "user: ";
+		var user = "user: ";
+		var userName = user.bold();
+		console.log(userName); 
+		comment.innerHTML = "<span class='labels'>User: </span>" + document.querySelector("#comment").value;
+		//comment.appendChild(user);
+		document.querySelector("#comments").appendChild(comment);
+	}
 		// go back to home page/where we originally clicked from to get more product details
 		$("#exit-area").click(function() {
 			console.log("back clicked");
