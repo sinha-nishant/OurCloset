@@ -41,18 +41,7 @@
 			<div id="innerwrapper">
 				<c:forEach items="${trending}" var="product">	
 					<form action="product.jsp" method="GET" name="product" value="Product">
-	<%-- 					<img src="${product.getImagePaths().get(0)}">
-	 --%>					<input type="image" style="width:400px;height:400px;" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
-						<%--<input type="hidden" name="brand" value="${product.getBrand()}">
-						<input type="hidden" name="productName" value="${product.getProductName()}">
-	<%-- 					<input type="hidden" name="itemType" value="${product.getItemType()}">
-	 --%>				<%--	<input type="hidden" name="size" value="${product.getSize()}">
-						<input type="hidden" name="description" value="${product.getDescription()}">
-						<input type="hidden" name="rentPrice" value="${product.getRentPrice()}">
-						<input type="hidden" name="buyPrice" value="${product.getBuyPrice()}">
-						<input type="hidden" name="interest" value="${product.getInterest()}">
-						<%-- <input type="hidden" name="comments" value="${product.getComments()}">
-						<input type="hidden" name="images" value="${product.getImagePaths()}"> --%> 
+	 					<input type="image" style="width:400px;height:400px;" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
 						<input type="hidden" name="productid" value="${product.getProductID()}">
 					</form>
 				</c:forEach>
@@ -65,18 +54,8 @@
 			<div id="column">
 				<c:forEach items="${recent}" var="product">	
 					<form action="product.jsp" method="GET" name="product" value="Product">
-	<%-- 					<img src="${product.getImagePaths().get(0)}">
-	 --%>					<input type="image" style="width:400px;height:400px;"class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
-						<%--<input type="hidden" name="brand" value="${product.getBrand()}">
-						<input type="hidden" name="productName" value="${product.getProductName()}">
-	<%-- 					<input type="hidden" name="itemType" value="${product.getItemType()}">
-	 --%>				<%--	<input type="hidden" name="size" value="${product.getSize()}">
-						<input type="hidden" name="description" value="${product.getDescription()}">
-						<input type="hidden" name="rentPrice" value="${product.getRentPrice()}">
-						<input type="hidden" name="buyPrice" value="${product.getBuyPrice()}">
-						<input type="hidden" name="interest" value="${product.getInterest()}">
-						<%-- <input type="hidden" name="comments" value="${product.getComments()}">
-						<input type="hidden" name="images" value="${product.getImagePaths()}"> --%> 
+						<img src="${product.getImagePaths().get(0)}">
+						<input type="image" style="width:400px;height:400px;"class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
 						<input type="hidden" name="productid" value="${product.getProductID()}">
 					</form>
 				</c:forEach>
