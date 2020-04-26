@@ -1,4 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -46,7 +49,6 @@
 			margin-left: 20%;
 			margin-right: 20%;
 		}
-
 		#exit-area {
 			cursor: pointer;
 		}
@@ -56,7 +58,6 @@
 			top: 5%;
 			color: white;
 		}
-
 		.formatting {
 			display: flex;
 			padding-bottom: 10px;
@@ -75,7 +76,6 @@
 		#name {
 			padding-left: 0px;
 		}
-
 		img {
 			width: 100%;
 		}
@@ -90,7 +90,6 @@
 			position: absolute;
 			right: 0%;
 		}
-
 		p {
 			margin-bottom: 0px;
 			font-family: 'Montserrat', sans-serif;
@@ -98,7 +97,6 @@
 		.labels {
 			font-family: 'Poppins', sans-serif;	
 		}
-
 		.hide {
 			display: none;
 		}
@@ -118,7 +116,6 @@
 		.placeholder-text {
 			font-family: 'Montserrat', sans-serif;
 		}
-
 		@media (min-width: 992px) {
 			h1 {
 				font-size: 50px;
@@ -150,17 +147,32 @@
 		commments.innerHTML += ("<p>" + source.value + "</p>");
 		return false;
 	}
-	
 	</script>
 </head>
 <body>
 	<div id="exit-area"><i id="exit-button" class="fas fa-times fa-3x"></i></div>
 	<div class="outer-box">
-
+	<%@page import="model.Product"%>
+	<%@page import="model.User"%>
+	<%@page import="java.util.ArrayList"%>
+	<%@page import="model.Comment"%>
+	<%@page import="util.SQL_Util" %>
+	<% int productID = Integer.parseInt(request.getParameter("productid"));
+	Product product = SQL_Util.getProduct(productID);
+	String pName = product.getProductName();
+	User seller = SQL_Util.getUser(product.getSellerID());
+	String sellerName = seller.getFirstName() + " " + seller.getLastName();
+	String brand = product.getBrand();
+	double buyPrice = product.getBuyPrice();
+	String size = product.getSize();
+	double rentPrice = product.getRentPrice();
+	String description = product.getDescription();
+	ArrayList<Comment> comments = product.getComments();
+	%>
 		<!-- seller name + interest button -->
 		<div class="container">
 			<div class="row formatting">
-				<h1 id="name" class="col-12 mt-5 d-flex justify-content-left">Betty
+				<h1 id="name" class="col-12 mt-5 d-flex justify-content-left"><%=sellerName %>
 					<div id="interest"><span id="interest-count">103</span><i id="interest-button" class="not-liked fas fa-hand-sparkles justify-content-right interest"></i></div>
 					<!-- NEED TO ADD JSP INTO THIS ICON's "CLASS" ATTRIBUTE TO DETERMINE WHAT COLOR IT SHOULD BE PRE-COLORED (INTERESTED (class: liked) OR NOT INTERESTED (class: not-liked)) -->
 				</h1>
@@ -176,25 +188,30 @@
 
 		<!-- product name + price -->
 		<div id="product-row" class="formatting">
-			<h3 id="product" class="col-12 d-flex justify-content-left">Coding Onesie
-				<span id="price">Rent: $3  Buy: $10</span>
+			<h3 id="product" class="col-12 d-flex justify-content-left"><%=pName %>
+				<span id="price">$<%=buyPrice%></span>
 			</h3>
 		</div>
 
 		<!-- product info -->
 		<div>
-			<p><span class="labels">size:</span> S</p>
-			<p><span class="labels">brand:</span> MADE4DEV</p>
-			<p><span class="labels">description:</span> Try out this cute coding onesie to encourage your little one to start compiling early!</p>
+			<p><span class="labels">size:</span> <%= size %></p>
+			<p><span class="labels">brand:</span> <%=brand %></p>
+			<p><span class="labels">rent/sell:</span> <%=rentPrice %></p>
+			<p><span class="labels">description:</span> <%=description %></p>
 		</div>
 
 		<!-- comments -->
 		<div>
 			<span id="comments-toggler">view comments...</span>
 			<div id="comments" class="hide">
+				<!-- <p><span class="labels">Patty:</span> so cute!</p>
+				<p><span class="labels">Elisabeth:</span> omg I NEED this for my little one *heart eyes* asdlfjkaskldjfklasd jkfldas</p> -->
 				
-				<p><span class="labels">Patty:</span> so cute!</p>
-				<p><span class="labels">Elisabeth:</span> omg I NEED this for my little one *heart eyes* asdlfjkaskldjfklasd jkfldas</p>
+				<c:forEach items="${comments}" var="comment">	
+					<p><span class="labels">${comment.getCommenterName() }</span>${comment.message() }</p>
+				
+				</c:forEach>
 			</div>
 		</div>
 		<div>

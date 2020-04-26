@@ -1,6 +1,9 @@
 package model;
 
 import java.sql.Timestamp;
+
+import util.SQL_Util;
+
 import java.lang.String;
 
 /**
@@ -71,6 +74,7 @@ public class Comment extends Notification {
 	public int isReplyTo() {
 		return this.replyTo;
 	}
+	
 	
 	/**
 	 * 

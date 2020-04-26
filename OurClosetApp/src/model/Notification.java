@@ -2,6 +2,8 @@ package model;
 
 import java.sql.Timestamp;
 
+import util.SQL_Util;
+
 /**
  * @author Nishant Sinha
  */
@@ -89,6 +91,11 @@ public class Notification {
 	 */
 	public Timestamp getWhenViewed () {
 		return this.whenViewed;
+	}
+	
+	public String getCommenterName(int commenterID) {
+		User user = SQL_Util.getUser(commenterID);
+		return user.getFirstName() + " " + user.getLastName();
 	}
 	
 	public String toString() {
