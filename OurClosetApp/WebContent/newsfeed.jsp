@@ -54,7 +54,6 @@
 			<div id="column">
 				<c:forEach items="${recent}" var="product">	
 					<form action="product.jsp" method="GET" name="product" value="Product">
-						<img src="${product.getImagePaths().get(0)}">
 						<input type="image" style="width:400px;height:400px;"class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
 						<input type="hidden" name="productid" value="${product.getProductID()}">
 					</form>

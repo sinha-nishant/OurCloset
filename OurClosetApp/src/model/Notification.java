@@ -93,12 +93,12 @@ public class Notification {
 		return this.whenViewed;
 	}
 	
-	public String getCommenterName(int commenterID) {
-		User user = SQL_Util.getUser(commenterID);
+	public String getCommenterName() {
+		User user = SQL_Util.getUser(notifierID);
 		return user.getFirstName() + " " + user.getLastName();
 	}
 	
 	public String toString() {
-		return "Notification from user " + notifierID + " regarding product " + productID;
+		return "Notification from user " + getCommenterName() + " regarding product " + productID;
 	}
 }

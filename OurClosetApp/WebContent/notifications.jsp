@@ -85,11 +85,11 @@ a {
 
 <div class="navbar">
       <nav>
-            <a href="homeUsers.html"> Our Closet </a>
-            <a href="homeUsers.html"> Home </a>
+            <a href="newsfeed"> Our Closet </a>
+            <a href="newsfeed"> Home </a>
             <a href="profilepage.html"> Profile</a>
-            <a href="#"><i class="fa fa-fw fa-search"></i>Search</a>
-            <a href="notifications.html" ><i class="fa fa-bell"></i> Notifications </a>
+            <a href="searchServlet"><i class="fa fa-fw fa-search"></i>Search</a>
+            <a href="notifications.jsp" ><i class="fa fa-bell"></i> Notifications </a>
     </nav>
  </div>
 
@@ -98,7 +98,8 @@ a {
 <%@page import="model.Notification" %>
 
 <%int userID = (int) request.getSession().getAttribute("user");
-ArrayList<Notification> notifications = SQL_Util.getNotifications(userID); 
+ArrayList<Notification> notifications = SQL_Util.getNotifications(userID);
+request.setAttribute("notifications", notifications);
 System.out.println("number of notifs:" + notifications.size());
 
 %>
@@ -106,10 +107,10 @@ System.out.println("number of notifs:" + notifications.size());
 
 <div>
 <c:forEach items="${notifications}" var="notif">	
-	<p>hiiiii</p>
-	<div class="alert comment">
+<%-- 	<p>${notif.getCommenterName()}</p>
+ --%>	<div class="alert comment">
 		<span class="closebtn">&times;</span>
-		<a href="product.jsp"> hi</a>
+		<a href="product.jsp"> ${notif.toString()}</a>
 	
 	</div>
 </c:forEach>

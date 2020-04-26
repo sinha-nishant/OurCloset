@@ -18,7 +18,8 @@
 
 	<!-- icons -->
 	<script src="https://kit.fontawesome.com/7ce1d97a87.js" crossorigin="anonymous"></script>
-
+	
+	
 	<!-- css -->
 	<style>
 		html {
@@ -164,6 +165,7 @@
 	String sellerName = seller.getFirstName() + " " + seller.getLastName();
 	String brand = product.getBrand();
 	double buyPrice = product.getBuyPrice();
+	int interest = product.getInterest();
 	String size = product.getSize();
 	double rentPrice = product.getRentPrice();
 	String description = product.getDescription();
@@ -173,7 +175,7 @@
 		<div class="container">
 			<div class="row formatting">
 				<h1 id="name" class="col-12 mt-5 d-flex justify-content-left"><%=sellerName %>
-					<div id="interest"><span id="interest-count">103</span><i id="interest-button" class="not-liked fas fa-hand-sparkles justify-content-right interest"></i></div>
+					<div id="interest"><span id="interest-count"><%=interest %></span><i id="interest-button" class="not-liked fas fa-hand-sparkles justify-content-right interest"></i></div>
 					<!-- NEED TO ADD JSP INTO THIS ICON's "CLASS" ATTRIBUTE TO DETERMINE WHAT COLOR IT SHOULD BE PRE-COLORED (INTERESTED (class: liked) OR NOT INTERESTED (class: not-liked)) -->
 				</h1>
 			</div>
@@ -221,7 +223,8 @@
 		</div>
 
 	</div>
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script> 
+	<!--  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
@@ -230,13 +233,14 @@
 		// go back to home page/where we originally clicked from to get more product details
 		$("#exit-area").click(function() {
 			console.log("back clicked");
-			location.href = "login.html";
+			location.href = "newsfeed";
 		});
+		
 		//interest button
 		document.querySelector("#interest-button").onclick = function() {
 			console.log(this);
 			//toggle effect
-			if(this.classList.contains("liked")) //if paragraph already has class "liked"
+<%-- 			if(this.classList.contains("liked")) //if paragraph already has class "liked"
 			{
 				//on click that satisfies this condition, will change color of interest button to indicate "not interested"
 				this.classList.remove("liked");
@@ -246,7 +250,35 @@
 				//on click that satisfies this condition, will change color of interest button to indicate "interested"
 				this.classList.add("liked");
 				this.classList.remove("not-liked");
-			}
+				$.post('interestCounter', 
+				{ addToInterest: true,
+					productID: <%=productID%>
+				
+					
+				}, 
+			    function(returnedData){
+					console.log(returnedData);
+					 
+					// how to reload CSS?
+					
+				});
+			} --%>
+			
+			var fordata = {addToInterest: true, productID: <%=productID%>};
+			
+			$.ajax({
+				type: "POST",
+				url: "interestCounter".
+				data: forData,
+				dataType: "text",
+
+				success: function(data) {
+				console.log('interest succesfully incremented'));
+				},
+				error: function(data){
+				alert("fail");
+				}
+			});
 		}
 		//toggle showing the comments on product page (default hidden)
 		document.querySelector("#comments-toggler").onclick = function() {
