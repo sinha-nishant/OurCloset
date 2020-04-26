@@ -38,7 +38,7 @@ public class SQL_Util {
 		HikariConfig config = new HikariConfig();
 		config.setJdbcUrl("jdbc:mysql://localhost/OurCloset?allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/Los_Angeles");
 		config.setUsername("root");
-		config.setPassword("MySQLServer");
+		config.setPassword("NecdetT1");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		dataSource = new HikariDataSource(config);
 	}
@@ -277,6 +277,27 @@ public class SQL_Util {
 		finally {
 			executeUpdateAndClose(connection, ps);
 		}
+	}
+	
+	public static Product getProduct(int productID) {
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Product product = null;
+		try {
+			connection = getConnection();
+			
+			ps = connection.prepareStatement("SELECT * FROM Products WHERE productID = ?");
+			ps.setInt(1, productID);
+			rs = ps.executeQuery();
+			product = handleProducts(rs).get(0);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			closeAll(connection, ps, rs);
+		}
+		return product;
 	}
 	
 	/**

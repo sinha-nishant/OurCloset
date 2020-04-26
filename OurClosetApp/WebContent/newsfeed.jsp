@@ -13,7 +13,7 @@
      	<nav>
             <a href="newsfeed"> Our Closet </a>
             <a href="newsfeed"> Home </a>
-            <a href="profilePage.jsp"> Profile</a>
+            <a href="profilepage.jsp"> Profile</a>
             <a href="search.jsp"><i class="fa fa-fw fa-search"></i>Search</a>
             <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
     	</nav>
@@ -28,6 +28,10 @@
 	<%
 		/* System.out.println("testing -- " + ((User)(session.getAttribute("user"))).getInterest()); */
 		ArrayList<Product> trending = (ArrayList<Product>) request.getAttribute("trending");
+		System.out.println(trending.size());
+		for (int i = 0; i < trending.size(); i++) {
+			System.out.println(trending.get(i).getProductName());
+		}
 		ArrayList<Product> recent = (ArrayList<Product>) request.getAttribute("recent");
 	
 	%>
@@ -36,19 +40,20 @@
 	<c:forEach items="${trending}" var="product">
 		<div id="wrapper">
 			<div id="innerwrapper">
-				<form action="details" method="GET" name="details" value="Details">
-					<img src="${product.getImagePaths().get(0)}">
-					<%-- <input type="image" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" /> --%>
-					<input type="hidden" name="brand" value="${product.getBrand()}">
+				<form action="product.jsp" method="GET" name="product" value="Product">
+<%-- 					<img src="${product.getImagePaths().get(0)}">
+ --%>					<input type="image" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" />
+					<%--<input type="hidden" name="brand" value="${product.getBrand()}">
 					<input type="hidden" name="productName" value="${product.getProductName()}">
-					<input type="hidden" name="itemType" value="${product.getItemType()}">
-					<input type="hidden" name="size" value="${product.getSize()}">
+<%-- 					<input type="hidden" name="itemType" value="${product.getItemType()}">
+ --%>				<%--	<input type="hidden" name="size" value="${product.getSize()}">
 					<input type="hidden" name="description" value="${product.getDescription()}">
 					<input type="hidden" name="rentPrice" value="${product.getRentPrice()}">
 					<input type="hidden" name="buyPrice" value="${product.getBuyPrice()}">
 					<input type="hidden" name="interest" value="${product.getInterest()}">
 					<%-- <input type="hidden" name="comments" value="${product.getComments()}">
-					<input type="hidden" name="images" value="${product.getImagePaths()}"> --%>
+					<input type="hidden" name="images" value="${product.getImagePaths()}"> --%> 
+					<input type="hidden" name="productid" value="${product.getProductID()}">
 				</form>
   			</div>
   		</div>
@@ -57,19 +62,19 @@
 	<h3>NEWSFEED</h3>
 	<c:forEach items="${recent}" var="product">
 		<div class="column">
-			<form action="details" method="GET" name="details" value="Details">
+			<form action="product.jsp" method="GET" name="product" value="Product">
 				<img src="${product.getImagePaths().get(0)}">
 				<%-- <input type="image" class="image" src="${product.getImagePaths().get(0)}" border="0" alt="Submit" /> --%>
-				<input type="hidden" name="brand" value="${product.getBrand()}">
+<%-- 				<input type="hidden" name="brand" value="${product.getBrand()}">
 				<input type="hidden" name="productName" value="${product.getProductName()}">
 				<input type="hidden" name="itemType" value="${product.getItemType()}">
 				<input type="hidden" name="size" value="${product.getSize()}">
 				<input type="hidden" name="description" value="${product.getDescription()}">
 				<input type="hidden" name="rentPrice" value="${product.getRentPrice()}">
 				<input type="hidden" name="buyPrice" value="${product.getBuyPrice()}">
-				<input type="hidden" name="interest" value="${product.getInterest()}">
-				<%-- <input type="hidden" name="comments" value="${product.getComments()}">
-				<input type="hidden" name="images" value="${product.getImagePaths()}"> --%>
+				<input type="hidden" name="interest" value="${product.getInterest()}"> --%>
+<%-- 				<input type="hidden" name="comments" value="${product.getComments()}">
+ --%>				<input type="hidden" name="productid" value="${product.getProductID()}">
 				
 			</form>
   		</div>

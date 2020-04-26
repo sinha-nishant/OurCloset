@@ -39,7 +39,7 @@ public class CreateAccountServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		System.out.println("In the servlet");
+		//System.out.println("In the servlet");
 		if (!SQL_Util.isEstablished())
 			SQL_Util.initDataSource();
 		
@@ -64,10 +64,10 @@ public class CreateAccountServlet extends HttpServlet {
 		if (newLastName != null) newLastName = newLastName.trim();
 		if (newPassword != null) newPassword = newPassword.trim();
 		
-		System.out.println(newEmail);
-		System.out.println(newFirstName);
-		System.out.println(newLastName);
-		System.out.println(newPassword);
+//		System.out.println(newEmail);
+//		System.out.println(newFirstName);
+//		System.out.println(newLastName);
+//		System.out.println(newPassword);
 
 
 		//empty input
@@ -84,7 +84,7 @@ public class CreateAccountServlet extends HttpServlet {
 		
 		//non-USC email
 		else if (!("@" + newEmail.split("@")[1]).contentEquals("@usc.edu")) {
-			System.out.println("Email is Wrong");
+			//System.out.println("Email is Wrong");
 
 			message = "Please enter a USC email.";
 			request.setAttribute("createAccountMessage", message);
@@ -96,7 +96,7 @@ public class CreateAccountServlet extends HttpServlet {
 		
 		//user already exists
 		else if (SQL_Util.checkIfExists(newEmail)) {
-			System.out.println("Account already exists");
+			//System.out.println("Account already exists");
 
 			message = "This email address is already registered.";
 			request.setAttribute("createAccountMessage", message);
@@ -107,7 +107,7 @@ public class CreateAccountServlet extends HttpServlet {
 		}
 		
 		else {
-			System.out.println("Valid - new account");
+			//System.out.println("Valid - new account");
 			
 			path = newEmail + "_path";			
 		
@@ -118,12 +118,10 @@ public class CreateAccountServlet extends HttpServlet {
 			
 			HttpSession session = request.getSession();	
 			
-			session.setAttribute("id", newEmail.split("@")[0]);
+			session.setAttribute("email", newEmail.split("@")[0]);
 			session.setAttribute("password", newPassword);
-			session.setAttribute("user", user);
 			session.setAttribute("isLoggedIn", "true");
 			session.setAttribute("loggedBy", "create account");
-
 
 			response.sendRedirect("ActiveStatus");
 		}

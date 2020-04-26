@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.mysql.cj.Session;
 
+import model.Interest;
 import model.User;
 import util.SQL_Util;
 
@@ -63,8 +64,11 @@ public class LoginServlet extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 
-			session.setAttribute("user", SQL_Util.getUser(userID));
 			
+			session.setAttribute("user", userID);
+			System.out.println("inteststs in login serv: " + SQL_Util.getUser(userID).getInterest());
+			SQL_Util.addInterest(new Interest(2, 1));
+			System.out.println("inteststs in login serv now: " + SQL_Util.getUser(userID).getInterest());
 
 			loggedIn = "true";
 			session.setAttribute("isLoggedIn", loggedIn);

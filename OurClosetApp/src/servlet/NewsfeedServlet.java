@@ -41,8 +41,11 @@ public class NewsfeedServlet extends HttpServlet {
 		// get trending posts
 		ArrayList<Product> trending = SQL_Util.getPopularProducts();
 		request.setAttribute("trending", trending);
+		System.out.println("trending size in the servlet : " + trending.size());
 		// get posts by recent order
 		ArrayList<Product> recent = SQL_Util.getAllProducts();
+		System.out.println("trending size in the servlet : " + recent.size());
+
 		request.setAttribute("recent", recent);
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/newsfeed.jsp");
 		dispatch.forward(request, response);

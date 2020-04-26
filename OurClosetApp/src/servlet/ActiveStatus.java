@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
+import model.Interest;
 import model.User;
 import util.SQL_Util;
 
@@ -39,21 +40,22 @@ public class ActiveStatus extends HttpServlet {
 			
 		
 		if (session.getAttribute("loggedBy") != null) {
-			System.out.println("Logged by is not null -> " + (String)(session.getAttribute("loggedBy")));
+			//System.out.println("Logged by is not null -> " + (String)(session.getAttribute("loggedBy")));
 		}
 		/*
 		 * If from create account
 		 */
 		if (((String)session.getAttribute("loggedBy")).contentEquals("create account")) {
-			System.out.println("in Active Status -> redirected to: Create Account");
+			//System.out.println("in Active Status -> redirected to: Create Account");
 			
 			//User user = new User(session.get, password, fName, lName, profileImagePath)
 			
-			int id = (SQL_Util.authenticate(session.getAttribute("id").toString(), session.getAttribute("password").toString()));
-			System.err.println("This is for testing purposes... ID is " + id);
-			User user = (User)session.getAttribute("user");
-			String emailString = user.getEmail();
-			//System.out.println("Testing -- " + emailString);
+			int id = (SQL_Util.authenticate(session.getAttribute("email").toString(), session.getAttribute("password").toString()));
+			session.setAttribute("user", id);
+			System.out.println("After authenticate execution -- id of the user is " + id);
+			
+			
+			
 		}
 		
 		
@@ -61,8 +63,7 @@ public class ActiveStatus extends HttpServlet {
 		 * If from login -> do nothing - already established (just testin)
 		 */	
 		else {
-			System.out.println("inside");
-			System.out.println(((User)session.getAttribute("user")).getInterest());
+			SQL_Util.addInterest(new Interest(2, 1));
 		}
 
 		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/newsfeed");

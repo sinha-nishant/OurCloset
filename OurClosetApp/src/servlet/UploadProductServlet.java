@@ -131,34 +131,30 @@ public class UploadProductServlet extends HttpServlet {
 		}
 		
 		//testing user object accessibility::
-		User user = (User)session.getAttribute("user");
+		int id = (Integer)session.getAttribute("user");
+		User user = SQL_Util.getUser(id);
 		if (user == null) {
 			System.out.println("Something is wrong - user is null in upload product servlet!");
 		}
 		else {
 			int sellerID = user.getID();
-			System.out.println("milestone: moving to construct the product object - id is " + sellerID);
+			System.out.println("milestone: moving to construct the product object - user id is " + sellerID);
 			
 			Product product = null;
 			if (!brandNull && !tagsNull) {
-				System.out.println("1");
-
-				//product = new model.Product(sellerID, productBrand, productName, colorList, itemType, productSize, description, tagsList, 0.0, productPriceCasted, imagePaths);
-				ArrayList<Tag>tagsList1 = new ArrayList<Tag>();
-				tagsList1.add(new Tag("TEST"));
-				product = new Product(1, "Pagani", "Huayra", colorList, "Car", "Medium", "Hypercar", tagsList, 1.00, 825.00, imagePaths);
-
+				//System.out.println("1");
+				product = new model.Product(sellerID, productBrand, productName, colorList, itemType, productSize, description, tagsList, 0.0, productPriceCasted, imagePaths);
 			}
 			else if (brandNull && !tagsNull) {
-				System.out.println("2");
+				//System.out.println("2");
 				product = new model.Product(sellerID, productName, colorList, itemType, productSize, description, tagsList, 0.0, productPriceCasted, imagePaths);
 			}
 			else if(!brandNull && tagsNull) {
-				System.out.println("3");
+				//System.out.println("3");
 				product = new model.Product(sellerID, productBrand, productName, colorList, itemType, productSize, description, 0.0, productPriceCasted, imagePaths);
 			}
 			else {
-				System.out.println("4");
+				//System.out.println("4");
 				product = new model.Product(sellerID, productName, colorList, itemType, productSize, description, 0.0, productPriceCasted, imagePaths);
 			}
 			SQL_Util.addProduct(product);
@@ -167,9 +163,6 @@ public class UploadProductServlet extends HttpServlet {
 			RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/newsfeed");
 			dispatch.forward(request, response);
 		}
-		
-		
-		
 	}
 
 	/**

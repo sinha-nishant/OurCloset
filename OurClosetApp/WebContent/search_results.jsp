@@ -1,6 +1,11 @@
-<!DOCTYPE html>
-<html>
+<%@page import="model.Product"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
+<title>Search Results</title>
 <style>
 * {
   box-sizing: border-box;
@@ -115,6 +120,9 @@ h3 {
 </head>
 <body>
 
+<% 
+%>
+
 <div class="navbar">
       <nav>
             <a href="homeUsers.html"> Our Closet </a>
@@ -128,7 +136,21 @@ h3 {
 <h3>Search Results</h3>
 
 <div class="row">
+<%
+ArrayList<Product> arrayList = ((ArrayList<Product>) session.getAttribute("searchedItems"));
+for (int i = 0; i < arrayList.size(); i++) { %>
   <div class="column">
+  	<a href="product.html">
+    <img src="<%=arrayList.get(i).getImagePaths().get(0)%>"></a>
+<!--     <img src="https://i.etsystatic.com/19181655/r/il/fd6649/1740098704/il_570xN.1740098704_3m72.jpg">
+    <img src="https://di2ponv0v5otw.cloudfront.net/posts/2019/10/26/5db491d8b3e9170d4bc01ad0/m_5db49230de696ad6cb5f34dd.jpg">
+    <img src="https://images.prod.meredith.com/product/63a507a2a4949af6efca1206d89505cc/1551577991272/l/herringbone-metro-high-waisted-legging-black-athleta-pants">
+    <img src="https://content.backcountry.com/images/items/900/PAT/PAT00KM/NATBLB.jpg">
+    <img src="https://static.nike.com/a/images/t_PDP_1280_v1/f_auto/1ad64451-9ef5-42c5-9c48-d5bee7a736a8/air-max-97-big-kids-shoe-cTXsh6.jpg">
+    <img src="https://i.s-madewell.com/is/image/madewell/H7397_WQ4092_ld?wid=500&hei=635&fmt=jpeg&fit=crop&qlt=75,1&resMode=bisharp&op_usm=0.5,1,5,0"> -->
+  </div>
+<%}%>
+<!--   <div class="column">
     <img src="https://di2ponv0v5otw.cloudfront.net/posts/2019/10/26/5db491d8b3e9170d4bc01ad0/m_5db49230de696ad6cb5f34dd.jpg">
     <img src="https://i.etsystatic.com/19181655/r/il/fd6649/1740098704/il_570xN.1740098704_3m72.jpg">
     <img src="https://di2ponv0v5otw.cloudfront.net/posts/2019/10/26/5db491d8b3e9170d4bc01ad0/m_5db49230de696ad6cb5f34dd.jpg">
@@ -161,7 +183,7 @@ h3 {
     <img src="https://di2ponv0v5otw.cloudfront.net/posts/2019/10/26/5db491d8b3e9170d4bc01ad0/m_5db49230de696ad6cb5f34dd.jpg">
     <img src="https://www.honestbrandreviews.com/wp-content/uploads/2020/02/mejuri-1.jpg">
     <img src="https://content.backcountry.com/images/items/900/PAT/PAT00KM/NATBLB.jpg">
-  </div>
+  </div> -->
 </div>
 
 

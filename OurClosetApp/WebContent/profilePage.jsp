@@ -163,8 +163,8 @@
 <body>
     <div class="navbar">
      	<nav>
-            <a href="newsfeed.jsp"> Our Closet </a>
-            <a href="newsfeed.jsp"> Home </a>
+            <a href="newsfeed"> Our Closet </a>
+            <a href="newsfeed"> Home </a>
             <a href="profilepage.jsp"> Profile</a>
             <a href="search.jsp"><i class="fa fa-fw fa-search"></i>Search</a>
             <a href="#" ><i class="fa fa-bell"></i> Notifications</a>
@@ -181,12 +181,13 @@
         
         <%@ page import="model.User" %>
         
-      <%--   <%  User user = (User) session.getAttribute("user");
-        	int interests = user.getInterest();
+        <%  int userid = (Integer)session.getAttribute("user");
+       	 	User user = util.SQL_Util.getUser(userid);
         	
+       	 	int interests = user.getInterest();
         	int products = 0;
         	if (user.getProducts() != null) products = user.getProducts().size();
-        %> --%>
+        %>
         <div class="profileInfo">
           <ul>
             <span class="name">First & Last Name</span>

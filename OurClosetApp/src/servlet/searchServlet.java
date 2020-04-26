@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import model.Product;
 
 
 @WebServlet("/searchServlet")
@@ -43,6 +46,8 @@ public class searchServlet extends HttpServlet {
 		
 		
 		String tagsInOne = request.getParameter("track_tag");
+		ArrayList<String> tagsList = new ArrayList<String>();
+		//if at least one tag is specified
 		if (tagsInOne != null) {
 			if (!tagsInOne.contains("#")) {
 				message = "Please make sure that you have # in the tags section";
@@ -62,12 +67,26 @@ public class searchServlet extends HttpServlet {
 				if (count != 0) {
 					String [] tags = tagsInOne.split("#", 10);		
 					for (int i = 0; i < count; i++) {
-						System.out.println(tags[count]);
+						//System.out.println(tags[count]);
+						tagsList.add(tags[count]);
 					}
 				}
 			}
-		}	
-		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/search_results.html");
+		}
+		//check name
+		
+		ArrayList<Product> finalizedArrayList = new ArrayList<Product>();
+		
+		ArrayList<String> imagePaths = new ArrayList<String>();
+		imagePaths.add("images/coding-onesie.jpg");
+		ArrayList<String> colors = new ArrayList<String>();
+		colors.add("#FF0000");
+		
+		Product product = new Product(1, "McLaren", "P1", colors, "Car", "Small", "Hypercar", 1.00, 999.99, imagePaths);
+		finalizedArrayList.add(product);
+		session.setAttribute("searchedItems", finalizedArrayList);
+
+		RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/search_results.jsp");
 		dispatch.forward(request, response);
 
 	}
