@@ -1,3 +1,5 @@
+-- Josie Jitzel Alvarez, Alex Qiu, Nishant Sinha, Can Toraman, Florence Yang, Anjalee Patel
+
 DROP DATABASE IF EXISTS OurCloset;
 CREATE DATABASE OurCloset;
 USE OurCloset;

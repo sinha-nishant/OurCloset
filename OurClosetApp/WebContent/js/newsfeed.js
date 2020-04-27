@@ -1,6 +1,6 @@
-/**
- * 
- */
+/*
+Anjalee Patel, Josie Jitzel Alvarez, Florence Yang, Alex Qiu, Can Toraman, Nishant Sinha
+*/
 
 var modal = document.getElementById('product-modal');
 var modalContent = document.getElementById('modal-content');

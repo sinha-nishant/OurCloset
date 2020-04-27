@@ -1,3 +1,5 @@
+<!-- Josie Jitzel Alvarez, Anjalee Patel, Can Toraman, Alex Qiu, Nishant Sinha, Florence Yang --->
+
 <!DOCTYPE html>
 <html>
 

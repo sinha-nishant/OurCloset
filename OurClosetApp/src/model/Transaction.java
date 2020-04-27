@@ -1,3 +1,7 @@
+/*
+Anjalee Patel, Josie Jitzel Alvarez, Florence Yang, Alex Qiu, Can Toraman, Nishant Sinha
+*/
+
 package model;
 
 import java.sql.Timestamp;
