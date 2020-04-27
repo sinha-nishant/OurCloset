@@ -1,6 +1,6 @@
 To deploy this application within Eclipse, import the CS201_FinalProject_OurClosetApp.zip file using the built in import function. This should generate a project called OurClosetApp with root folders src, images, assets, and a MySQL script. The WebContent folder contains the page jsps. The src folder contains the client, server, servlet, and backend classes and code. Assets such as images will also be included in the project folder.
 
-###We are using 8 outside libraries:
+### We are using 8 outside libraries:
  - mysql-connector-java-8.0.19.jar
  - Jstl-1.2.jar
  - Bootstrap 
@@ -10,7 +10,7 @@ To deploy this application within Eclipse, import the CS201_FinalProject_OurClos
  - slf4j-nop-1.7.9.jar
  - tomcat-servlet-api-9.0.1.jar
 
-###Step-by-step instructions on how to run the program:
+### Step-by-step instructions on how to run the program:
  1. Execute the OurCloset.sql file in your MySQL Workbench
  2. Change password on line 41 in SQL_Util.java to your password for MySQL server
  3. Run test.java
@@ -20,7 +20,7 @@ To deploy this application within Eclipse, import the CS201_FinalProject_OurClos
  7. If you do not want to login or register, you can go to the main page with limited functionality by clicking the “View as Guest” button.
  8. After you have logged in, you can then start to explore OurCloset!
 
-###Bugs:
+### Bugs:
  - User can show interest in same post repeatedly if they refresh the page
  - User can instantly add a product they just added by refreshing the home page immediately after submitting a new product
  - Notifications aren't updated for a seller's page after prospective buyer adds a comment or indicates interest
