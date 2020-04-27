@@ -16,7 +16,7 @@ To deploy this application within Eclipse, import the CS201_FinalProject_OurClos
  3. Run test.java
  4. To execute the server for OurCloset, run the Server inside the networking package.
  5. To start OurCloset, open the login.jsp with a browser such as Chrome.
- 6. In the login page, you can choose to login if you already have an account or sign up if you do not have an account.
+ 6. In the login page, you can choose to login if you already have an account or sign up if you do not have an account. If this does not seem to be working, sign in with email: sinhan@usc.edu and password : "xyz"
  7. If you do not want to login or register, you can go to the main page with limited functionality by clicking the “View as Guest” button.
  8. After you have logged in, you can then start to explore OurCloset!
 
